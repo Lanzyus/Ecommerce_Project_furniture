@@ -1,0 +1,491 @@
+.page {
+  min-height: 100vh;
+  background: #f7f6f2;
+  padding: 50px 20px 80px;
+  color: #252525;
+}
+
+.container {
+  width: 100%;
+  max-width: 1050px;
+  margin: 0 auto;
+}
+
+/* =========================================
+   BACK BUTTON
+========================================= */
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background: transparent;
+  color: #555;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 0;
+  margin-bottom: 35px;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.backButton:hover {
+  color: #6050dc;
+  transform: translateX(-3px);
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.header {
+  margin-bottom: 35px;
+}
+
+.eyebrow {
+  display: block;
+  color: #6050dc;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  margin-bottom: 10px;
+}
+
+.header h1 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(35px, 5vw, 54px);
+  font-weight: 500;
+  letter-spacing: -1px;
+}
+
+.header p {
+  margin: 12px 0 0;
+  max-width: 600px;
+  color: #777;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* =========================================
+   ERROR
+========================================= */
+
+.errorBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  background: #fff1f1;
+  border: 1px solid #f2c5c5;
+  color: #a32929;
+  padding: 14px 18px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.errorBox button {
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* =========================================
+   FORM
+========================================= */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* =========================================
+   PHOTO SECTION
+========================================= */
+
+.photoSection,
+.section {
+  background: #fff;
+  border: 1px solid #e9e7e2;
+  border-radius: 18px;
+  padding: 30px;
+  box-shadow: 0 8px 30px rgba(30, 30, 30, 0.04);
+}
+
+.sectionTitle {
+  margin-bottom: 25px;
+}
+
+.sectionTitle h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.sectionTitle p {
+  margin: 7px 0 0;
+  color: #888;
+  font-size: 14px;
+}
+
+.photoContent {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.photoWrapper {
+  position: relative;
+  width: 125px;
+  height: 125px;
+  flex-shrink: 0;
+}
+
+.profileImage {
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  border: 5px solid #f3f1ec;
+}
+
+.cameraButton {
+  position: absolute;
+  right: -3px;
+  bottom: 2px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  background: #6050dc;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(96, 80, 220, 0.3);
+  transition: 0.25s ease;
+}
+
+.cameraButton:hover {
+  transform: scale(1.08);
+}
+
+.photoInfo h3 {
+  margin: 0 0 6px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.photoInfo p {
+  margin: 0 0 15px;
+  color: #888;
+  font-size: 13px;
+}
+
+.photoActions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.changeButton,
+.removeButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: 8px;
+  padding: 10px 15px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.changeButton {
+  border: 1px solid #6050dc;
+  background: #6050dc;
+  color: #fff;
+}
+
+.changeButton:hover {
+  background: #4d3fc5;
+}
+
+.removeButton {
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #777;
+}
+
+.removeButton:hover {
+  border-color: #c94b4b;
+  color: #c94b4b;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+/* =========================================
+   SECTION HEADING
+========================================= */
+
+.sectionHeading {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #f0eefc;
+  color: #6050dc;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.sectionHeading h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 23px;
+  font-weight: 500;
+}
+
+.sectionHeading p {
+  margin: 5px 0 0;
+  color: #888;
+  font-size: 13px;
+}
+
+/* =========================================
+   FORM GRID
+========================================= */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field label {
+  margin-bottom: 8px;
+  color: #3f3f3f;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  border: 1px solid #dedcd7;
+  border-radius: 9px;
+  background: #fff;
+  color: #222;
+  padding: 13px 14px;
+  outline: none;
+  font-family: inherit;
+  font-size: 14px;
+  transition: 0.25s ease;
+  box-sizing: border-box;
+}
+
+.field input {
+  height: 48px;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: #aaa;
+}
+
+.field input:focus,
+.field textarea:focus {
+  border-color: #6050dc;
+  box-shadow: 0 0 0 3px rgba(96, 80, 220, 0.08);
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 5px 0;
+}
+
+.cancelButton,
+.saveButton {
+  min-height: 48px;
+  padding: 0 23px;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: 0.25s ease;
+}
+
+.cancelButton {
+  border: 1px solid #d8d6d1;
+  background: #fff;
+  color: #555;
+}
+
+.cancelButton:hover {
+  background: #f1f0ed;
+}
+
+.saveButton {
+  border: 1px solid #6050dc;
+  background: #6050dc;
+  color: #fff;
+  min-width: 160px;
+}
+
+.saveButton:hover:not(:disabled) {
+  background: #4d3fc5;
+  box-shadow: 0 8px 20px rgba(96, 80, 220, 0.22);
+  transform: translateY(-1px);
+}
+
+.saveButton:disabled,
+.cancelButton:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   LOADING
+========================================= */
+
+.loadingPage {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #777;
+}
+
+.spinner,
+.buttonSpinner {
+  border: 3px solid #e4e2df;
+  border-top-color: #6050dc;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+.spinner {
+  width: 38px;
+  height: 38px;
+  margin-bottom: 15px;
+}
+
+.buttonSpinner {
+  width: 16px;
+  height: 16px;
+  border-width: 2px;
+  border-top-color: #fff;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 700px) {
+  .page {
+    padding: 30px 15px 60px;
+  }
+
+  .photoSection,
+  .section {
+    padding: 22px;
+    border-radius: 14px;
+  }
+
+  .photoContent {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fullWidth {
+    grid-column: auto;
+  }
+
+  .formActions {
+    flex-direction: column-reverse;
+  }
+
+  .cancelButton,
+  .saveButton {
+    width: 100%;
+  }
+}
+
+@media (max-width: 450px) {
+  .header h1 {
+    font-size: 35px;
+  }
+
+  .photoWrapper,
+  .profileImage {
+    width: 105px;
+    height: 105px;
+  }
+
+  .cameraButton {
+    width: 34px;
+    height: 34px;
+  }
+
+  .photoActions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

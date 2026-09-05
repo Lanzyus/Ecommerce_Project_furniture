@@ -1,0 +1,226 @@
+/* ==========================================================
+   PAGE
+========================================================== */
+
+.page {
+  min-height: 100vh;
+
+  background: #f7f5f1;
+
+  color: #272521;
+}
+
+
+/* ==========================================================
+   HERO
+========================================================== */
+
+.profileHero {
+  position: relative;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      105deg,
+      #272521 0%,
+      #302e29 55%,
+      #24231f 100%
+    );
+
+  padding: 85px 20px 80px;
+
+  color: #fff;
+}
+
+
+/* subtle decorative line */
+
+.profileHero::after {
+  content: "";
+
+  position: absolute;
+
+  right: 7%;
+
+  bottom: 25px;
+
+  width: 160px;
+
+  height: 1px;
+
+  background: rgba(
+    196,
+    154,
+    85,
+    0.55
+  );
+}
+
+
+.heroInner {
+  position: relative;
+
+  z-index: 1;
+
+  max-width: 1180px;
+
+  margin: 0 auto;
+}
+
+
+/* ==========================================================
+   EYEBROW
+========================================================== */
+
+.eyebrow {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 20px;
+
+  color: #c49a55;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 2.8px;
+}
+
+.eyebrow::before {
+  content: "";
+
+  width: 28px;
+
+  height: 1px;
+
+  background: #c49a55;
+}
+
+
+/* ==========================================================
+   HERO TITLE
+========================================================== */
+
+.profileHero h1 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: clamp(
+    42px,
+    6vw,
+    70px
+  );
+
+  font-weight: 400;
+
+  line-height: 1.04;
+
+  letter-spacing: -1px;
+}
+
+.profileHero h1 em {
+  color: #c49a55;
+
+  font-style: italic;
+}
+
+
+/* ==========================================================
+   HERO DESCRIPTION
+========================================================== */
+
+.profileHero p {
+  max-width: 570px;
+
+  margin: 26px 0 0;
+
+  color: rgba(
+    255,
+    255,
+    255,
+    0.68
+  );
+
+  font-size: 14px;
+
+  line-height: 1.85;
+}
+
+
+/* ==========================================================
+   PROFILE SECTION
+========================================================== */
+
+.profileSection {
+  padding: 55px 20px 100px;
+}
+
+
+/* ==========================================================
+   CONTAINER
+========================================================== */
+
+.container {
+  max-width: 1180px;
+
+  margin: 0 auto;
+}
+
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media (max-width: 768px) {
+
+  .profileHero {
+    padding: 60px 20px 65px;
+  }
+
+  .profileHero h1 {
+    font-size: 43px;
+
+    letter-spacing: -0.5px;
+  }
+
+  .profileHero p {
+    font-size: 13px;
+  }
+
+  .profileSection {
+    padding: 35px 15px 70px;
+  }
+}
+
+
+@media (max-width: 480px) {
+
+  .profileHero {
+    padding: 48px 18px 55px;
+  }
+
+  .profileHero h1 {
+    font-size: 36px;
+  }
+
+  .profileHero p {
+    font-size: 13px;
+
+    line-height: 1.7;
+  }
+
+  .profileSection {
+    padding: 28px 12px 55px;
+  }
+}

@@ -1,0 +1,64 @@
+# =========================
+# Python / Django
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+env/
+venv/
+.venv/
+
+# Environment variables / secrets
+.env
+.env.*
+!.env.example
+
+# Django database
+*.sqlite3
+db.sqlite3
+
+# Django media/uploads
+backend/media/
+
+# =========================
+# Database backups / exports
+# =========================
+backend/mysql_data.json
+backend/mysql_data_clean.json
+backend/mysql_real_data.json
+backend/mysql_real_data_utf8.json
+
+# =========================
+# Node / React
+# =========================
+node_modules/
+frontend/node_modules/
+frontend1/node_modules/
+frontend2/node_modules/
+
+# React/Vite builds
+frontend/dist/
+frontend/build/
+frontend1/dist/
+frontend1/build/
+frontend2/dist/
+frontend2/build/
+
+# =========================
+# ZIP backups
+# =========================
+*.zip
+
+# =========================
+# IDE
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# OS
+# =========================
+.DS_Store
+Thumbs.db

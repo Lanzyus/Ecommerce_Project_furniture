@@ -1,0 +1,15 @@
+@media print {
+
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+  }
+
+  .card {
+    border: none !important;
+    box-shadow: none !important;
+  }
+}

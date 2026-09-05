@@ -1,0 +1,342 @@
+/* =========================================================
+   ORDER SUMMARY
+========================================================= */
+
+.summary {
+  background: #ffffff;
+
+  border: 1px solid #e4dfd6;
+
+  box-shadow:
+    0 15px 45px rgba(35, 30, 23, 0.055);
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+
+  padding: 25px 28px;
+
+  border-bottom: 1px solid #e8e3da;
+}
+
+
+.headerIcon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #f5f2ec;
+
+  color: #b47a16;
+
+  font-size: 18px;
+}
+
+
+.header span {
+  display: block;
+
+  color: #b47a16;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+
+.header h2 {
+  margin: 4px 0 0;
+
+  color: #24221f;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 26px;
+
+  font-weight: 400;
+}
+
+
+.itemCount {
+  margin-left: auto;
+
+  color: #888178;
+
+  font-size: 11px;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   ITEMS
+========================================================= */
+
+.items {
+  padding: 5px 28px;
+}
+
+
+/* =========================================================
+   BREAKDOWN
+========================================================= */
+
+.breakdown {
+  margin: 0 28px;
+
+  padding: 25px 0 5px;
+
+  border-top: 1px solid #e8e3da;
+}
+
+
+.row {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 16px;
+
+  color: #77716a;
+
+  font-size: 13px;
+}
+
+
+.row strong {
+  color: #37332e;
+
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   SHIPPING
+========================================================= */
+
+.shipping {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin: 20px 0;
+
+  padding: 15px;
+
+  background: #f8f6f2;
+}
+
+
+.shipping span {
+  display: block;
+
+  color: #5e5952;
+
+  font-size: 12px;
+}
+
+
+.shipping small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #a39d94;
+
+  font-size: 9px;
+}
+
+
+.shipping strong {
+  color: #8b651c;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   TOTAL
+========================================================= */
+
+.total {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-top: 22px;
+
+  padding-top: 22px;
+
+  border-top: 1px solid #dcd5ca;
+}
+
+
+.total span {
+  display: block;
+
+  color: #292621;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 21px;
+}
+
+
+.total small {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #a09a91;
+
+  font-size: 9px;
+}
+
+
+.total strong {
+  color: #b47a16;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 23px;
+
+  font-weight: 500;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   NOTE
+========================================================= */
+
+.note {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 8px;
+
+  margin: 25px 28px;
+
+  padding-top: 20px;
+
+  border-top: 1px solid #eeeae3;
+}
+
+
+.note svg {
+  flex-shrink: 0;
+
+  margin-top: 1px;
+
+  color: #b47a16;
+
+  font-size: 13px;
+}
+
+
+.note p {
+  margin: 0;
+
+  color: #9a948b;
+
+  font-size: 10px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty {
+  padding: 50px 20px;
+
+  text-align: center;
+
+  color: #8b857c;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 575px) {
+
+  .header {
+    padding: 20px;
+  }
+
+
+  .headerIcon {
+    width: 38px;
+    height: 38px;
+  }
+
+
+  .header h2 {
+    font-size: 22px;
+  }
+
+
+  .itemCount {
+    font-size: 10px;
+  }
+
+
+  .items {
+    padding: 5px 20px;
+  }
+
+
+  .breakdown {
+    margin: 0 20px;
+  }
+
+
+  .note {
+    margin: 22px 20px;
+  }
+
+}

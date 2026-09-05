@@ -1,0 +1,198 @@
+.temuGallery {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+.thumbnailColumn {
+  width: 90px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 700px;
+  overflow-y: auto;
+}
+
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #fff;
+  transition: all 0.2s ease;
+}
+
+.thumbnail:hover {
+  border-color: #ff6600;
+}
+
+.active {
+  border: 2px solid #ff6600;
+}
+
+.mainImageContainer {
+  flex: 1;
+  position: relative;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  height: 650px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.mainImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.mainImage:hover {
+  transform: scale(1.08);
+}
+
+.galleryArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+}
+
+.galleryArrow:hover {
+  background: #fff;
+}
+
+.left {
+  left: 20px;
+}
+
+.right {
+  right: 20px;
+}
+
+.galleryEmpty {
+  height: 650px;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #777;
+}
+
+.productContainer {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.gallerySection {
+    flex: 0 0 55%;
+    min-width: 0;
+}
+
+.infoSection {
+    flex: 0 0 45%;
+    background: #fff;
+    padding: 20px;
+}
+
+.price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ff6600;
+    margin: 15px 0;
+}
+
+.description {
+    line-height: 1.8;
+    color: #555;
+}
+.imageModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 9999;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent {
+  position: relative;
+  width: 95vw;
+  height: 95vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalImage {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+
+  background: transparent;
+  border: none;
+  color: white;
+
+  cursor: pointer;
+  z-index: 10000;
+}
+
+.modalArrow {
+  position: absolute;
+
+  width: 60px;
+  height: 60px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+}
+
+.modalArrow:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.modalLeft {
+  left: 20px;
+}
+
+.modalRight {
+  right: 20px;
+}

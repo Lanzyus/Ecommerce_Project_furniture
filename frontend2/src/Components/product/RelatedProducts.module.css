@@ -1,0 +1,63 @@
+/* Related Products Section */
+.related-products-section {
+    padding: 60px 0;
+    background-color: #f8f9fa;
+}
+
+/* Container spacing */
+.related-products-section .container {
+    max-width: 1200px;
+}
+
+/* Title */
+.related-products-section h3 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+/* Optional underline accent */
+.related-products-section h3::after {
+    content: "";
+    width: 60px;
+    height: 3px;
+    background: #000;
+    display: block;
+    margin-top: 8px;
+    border-radius: 5px;
+}
+
+/* Grid spacing improvement */
+.related-products-section .row {
+    row-gap: 20px;
+}
+
+/* Card wrapper animation */
+.related-products-section .col-md-3 {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.related-products-section .col-md-3:hover {
+    transform: translateY(-5px);
+}
+
+/* Empty state text */
+.related-products-section .text-muted {
+    text-align: center;
+    font-size: 1rem;
+    padding: 20px;
+    color: #777;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .related-products-section {
+        padding: 40px 0;
+    }
+
+    .related-products-section h3 {
+        font-size: 1.3rem;
+    }
+}

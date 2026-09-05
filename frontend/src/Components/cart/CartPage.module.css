@@ -1,0 +1,456 @@
+.cartPage {
+  min-height: 100vh;
+  background: #f7f4ef;
+  color: #25211d;
+}
+
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+
+/* =========================================
+   PAGE HEADER
+========================================= */
+
+.pageHeader {
+  padding: 105px 0 85px;
+  background: #211e1b;
+  text-align: center;
+}
+
+.eyebrow {
+  display: block;
+  margin-bottom: 18px;
+
+  color: #bd882c;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.pageHeader h1 {
+  margin: 0;
+
+  color: #fff;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(52px, 7vw, 82px);
+  font-weight: 400;
+
+  line-height: 1;
+}
+
+.pageHeader h1 em {
+  color: #c4933e;
+  font-style: italic;
+}
+
+.headerLine {
+  width: 55px;
+  height: 2px;
+
+  margin: 28px auto;
+
+  background: #bd882c;
+}
+
+.pageHeader p {
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.65);
+
+  font-size: 14px;
+}
+
+
+/* =========================================
+   CART SECTION
+========================================= */
+
+.cartSection {
+  padding: 90px 0 120px;
+}
+
+.cartLayout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr) 370px;
+
+  gap: 70px;
+
+  align-items: start;
+}
+
+
+/* =========================================
+   ITEMS HEADER
+========================================= */
+
+.itemsHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 30px;
+
+  padding-bottom: 25px;
+
+  border-bottom: 1px solid #dcd6cc;
+}
+
+.smallLabel {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #ad7c28;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+.itemsHeader h2 {
+  margin: 0;
+
+  color: #28231e;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 32px;
+  font-weight: 400;
+}
+
+.clearButton {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 10px 0;
+
+  border: 0;
+
+  background: transparent;
+
+  color: #8c4e44;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+
+  cursor: pointer;
+}
+
+.clearButton:hover {
+  color: #b12d21;
+}
+
+.clearButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+/* =========================================
+   ITEMS
+========================================= */
+
+.itemsList {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0;
+}
+
+
+/* =========================================
+   PAGINATION
+========================================= */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-top: 35px;
+  padding-top: 25px;
+
+  border-top: 1px solid #dcd6cc;
+}
+
+.pagination button {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 8px;
+
+  border: 0;
+
+  background: transparent;
+
+  color: #3c3731;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+
+  cursor: pointer;
+}
+
+.pagination button:hover:not(:disabled) {
+  color: #ae7b26;
+}
+
+.pagination button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  color: #8a8278;
+
+  font-size: 12px;
+}
+
+.pagination strong {
+  color: #25211d;
+}
+
+
+/* =========================================
+   CONTINUE SHOPPING
+========================================= */
+
+.continueShopping {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 45px;
+
+  color: #38322c;
+
+  text-decoration: none;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+
+  text-transform: uppercase;
+}
+
+.continueShopping:hover {
+  color: #ae7b26;
+}
+
+
+/* =========================================
+   EMPTY CART
+========================================= */
+
+.emptyCart {
+  max-width: 650px;
+
+  margin: 30px auto;
+
+  padding: 100px 30px;
+
+  text-align: center;
+}
+
+.emptyIcon {
+  width: 75px;
+  height: 75px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto 30px;
+
+  border: 1px solid #d4c9ba;
+
+  border-radius: 50%;
+
+  color: #b27e29;
+
+  font-size: 28px;
+}
+
+.emptyCart h2 {
+  margin: 0;
+
+  color: #27221e;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 52px;
+  font-weight: 400;
+}
+
+.emptyCart h2 em {
+  color: #a87829;
+  font-style: italic;
+}
+
+.emptyCart p {
+  max-width: 500px;
+
+  margin: 22px auto 35px;
+
+  color: #766f67;
+
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.goldButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  min-height: 53px;
+
+  padding: 0 27px;
+
+  background: #b98124;
+  color: #fff;
+
+  text-decoration: none;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+
+  text-transform: uppercase;
+}
+
+.goldButton:hover {
+  background: #9d6b1c;
+  color: #fff;
+}
+
+
+/* =========================================
+   LOADING
+========================================= */
+
+.loadingState {
+  min-height: 400px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+.loadingState p {
+  color: #817970;
+
+  font-size: 13px;
+}
+
+.spinner {
+  width: 35px;
+  height: 35px;
+
+  border: 2px solid #ddd4c8;
+  border-top-color: #b98124;
+
+  border-radius: 50%;
+
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 900px) {
+
+  .cartLayout {
+    grid-template-columns: 1fr;
+
+    gap: 55px;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .container {
+    width: calc(100% - 34px);
+  }
+
+  .pageHeader {
+    padding: 80px 0 65px;
+  }
+
+  .pageHeader h1 {
+    font-size: 54px;
+  }
+
+  .cartSection {
+    padding: 60px 0 80px;
+  }
+
+  .itemsHeader {
+    align-items: flex-start;
+  }
+
+  .itemsHeader h2 {
+    font-size: 28px;
+  }
+
+  .clearButton {
+    font-size: 9px;
+  }
+
+  .emptyCart {
+    padding: 65px 15px;
+  }
+
+  .emptyCart h2 {
+    font-size: 43px;
+  }
+
+  .pagination {
+    gap: 15px;
+  }
+
+  .pagination button {
+    font-size: 9px;
+  }
+
+}

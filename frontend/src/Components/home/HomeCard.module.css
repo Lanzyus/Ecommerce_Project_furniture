@@ -1,0 +1,152 @@
+.content {
+    padding: 12px;
+}
+
+.row {
+    --bs-gutter-x: 1rem;
+    --bs-gutter-y: 1rem;
+}
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  width: 100%;
+}
+.card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #eee;
+    transition: all .25s ease;
+}
+.rating {
+    margin: 6px 0;
+    font-size: 14px;
+    line-height: 1;
+}
+
+.rating span {
+    color: #ffc107;
+    letter-spacing: 1px;
+}
+
+.rating small {
+    color: #666;
+    font-size: 12px;
+}
+
+/* .card {
+  position: relative;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #eee;
+  transition: all 0.25s ease;
+  max-width: 190px;
+  margin: 0 auto;
+} */
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,.12);
+}
+/* .imageWrapper {
+  width: 100%;
+  height: 160px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+} */
+
+.imageWrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.swiper-slide {
+  height: auto;
+}
+
+.card {
+  height: 100%;
+}
+.image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.content {
+  padding: 10px;
+}
+
+.name {
+    font-size: 14px;
+    line-height: 1.4;
+    margin-top: 8px;
+    height: 40px;
+
+    display: -webkit-box;
+    /* -webkit-line-clamp: 2; */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+
+.oldPrice {
+  font-size: 12px;
+  color: #999;
+  text-decoration: line-through;
+}
+
+.price {
+  color: #ff4d00;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.discountBadge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #ff4d00;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.newBadge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #00b894;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.inStock {
+  color: #198754;
+  font-weight: 600;
+}
+
+.lowStock {
+  color: #fd7e14;
+  font-weight: 700;
+}
+
+.outStock {
+  color: #dc3545;
+  font-weight: 700;
+}

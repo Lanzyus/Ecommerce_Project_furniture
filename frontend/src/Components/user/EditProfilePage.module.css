@@ -1,0 +1,107 @@
+.page {
+  min-height: 100vh;
+  background: #f7f5f1;
+  padding: 55px 20px 80px;
+}
+
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+  margin-bottom: 35px;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #6d5a3a;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 28px;
+  transition: 0.3s ease;
+}
+
+.backLink:hover {
+  color: #a88952;
+  transform: translateX(-3px);
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.iconBox {
+  width: 58px;
+  height: 58px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #2e2821;
+  color: #d5b16b;
+  border-radius: 50%;
+  font-size: 24px;
+}
+
+.eyebrow {
+  display: block;
+  color: #9a7943;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  margin-bottom: 7px;
+}
+
+.titleRow h1 {
+  margin: 0;
+  color: #29231d;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(30px, 4vw, 44px);
+  font-weight: 500;
+  letter-spacing: -0.5px;
+}
+
+.titleRow p {
+  margin: 8px 0 0;
+  color: #766f67;
+  font-size: 15px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 600px) {
+  .page {
+    padding: 35px 15px 60px;
+  }
+
+  .titleRow {
+    align-items: flex-start;
+  }
+
+  .iconBox {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .titleRow h1 {
+    font-size: 30px;
+  }
+
+  .titleRow p {
+    font-size: 14px;
+  }
+}

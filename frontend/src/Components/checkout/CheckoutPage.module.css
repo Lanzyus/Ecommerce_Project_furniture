@@ -1,0 +1,399 @@
+/* =========================================================
+   SENSATIONAL INTERIORS
+   CHECKOUT PAGE
+========================================================= */
+
+.checkoutPage {
+  min-height: 100vh;
+  background: #f5f2ec;
+  color: #24221f;
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.checkoutHeader {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e0d7;
+  padding: 35px 0 45px;
+}
+
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  color: #77716a;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  letter-spacing: 0.5px;
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+
+.backLink:hover {
+  color: #b47a16;
+}
+
+
+.backLink svg {
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.heading {
+  text-align: center;
+  margin-top: 35px;
+}
+
+
+.heading span {
+  display: block;
+
+  color: #b47a16;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 3px;
+
+  margin-bottom: 14px;
+}
+
+
+.heading h1 {
+  margin: 0;
+
+  color: #211f1c;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: clamp(38px, 5vw, 58px);
+
+  line-height: 1.05;
+
+  font-weight: 400;
+
+  letter-spacing: -1.5px;
+}
+
+
+.heading p {
+  max-width: 540px;
+
+  margin: 18px auto 0;
+
+  color: #77716a;
+
+  font-size: 14px;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   SECURITY
+========================================================= */
+
+.security {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 35px;
+
+  margin-top: 30px;
+}
+
+
+.security div {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  color: #77716a;
+
+  font-size: 10px;
+
+  letter-spacing: 0.5px;
+}
+
+
+.security svg {
+  color: #b47a16;
+
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.checkoutContent {
+  padding: 55px 0 80px;
+}
+
+
+.checkoutGrid {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.55fr)
+    minmax(330px, 0.8fr);
+
+  gap: 30px;
+
+  align-items: start;
+}
+
+
+/* =========================================================
+   EMPTY CHECKOUT
+========================================================= */
+
+.emptyCheckout {
+  max-width: 600px;
+
+  margin: 40px auto;
+
+  padding: 70px 30px;
+
+  background: #ffffff;
+
+  text-align: center;
+
+  border: 1px solid #e5e0d7;
+
+  box-shadow:
+    0 15px 40px rgba(35, 30, 23, 0.05);
+}
+
+
+.emptyIcon {
+  width: 65px;
+  height: 65px;
+
+  margin: 0 auto 25px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #f5f2ec;
+
+  font-size: 25px;
+}
+
+
+.emptyCheckout > span {
+  color: #b47a16;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 3px;
+}
+
+
+.emptyCheckout h2 {
+  margin: 12px 0;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 34px;
+
+  font-weight: 400;
+}
+
+
+.emptyCheckout p {
+  color: #77716a;
+
+  font-size: 14px;
+}
+
+
+.shopButton {
+  display: inline-flex;
+
+  margin-top: 20px;
+
+  padding: 15px 25px;
+
+  background: #b47a16;
+
+  color: white;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+
+  text-decoration: none;
+
+  transition: 0.25s ease;
+}
+
+
+.shopButton:hover {
+  background: #91600d;
+
+  color: white;
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loadingPage {
+  min-height: 70vh;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #f5f2ec;
+}
+
+
+.loadingBox {
+  text-align: center;
+}
+
+
+.loadingBox p {
+  margin-top: 15px;
+
+  color: #77716a;
+
+  font-size: 12px;
+
+  letter-spacing: 1px;
+}
+
+
+.spinner {
+  width: 38px;
+  height: 38px;
+
+  margin: auto;
+
+  border: 2px solid #ded8cd;
+
+  border-top-color: #b47a16;
+
+  border-radius: 50%;
+
+  animation: checkoutSpin 0.8s linear infinite;
+}
+
+
+@keyframes checkoutSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .checkoutGrid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 575px) {
+
+  .container {
+    width: min(100% - 30px, 1180px);
+  }
+
+
+  .checkoutHeader {
+    padding: 25px 0 35px;
+  }
+
+
+  .heading {
+    margin-top: 30px;
+  }
+
+
+  .heading h1 {
+    font-size: 37px;
+  }
+
+
+  .heading p {
+    font-size: 13px;
+  }
+
+
+  .security {
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 10px;
+  }
+
+
+  .checkoutContent {
+    padding: 30px 0 50px;
+  }
+
+
+  .emptyCheckout {
+    padding: 50px 20px;
+  }
+
+}

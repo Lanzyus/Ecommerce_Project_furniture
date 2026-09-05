@@ -1,0 +1,81 @@
+
+.productContainer {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  overflow: hidden;
+}
+/* Gallery wrapper */
+.gallerySection {
+  width: 55%;
+  min-width: 0;
+}
+
+.infoSection {
+  width: 45%;
+  min-width: 0;
+}
+.row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Thumbnail column */
+.thumbnailList {
+  width: 110px; /* increased from ~60px */
+  margin-right: 15px;
+}
+
+.thumbnailItem {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.thumbnailItem img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+
+.mainImageContainer {
+  width: 100%;
+  height: 650px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.mainImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 20px;
+}
+
+
+/* Main image area */
+
+.image-gallery-thumbnails-wrapper {
+  width: 120px !important;
+}
+
+.image-gallery-thumbnail {
+  width: 100px !important;
+  height: 100px !important;
+}
+
+.image-gallery-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}

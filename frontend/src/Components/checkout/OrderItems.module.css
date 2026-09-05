@@ -1,0 +1,249 @@
+/* =========================================================
+   ORDER ITEM
+========================================================= */
+
+.item {
+  display: grid;
+
+  grid-template-columns:
+    92px
+    minmax(0, 1fr)
+    auto;
+
+  gap: 22px;
+
+  align-items: center;
+
+  padding: 22px 0;
+
+  border-bottom: 1px solid #e8e3da;
+}
+
+
+.item:last-child {
+  border-bottom: none;
+}
+
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.imageWrapper {
+  position: relative;
+
+  width: 92px;
+  height: 92px;
+
+  background: #f5f2ec;
+
+  overflow: hidden;
+}
+
+
+.imageWrapper img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition: transform 0.35s ease;
+}
+
+
+.item:hover .imageWrapper img {
+  transform: scale(1.04);
+}
+
+
+/* Quantity badge */
+
+.quantityBadge {
+  position: absolute;
+
+  right: 6px;
+  top: 6px;
+
+  width: 23px;
+  height: 23px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #24221f;
+
+  color: white;
+
+  border-radius: 50%;
+
+  font-size: 10px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   INFO
+========================================================= */
+
+.info {
+  min-width: 0;
+}
+
+
+.category {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #b47a16;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.8px;
+
+  text-transform: uppercase;
+}
+
+
+.info h3 {
+  margin: 0;
+
+  color: #24221f;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 20px;
+
+  font-weight: 400;
+
+  line-height: 1.25;
+}
+
+
+/* =========================================================
+   QUANTITY
+========================================================= */
+
+.quantity {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-top: 13px;
+
+  color: #8b857d;
+
+  font-size: 11px;
+}
+
+
+.quantityNumber {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: #6d675f;
+}
+
+
+.quantityNumber svg {
+  font-size: 10px;
+}
+
+
+/* =========================================================
+   PRICE
+========================================================= */
+
+.price {
+  min-width: 130px;
+
+  text-align: right;
+}
+
+
+.price span {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #a39c92;
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+
+.price strong {
+  color: #24221f;
+
+  font-size: 15px;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .item {
+    grid-template-columns: 72px minmax(0, 1fr);
+
+    gap: 14px;
+
+    padding: 18px 0;
+  }
+
+
+  .imageWrapper {
+    width: 72px;
+    height: 72px;
+  }
+
+
+  .info h3 {
+    font-size: 16px;
+  }
+
+
+  .price {
+    grid-column: 2;
+
+    min-width: 0;
+
+    text-align: left;
+
+    margin-top: -8px;
+  }
+
+
+  .price span {
+    display: none;
+  }
+
+
+  .price strong {
+    font-size: 14px;
+  }
+
+}

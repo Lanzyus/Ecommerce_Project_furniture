@@ -1,0 +1,927 @@
+/* =========================================================
+   PROFILE PAGE CONTENT
+========================================================= */
+
+.profile {
+  width: 100%;
+  color: #272521;
+}
+
+
+/* =========================================================
+   PROFILE TOP / HERO CARD
+========================================================= */
+
+.profileTop {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 35px;
+
+  padding: 38px 42px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e0d8;
+
+  margin-bottom: 28px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   IDENTITY
+========================================================= */
+
+.identity {
+  display: flex;
+  align-items: center;
+
+  gap: 27px;
+
+  min-width: 0;
+}
+
+
+/* =========================================================
+   AVATAR WRAPPER
+========================================================= */
+
+.avatarWrapper {
+  position: relative;
+
+  width: 112px;
+  height: 112px;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   PROFILE IMAGE
+========================================================= */
+
+.avatar {
+  width: 112px;
+  height: 112px;
+
+  display: block;
+
+  object-fit: cover;
+
+  border-radius: 50%;
+
+  border: 4px solid #f1eadf;
+
+  background: #f5f3ef;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 3px 12px rgba(39, 37, 33, 0.08);
+}
+
+
+/* =========================================================
+   CAMERA BUTTON
+========================================================= */
+
+.avatarCamera {
+  position: absolute;
+
+  right: -4px;
+  bottom: -2px;
+
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 3px solid #ffffff;
+
+  border-radius: 50%;
+
+  background: #b48745;
+
+  color: #ffffff;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 3px 10px rgba(39, 37, 33, 0.18);
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+
+  z-index: 5;
+}
+
+
+.avatarCamera:hover {
+  background: #272521;
+
+  transform: scale(1.08);
+
+  box-shadow:
+    0 5px 14px rgba(39, 37, 33, 0.24);
+}
+
+
+.avatarCamera:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.75;
+
+  transform: none;
+}
+
+
+/* =========================================================
+   CAMERA ICON
+========================================================= */
+
+.cameraIcon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 15px;
+
+  line-height: 1;
+}
+
+
+/* =========================================================
+   HIDDEN FILE INPUT
+========================================================= */
+
+.fileInput {
+  display: none;
+}
+
+
+/* =========================================================
+   IDENTITY INFORMATION
+========================================================= */
+
+.identityInfo {
+  display: flex;
+
+  flex-direction: column;
+
+  min-width: 0;
+}
+
+
+/* =========================================================
+   WELCOME LABEL
+========================================================= */
+
+.smallLabel {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #b48745;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 2.2px;
+
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   USER NAME
+========================================================= */
+
+.identityInfo h2 {
+  margin: 0;
+
+  color: #272521;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: clamp(30px, 4vw, 42px);
+
+  font-weight: 400;
+
+  line-height: 1.08;
+
+  word-break: break-word;
+}
+
+
+/* =========================================================
+   USERNAME
+========================================================= */
+
+.identityInfo p {
+  margin: 8px 0 0;
+
+  color: #8b867e;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   EDIT PROFILE BUTTON
+========================================================= */
+
+.editButton {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  flex-shrink: 0;
+
+  min-width: 157px;
+
+  padding: 14px 22px;
+
+  background: #272521;
+
+  color: #ffffff;
+
+  border: 1px solid #272521;
+
+  text-decoration: none;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.4px;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+
+.editButton:hover {
+  background: #b48745;
+
+  border-color: #b48745;
+
+  color: #ffffff;
+
+  transform: translateY(-1px);
+}
+
+
+.editIcon {
+  font-size: 16px;
+
+  line-height: 1;
+}
+
+
+/* =========================================================
+   ACCOUNT GRID
+========================================================= */
+
+.accountGrid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 28px;
+
+  margin-bottom: 28px;
+}
+
+
+/* =========================================================
+   INFORMATION CARD
+========================================================= */
+
+.infoCard {
+  background: #ffffff;
+
+  border: 1px solid #e5e0d8;
+
+  padding: 30px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   CARD HEADING
+========================================================= */
+
+.cardHeading {
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding-bottom: 22px;
+
+  border-bottom: 1px solid #eee9e1;
+
+  margin-bottom: 4px;
+}
+
+
+/* =========================================================
+   CARD EYEBROW
+========================================================= */
+
+.cardEyebrow {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #b48745;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.9px;
+
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   CARD TITLE
+========================================================= */
+
+.cardHeading h3 {
+  margin: 0;
+
+  color: #272521;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 23px;
+
+  font-weight: 400;
+
+  line-height: 1.2;
+}
+
+
+/* =========================================================
+   CARD ICON
+========================================================= */
+
+.cardIcon {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  background: #f7f2ea;
+
+  color: #b48745;
+
+  font-size: 18px;
+}
+
+
+/* =========================================================
+   DETAILS GRID
+========================================================= */
+
+.details {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  column-gap: 28px;
+}
+
+
+/* =========================================================
+   DETAIL
+========================================================= */
+
+.detail {
+  min-width: 0;
+
+  padding: 17px 0;
+
+  border-bottom: 1px solid #f0ece6;
+}
+
+
+/* =========================================================
+   DETAIL LABEL
+========================================================= */
+
+.detail span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #989188;
+
+  font-size: 9px;
+
+  font-weight: 600;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1.1px;
+
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   DETAIL VALUE
+========================================================= */
+
+.detail strong {
+  display: block;
+
+  color: #36332e;
+
+  font-size: 13px;
+
+  font-weight: 500;
+
+  line-height: 1.55;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   FULL WIDTH DETAIL
+========================================================= */
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+
+/* =========================================================
+   ORDERS SECTION
+========================================================= */
+
+.ordersSection {
+  background: #ffffff;
+
+  border: 1px solid #e5e0d8;
+
+  padding: 35px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   ORDERS HEADING
+========================================================= */
+
+.ordersHeading {
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content: space-between;
+
+  gap: 25px;
+
+  padding-bottom: 24px;
+
+  border-bottom: 1px solid #eee9e1;
+
+  margin-bottom: 25px;
+}
+
+
+/* =========================================================
+   ORDERS TITLE
+========================================================= */
+
+.ordersHeading h2 {
+  margin: 0;
+
+  color: #272521;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 30px;
+
+  font-weight: 400;
+
+  line-height: 1.15;
+}
+
+
+/* =========================================================
+   ORDERS DESCRIPTION
+========================================================= */
+
+.ordersHeading p {
+  margin: 8px 0 0;
+
+  color: #89837a;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   ORDER COUNT
+========================================================= */
+
+.orderCount {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 8px 13px;
+
+  background: #f7f2ea;
+
+  color: #8f682f;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   EMPTY ORDERS
+========================================================= */
+
+.emptyOrders {
+  display: flex;
+
+  align-items: center;
+
+  flex-direction: column;
+
+  text-align: center;
+
+  padding: 55px 20px 45px;
+}
+
+
+/* =========================================================
+   EMPTY ICON
+========================================================= */
+
+.emptyIcon {
+  width: 64px;
+  height: 64px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 18px;
+
+  background: #f7f2ea;
+
+  color: #b48745;
+
+  border-radius: 50%;
+
+  font-size: 24px;
+}
+
+
+/* =========================================================
+   EMPTY TITLE
+========================================================= */
+
+.emptyOrders h3 {
+  margin: 0;
+
+  color: #272521;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 24px;
+
+  font-weight: 400;
+}
+
+
+/* =========================================================
+   EMPTY DESCRIPTION
+========================================================= */
+
+.emptyOrders p {
+  max-width: 420px;
+
+  margin: 8px 0 20px;
+
+  color: #89837a;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   SHOP BUTTON
+========================================================= */
+
+.shopButton {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 12px 21px;
+
+  background: #272521;
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.5px;
+
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+
+.shopButton:hover {
+  background: #b48745;
+
+  color: #ffffff;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading {
+  min-height: 300px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+
+/* =========================================================
+   RESPONSIVE — 900PX
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .profileTop {
+    padding: 30px;
+  }
+
+
+  .accountGrid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — 700PX
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .profileTop {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    padding: 28px;
+  }
+
+
+  .identity {
+    width: 100%;
+  }
+
+
+  .editButton {
+    width: 100%;
+  }
+
+
+  .ordersHeading {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+
+  .ordersSection {
+    padding: 28px 22px;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — 520PX
+========================================================= */
+
+@media (max-width: 520px) {
+
+  .profileTop {
+    padding: 22px 18px;
+
+    gap: 22px;
+  }
+
+
+  .identity {
+    align-items: flex-start;
+
+    gap: 18px;
+  }
+
+
+  .avatarWrapper {
+    width: 82px;
+    height: 82px;
+  }
+
+
+  .avatar {
+    width: 82px;
+    height: 82px;
+
+    border-width: 3px;
+  }
+
+
+  .avatarCamera {
+    width: 32px;
+    height: 32px;
+
+    right: -5px;
+    bottom: -3px;
+
+    border-width: 2px;
+  }
+
+
+  .cameraIcon {
+    font-size: 13px;
+  }
+
+
+  .smallLabel {
+    font-size: 8px;
+
+    letter-spacing: 1.6px;
+  }
+
+
+  .identityInfo h2 {
+    font-size: 25px;
+  }
+
+
+  .identityInfo p {
+    font-size: 12px;
+  }
+
+
+  .infoCard {
+    padding: 22px 18px;
+  }
+
+
+  .details {
+    grid-template-columns: 1fr;
+  }
+
+
+  .fullWidth {
+    grid-column: auto;
+  }
+
+
+  .ordersSection {
+    padding: 24px 16px;
+  }
+
+
+  .ordersHeading h2 {
+    font-size: 26px;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — 380PX
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .identity {
+    gap: 14px;
+  }
+
+
+  .avatarWrapper {
+    width: 70px;
+    height: 70px;
+  }
+
+
+  .avatar {
+    width: 70px;
+    height: 70px;
+  }
+
+
+  .avatarCamera {
+    width: 29px;
+    height: 29px;
+  }
+
+
+  .identityInfo h2 {
+    font-size: 21px;
+  }
+
+
+  .identityInfo p {
+    font-size: 11px;
+  }
+
+
+  .editButton {
+    padding: 13px 16px;
+  }
+
+}

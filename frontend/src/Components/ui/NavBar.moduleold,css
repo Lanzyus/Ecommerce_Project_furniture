@@ -1,0 +1,694 @@
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.topbar {
+  height: 30px;
+
+  background: #1d1b18;
+  color: #e9e2d6;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 9px;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  background: rgba(251, 250, 247, 0.97);
+
+  border-bottom: 1px solid #e3ded4;
+
+  backdrop-filter: blur(12px);
+}
+
+
+/* =========================================================
+   INNER
+========================================================= */
+
+.inner {
+  width: min(1400px, calc(100% - 70px));
+
+  height: 88px;
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns: 245px 1fr auto;
+
+  align-items: center;
+
+  gap: 30px;
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.brand {
+  text-decoration: none;
+
+  color: #171614;
+
+  text-align: center;
+
+  line-height: 1;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+}
+
+.brandMark {
+  color: #ae7415;
+
+  font-size: 25px;
+
+  height: 24px;
+
+  line-height: 22px;
+
+  transform: rotate(180deg);
+}
+
+.brand strong {
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 22px;
+
+  letter-spacing: 0.16em;
+
+  font-weight: 400;
+}
+
+.brand small {
+  font-size: 8px;
+
+  letter-spacing: 0.35em;
+
+  margin-top: 6px;
+}
+
+
+/* =========================================================
+   MAIN NAVIGATION
+========================================================= */
+
+.nav {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 30px;
+
+  min-width: 0;
+}
+
+
+/* ONLY normal navigation links */
+
+.nav > a {
+  color: #1d1b18;
+
+  text-decoration: none;
+
+  font-size: 11px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.06em;
+
+  position: relative;
+
+  white-space: nowrap;
+
+  padding: 35px 0;
+
+  transition: color 0.25s ease;
+}
+
+
+/* Hover */
+
+.nav > a:hover {
+  color: #a56d11;
+}
+
+
+/* =========================================================
+   ACCOUNT NAVIGATION
+========================================================= */
+
+.accountNavigation {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  margin-left: 5px;
+}
+
+
+/* =========================================================
+   ACCOUNT LINKS CONTAINER
+========================================================= */
+
+.accountLinks {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 30px;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   ACCOUNT LINK
+========================================================= */
+
+.accountLink {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: #272521 !important;
+
+  text-decoration: none !important;
+
+  font-size: 12px;
+
+  font-weight: 500;
+
+  letter-spacing: 0.6px;
+
+  white-space: nowrap;
+
+  padding: 8px 0;
+
+  transition:
+    color 0.25s ease,
+    transform 0.2s ease;
+}
+
+
+/* Icon */
+
+.accountLink svg {
+  width: 15px;
+  height: 15px;
+
+  flex-shrink: 0;
+}
+
+
+/* Hover */
+
+.accountLink:hover {
+  color: #b48745 !important;
+
+  text-decoration: none !important;
+}
+
+
+/* Active */
+
+.accountLink.active {
+  color: #b48745 !important;
+
+  text-decoration: none !important;
+}
+
+
+/* VERY IMPORTANT:
+   Do not show the normal navbar underline
+   on account links.
+*/
+
+.accountLink.active::after {
+  display: none !important;
+
+  content: none !important;
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+.navLogout {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 9px 15px;
+
+  border: 1px solid #272521;
+
+  background: transparent;
+
+  color: #272521;
+
+  font-family: inherit;
+
+  font-size: 12px;
+
+  font-weight: 500;
+
+  letter-spacing: 0.5px;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+
+/* Logout icon */
+
+.navLogout svg {
+  width: 16px;
+  height: 16px;
+}
+
+
+/* Logout hover */
+
+.navLogout:hover {
+  background: #272521;
+
+  color: #fff;
+
+  border-color: #272521;
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+.navLogin {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 7px;
+
+  color: #272521 !important;
+
+  background: transparent;
+
+  text-decoration: none !important;
+
+  font-size: 12px;
+
+  font-weight: 500;
+
+  letter-spacing: 0.6px;
+
+  white-space: nowrap;
+
+  padding: 10px 16px;
+
+  border: 1px solid #b48745;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.navLogin svg {
+  width: 15px;
+  height: 15px;
+}
+
+.navLogin:hover {
+  background: #b48745;
+
+  color: #fff !important;
+
+  text-decoration: none !important;
+}
+
+
+/* =========================================================
+   RIGHT ACTIONS
+========================================================= */
+
+.actions {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 18px;
+}
+
+
+/* =========================================================
+   INSTAGRAM
+========================================================= */
+
+.instagram {
+  color: #1d1b18;
+
+  display: flex;
+
+  align-items: center;
+
+  font-size: 17px;
+
+  text-decoration: none;
+
+  transition: color 0.25s ease;
+}
+
+.instagram:hover {
+  color: #b27a1c;
+}
+
+
+/* =========================================================
+   CONSULTATION
+========================================================= */
+
+.consultation {
+  background: #b27a1c;
+
+  color: #fff;
+
+  text-decoration: none;
+
+  text-transform: uppercase;
+
+  font-size: 10px;
+
+  letter-spacing: 0.06em;
+
+  padding: 13px 17px;
+}
+
+.consultation:hover {
+  background: #8f5e0e;
+
+  color: #fff;
+}
+
+
+/* =========================================================
+   CART
+========================================================= */
+
+.cart {
+  color: #1d1b18;
+
+  text-decoration: none;
+
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  font-size: 20px;
+
+  padding: 4px;
+}
+
+.cart span {
+  position: absolute;
+
+  right: -8px;
+
+  top: -8px;
+
+  background: #b27a1c;
+
+  color: #fff;
+
+  font-size: 8px;
+
+  min-width: 15px;
+
+  height: 15px;
+
+  border-radius: 50%;
+
+  display: grid;
+
+  place-items: center;
+}
+
+
+/* =========================================================
+   MOBILE MENU BUTTON
+========================================================= */
+
+.mobileToggle {
+  display: none;
+
+  border: 0;
+
+  background: transparent;
+
+  color: #272521;
+
+  font-size: 22px;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1200px) {
+
+  .inner {
+    width: calc(100% - 40px);
+
+    grid-template-columns: 200px 1fr auto;
+
+    gap: 20px;
+  }
+
+  .nav {
+    gap: 20px;
+  }
+
+  .accountLinks {
+    gap: 20px;
+  }
+
+  .nav > a {
+    font-size: 10px;
+  }
+
+  .accountLink {
+    font-size: 11px;
+  }
+
+  .consultation {
+    display: none;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .inner {
+    width: calc(100% - 28px);
+
+    height: 72px;
+
+    grid-template-columns: 40px 1fr auto;
+
+    gap: 10px;
+  }
+
+
+  /* Mobile button */
+
+  .mobileToggle {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+  }
+
+
+  /* Brand */
+
+  .brand strong {
+    font-size: 18px;
+  }
+
+  .brand small {
+    font-size: 7px;
+  }
+
+
+  /* Navigation */
+
+  .nav {
+    display: none;
+  }
+
+
+  .navOpen {
+    display: flex;
+
+    position: absolute;
+
+    top: 72px;
+
+    left: 0;
+
+    right: 0;
+
+    background: #fbfaf7;
+
+    border-bottom: 1px solid #ddd7cc;
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 0;
+
+    padding: 15px 25px;
+  }
+
+
+  /* Normal mobile links */
+
+  .navOpen > a {
+    width: 100%;
+
+    padding: 14px 0;
+
+    text-align: center;
+
+    border-bottom: 1px solid #eee9e1;
+  }
+
+
+  /* Account area */
+
+  .accountNavigation {
+    width: 100%;
+
+    margin: 0;
+  }
+
+
+  .accountLinks {
+    width: 100%;
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 0;
+  }
+
+
+  .accountLink {
+    width: 100%;
+
+    justify-content: center;
+
+    padding: 14px 0;
+
+    border-bottom: 1px solid #eee9e1;
+  }
+
+
+  .navLogout {
+    width: 100%;
+
+    margin-top: 12px;
+  }
+
+
+  /* Hide desktop actions */
+
+  .instagram {
+    display: none;
+  }
+
+  .consultation {
+    display: none;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+
+  .topbar {
+    font-size: 7px;
+
+    letter-spacing: 0.1em;
+  }
+
+  .brand strong {
+    font-size: 16px;
+  }
+
+  .brand small {
+    letter-spacing: 0.25em;
+  }
+
+  .cart {
+    font-size: 18px;
+  }
+}

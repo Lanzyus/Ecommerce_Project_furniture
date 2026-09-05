@@ -1,0 +1,221 @@
+/* ==========================================================
+   ORDERS SECTION
+========================================================== */
+
+.ordersSection {
+  width: 100%;
+
+  background: #ffffff;
+
+  border: 1px solid #e8e2d9;
+
+  padding: 35px;
+}
+
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.ordersHeader {
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content: space-between;
+
+  gap: 30px;
+
+  padding-bottom: 25px;
+
+  margin-bottom: 25px;
+
+  border-bottom: 1px solid #eee9e1;
+}
+
+.eyebrow {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #b48745;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+.ordersHeader h2 {
+  margin: 0;
+
+  color: #272521;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 31px;
+
+  font-weight: 400;
+}
+
+.ordersHeader p {
+  margin: 7px 0 0;
+
+  color: #8f8980;
+
+  font-size: 12px;
+}
+
+
+/* ==========================================================
+   ORDER COUNT
+========================================================== */
+
+.orderCount {
+  display: flex;
+
+  align-items: flex-end;
+
+  flex-direction: column;
+
+  flex-shrink: 0;
+}
+
+.orderCount strong {
+  color: #272521;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 29px;
+
+  font-weight: 400;
+
+  line-height: 1;
+}
+
+.orderCount span {
+  margin-top: 5px;
+
+  color: #b48745;
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+
+/* ==========================================================
+   ORDER LIST
+========================================================== */
+
+.ordersList {
+  display: flex;
+
+  flex-direction: column;
+}
+
+
+/* ==========================================================
+   EMPTY STATE
+========================================================== */
+
+.emptyOrders {
+  display: flex;
+
+  align-items: center;
+
+  flex-direction: column;
+
+  text-align: center;
+
+  padding: 65px 20px;
+}
+
+.emptyIcon {
+  width: 60px;
+
+  height: 60px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  margin-bottom: 18px;
+
+  border-radius: 50%;
+
+  background: #f7f2ea;
+
+  color: #b48745;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 24px;
+}
+
+.emptyOrders h3 {
+  margin: 0;
+
+  color: #302d28;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 23px;
+
+  font-weight: 400;
+}
+
+.emptyOrders p {
+  max-width: 360px;
+
+  margin: 8px 0 0;
+
+  color: #918b82;
+
+  font-size: 12px;
+
+  line-height: 1.7;
+}
+
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media (max-width: 600px) {
+
+  .ordersSection {
+    padding: 25px 18px;
+  }
+
+  .ordersHeader {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .orderCount {
+    align-items: flex-start;
+  }
+
+  .ordersHeader h2 {
+    font-size: 27px;
+  }
+}
