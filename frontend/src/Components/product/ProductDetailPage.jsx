@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import api, { BASE_URL } from "../../api";
 
 import ProductPagePlaceholder from "./ProductPagePlaceHolder";
-import ProductGallery from "./ProductGallery";
+import ProductGallery from "./ProductGallery.jsx";
 import RelatedProducts from "./RelatedProducts";
 
 
