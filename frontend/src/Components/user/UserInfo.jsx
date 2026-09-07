@@ -9,7 +9,7 @@ import styles from "./UserInfo.module.css";
 
 import api, { BASE_URL } from "../../api";
 
-import Spinner from "../ui/Spinner";
+import Spinner from "../ui/spinner";
 
 import OrderHistoryItemContainer from "./OrderHistoryItemContainer";
 
