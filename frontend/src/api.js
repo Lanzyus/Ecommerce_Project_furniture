@@ -3,30 +3,15 @@ import axios from "axios";
 export const BASE_URL = "https://ecommerce-project-furniture.onrender.com";
 
 const api = axios.create({
-    baseURL: BASE_URL,
+    baseURL: `${BASE_URL}/api`,
 });
-
-// export default api;
-
-
-// 
-// import axios from "axios";
-
-// export const BASE_URL =
-//   "http://127.0.0.1:8001";
-
-// const api = axios.create({
-//   baseURL: `${BASE_URL}/api`,
-// });
 
 api.interceptors.request.use(
   (config) => {
-    const token =
-      localStorage.getItem("access");
+    const token = localStorage.getItem("access");
 
     if (token) {
-      config.headers.Authorization =
-        `Bearer ${token}`;
+      config.headers.Authorization = `Bearer ${token}`;
     }
 
     return config;
@@ -35,7 +20,6 @@ api.interceptors.request.use(
 );
 
 export default api;
-
 
 
 
