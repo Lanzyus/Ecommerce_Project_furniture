@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import api from "../../api";
-import Spinner from "./Spinner";
+import Spinner from "./spinner";
 import "./SearchResultsPage.css";
 
 const SearchResultsPage = () => {

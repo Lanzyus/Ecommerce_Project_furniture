@@ -1,11 +1,23 @@
 import axios from "axios";
 
-export const BASE_URL =
-  "http://127.0.0.1:8001";
+export const BASE_URL = "https://ecommerce-project-furniture.onrender.com";
 
 const api = axios.create({
-  baseURL: `${BASE_URL}/api`,
+    baseURL: BASE_URL,
 });
+
+// export default api;
+
+
+// 
+// import axios from "axios";
+
+// export const BASE_URL =
+//   "http://127.0.0.1:8001";
+
+// const api = axios.create({
+//   baseURL: `${BASE_URL}/api`,
+// });
 
 api.interceptors.request.use(
   (config) => {

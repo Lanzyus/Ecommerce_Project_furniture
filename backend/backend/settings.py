@@ -39,15 +39,20 @@ if not SECRET_KEY:
 DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
 
-ALLOWED_HOSTS = [
-    host.strip()
-    for host in os.getenv(
-        "ALLOWED_HOSTS",
-        "localhost,127.0.0.1"
-    ).split(",")
-    if host.strip()
-]
+# ALLOWED_HOSTS = [
+#     host.strip()
+#     for host in os.getenv(
+#         "ALLOWED_HOSTS",
+#         "localhost,127.0.0.1"
+#     ).split(",")
+#     if host.strip()
+# ]
 
+ALLOWED_HOSTS = [
+    "ecommerce-project-furniture.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
 
 CSRF_TRUSTED_ORIGINS = [
     origin.strip()
@@ -76,6 +81,8 @@ CSRF_COOKIE_SECURE = False
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 if not DEBUG:
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
@@ -88,6 +95,27 @@ if not DEBUG:
 # ============================================================
 # APPLICATIONS
 # ============================================================
+
+# INSTALLED_APPS = [
+#     # Django
+#     "django.contrib.admin",
+#     "django.contrib.auth",
+#     "django.contrib.contenttypes",
+#     "django.contrib.sessions",
+#     "django.contrib.messages",
+#     "django.contrib.staticfiles",
+
+#     # Third-party
+#     "rest_framework",
+#     "corsheaders",
+#     "rest_framework_simplejwt",
+
+#     # Local apps
+#     "accounts",
+#     "core",
+#     "shop_app",
+# ]
+
 
 INSTALLED_APPS = [
     # Django
@@ -102,13 +130,15 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "rest_framework_simplejwt",
+    "cloudinary_storage",
+    "django.contrib.staticfiles",
+    "cloudinary",
 
     # Local apps
     "accounts",
     "core",
     "shop_app",
 ]
-
 
 # ============================================================
 # MIDDLEWARE
@@ -252,9 +282,23 @@ STORAGES = {
 # MEDIA FILES
 # ============================================================
 
+# MEDIA_URL = "/media/"
+
+# MEDIA_ROOT = BASE_DIR / "media"
+
+# ============================================================
+# MEDIA FILES (CLOUDINARY)
+# ============================================================
+
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": os.getenv("CLOUDINARY_CLOUD_NAME"),
+    "API_KEY": os.getenv("CLOUDINARY_API_KEY"),
+    "API_SECRET": os.getenv("CLOUDINARY_API_SECRET"),
+}
+
 MEDIA_URL = "/media/"
 
-MEDIA_ROOT = BASE_DIR / "media"
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 
 # ============================================================
@@ -271,13 +315,28 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
-    origin.strip()
-    for origin in os.getenv(
-        "CORS_ALLOWED_ORIGINS",
-        "http://localhost:5173"
-    ).split(",")
-    if origin.strip()
+    "http://localhost:5173",
+    "https://sensational-interior-07.onrender.com",
 ]
+
+# CORS_ALLOWED_ORIGINS = [
+#     origin.strip()
+#     for origin in os.getenv(
+#     "http://localhost:5173",
+#     "https://sensational-interior-07.onrender.com",
+#     ).split(",")
+#     if origin.strip()
+# ]
+
+
+# CORS_ALLOWED_ORIGINS = [
+#     origin.strip()
+#     for origin in os.getenv(
+#         "CORS_ALLOWED_ORIGINS",
+#         "http://localhost:5173"
+#     ).split(",")
+#     if origin.strip()
+# ]
 
 
 # ============================================================

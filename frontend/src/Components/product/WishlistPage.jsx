@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../../api";
-import Spinner from "../ui/Spinner";
+import Spinner from "../ui/spinner";
 
 const WishlistPage = () => {
   const [wishlist, setWishlist] = useState([]);

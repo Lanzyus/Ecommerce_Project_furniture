@@ -1,5 +1,5 @@
 import React from "react";
-import Placeholder from "./Placeholder";
+import Placeholder from "./placeholder";
 
 const PlaceholderContainer = () => {
   const placeholders = [...Array(12).keys()];
