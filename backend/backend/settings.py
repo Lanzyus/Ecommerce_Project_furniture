@@ -116,7 +116,6 @@ if not DEBUG:
 #     "shop_app",
 # ]
 
-
 INSTALLED_APPS = [
     # Django
     "django.contrib.admin",
@@ -127,12 +126,11 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     # Third-party
+    "cloudinary_storage",
+    "cloudinary",
     "rest_framework",
     "corsheaders",
     "rest_framework_simplejwt",
-    "cloudinary_storage",
-    "django.contrib.staticfiles",
-    "cloudinary",
 
     # Local apps
     "accounts",
