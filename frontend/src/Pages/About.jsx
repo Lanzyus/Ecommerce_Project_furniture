@@ -121,7 +121,7 @@ const About = () => {
 
             <div className="story-image story-image-large">
               <img
-                src="/src/assets/image/Elegant interior.PNG"
+                src="../../assets/image/Elegant interior.png"
                 alt="Elegant interior designed by Sensational Interiors"
               />
 
@@ -130,7 +130,7 @@ const About = () => {
 
             <div className="story-image story-image-small">
               <img
-                src="/src/assets/image/Luxury Interior.PNG"
+                src="../../assets/image/Luxury Interior.png"
                 alt="Luxury interior details"
               />
 
