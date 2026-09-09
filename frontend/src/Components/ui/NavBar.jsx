@@ -67,9 +67,13 @@ export default function NavBar() {
         >
           <span className={styles.brandMark}>
             <img
-              src="/src/assets/image/Sensation.PNG"
+              src={logo}
               alt="Luxury interior details"
             />
+            {/* <img
+              src="/src/assets/image/Sensation.PNG"
+              alt="Luxury interior details"
+            /> */}
           </span>
 
           <span className={styles.brandText}>
