@@ -1,13 +1,10 @@
 import React from "react";
 import "./AboutPage.css";
 
-import elegantInterior from "../assets/image/elegant-interior.png";
-import luxuryInterior from "../assets/image/luxury-interior.png";
-import interiorFeature from "../assets/image/interior-feature.jpg";
-
 const About = () => {
   return (
     <main className="sensational-about">
+
       {/* ================= HERO ================= */}
       <section className="about-hero">
         <div
@@ -67,6 +64,7 @@ const About = () => {
       <section className="about-introduction">
         <div className="container">
           <div className="about-intro-grid">
+
             <div className="about-intro-title">
               <p className="section-label">
                 ABOUT US
@@ -109,6 +107,7 @@ const About = () => {
                 <span aria-hidden="true">→</span>
               </a>
             </div>
+
           </div>
         </div>
       </section>
@@ -116,6 +115,7 @@ const About = () => {
       {/* ================= IMAGE STORY ================= */}
       <section className="about-story">
         <div className="container">
+
           <div className="story-header">
             <div>
               <p className="section-label">
@@ -137,9 +137,10 @@ const About = () => {
           </div>
 
           <div className="story-images">
+
             <div className="story-image story-image-large">
               <img
-                src={elegantInterior}
+                src="/assets/image/elegant-interior.png"
                 alt="Elegant luxury interior designed by Sensational Interiors"
                 loading="lazy"
                 decoding="async"
@@ -155,7 +156,7 @@ const About = () => {
 
             <div className="story-image story-image-small">
               <img
-                src={luxuryInterior}
+                src="/assets/image/luxury-interior.png"
                 alt="Luxury interior details by Sensational Interiors"
                 loading="lazy"
                 decoding="async"
@@ -168,6 +169,7 @@ const About = () => {
                 02
               </span>
             </div>
+
           </div>
         </div>
       </section>
@@ -175,6 +177,7 @@ const About = () => {
       {/* ================= VALUES ================= */}
       <section className="about-values">
         <div className="container">
+
           <div className="values-heading">
             <p className="section-label">
               WHAT WE BELIEVE
@@ -193,6 +196,7 @@ const About = () => {
           </div>
 
           <div className="values-grid">
+
             <article className="value-card">
               <span aria-hidden="true">01</span>
 
@@ -248,6 +252,7 @@ const About = () => {
                 practicality.
               </p>
             </article>
+
           </div>
         </div>
       </section>
@@ -255,7 +260,9 @@ const About = () => {
       {/* ================= SERVICES ================= */}
       <section className="about-services">
         <div className="container">
+
           <div className="services-top">
+
             <div>
               <p className="section-label">
                 WHAT WE DO
@@ -274,9 +281,11 @@ const About = () => {
               designed to help you create a space that feels
               uniquely yours.
             </p>
+
           </div>
 
           <div className="services-list">
+
             <div className="service-row">
               <span className="service-number">
                 01
@@ -365,6 +374,7 @@ const About = () => {
                 ↗
               </span>
             </div>
+
           </div>
         </div>
       </section>
@@ -372,6 +382,7 @@ const About = () => {
       {/* ================= PROCESS ================= */}
       <section className="about-process">
         <div className="container">
+
           <div className="process-heading">
             <p className="section-label">
               OUR PROCESS
@@ -385,6 +396,7 @@ const About = () => {
           </div>
 
           <div className="process-grid">
+
             <div className="process-item">
               <div
                 className="process-circle"
@@ -456,6 +468,7 @@ const About = () => {
                 your space into something truly special.
               </p>
             </div>
+
           </div>
         </div>
       </section>
@@ -463,8 +476,9 @@ const About = () => {
       {/* ================= FEATURED IMAGE ================= */}
       <section className="about-feature">
         <div className="feature-image">
+
           <img
-            src={interiorFeature}
+            src="/assets/image/interior-feature.jpg"
             alt="Sensational Interiors project"
             loading="lazy"
             decoding="async"
@@ -476,6 +490,7 @@ const About = () => {
           />
 
           <div className="feature-content">
+
             <p className="about-eyebrow">
               THE SENSATIONAL EXPERIENCE
             </p>
@@ -494,14 +509,18 @@ const About = () => {
             >
               View Our Work
             </a>
+
           </div>
+
         </div>
       </section>
 
       {/* ================= CTA ================= */}
       <section className="about-cta">
         <div className="container">
+
           <div className="cta-inner">
+
             <p className="section-label">
               LET'S CREATE SOMETHING BEAUTIFUL
             </p>
@@ -523,9 +542,11 @@ const About = () => {
             >
               Book a Consultation
             </a>
+
           </div>
         </div>
       </section>
+
     </main>
   );
 };
