@@ -106,7 +106,7 @@ const RegisterPage = () => {
                   </h1>
 
                   <p className="text-muted">
-                    Join NajaOpenMarket and start
+                    Join Sensational-interior-07 and start
                     shopping today.
                   </p>
 
