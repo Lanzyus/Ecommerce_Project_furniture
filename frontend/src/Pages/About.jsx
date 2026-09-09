@@ -1,22 +1,29 @@
 import React from "react";
 import "./AboutPage.css";
 
-import elegantInterior from "../assets/image/Elegant interior.PNG";
-import luxuryInterior from "../assets/image/Luxury Interior.png";
+import elegantInterior from "../assets/image/elegant-interior.png";
+import luxuryInterior from "../assets/image/luxury-interior.png";
 import interiorFeature from "../assets/image/interior-feature.jpg";
 
 const About = () => {
   return (
     <main className="sensational-about">
-
       {/* ================= HERO ================= */}
       <section className="about-hero">
-        <div className="about-hero-image"></div>
+        <div
+          className="about-hero-image"
+          aria-hidden="true"
+        />
 
-        <div className="about-hero-overlay"></div>
+        <div
+          className="about-hero-overlay"
+          aria-hidden="true"
+        />
 
         <div className="container about-hero-content">
-          <p className="about-eyebrow">SENSATIONAL INTERIORS</p>
+          <p className="about-eyebrow">
+            SENSATIONAL INTERIORS
+          </p>
 
           <h1>
             Beautiful Spaces.
@@ -31,29 +38,39 @@ const About = () => {
           </p>
 
           <div className="about-hero-actions">
-            <a href="/shop" className="about-btn about-btn-light">
+            <a
+              href="/shop"
+              className="about-btn about-btn-light"
+            >
               Explore Our Collection
             </a>
 
-            <a href="/contact" className="about-btn about-btn-outline">
+            <a
+              href="/contact"
+              className="about-btn about-btn-outline"
+            >
               Start a Project
             </a>
           </div>
         </div>
 
-        <div className="hero-scroll">
+        <div
+          className="hero-scroll"
+          aria-hidden="true"
+        >
           <span>SCROLL TO EXPLORE</span>
-          <div className="scroll-line"></div>
+          <div className="scroll-line" />
         </div>
       </section>
 
-      {/* ================= INTRO ================= */}
+      {/* ================= INTRODUCTION ================= */}
       <section className="about-introduction">
         <div className="container">
           <div className="about-intro-grid">
-
             <div className="about-intro-title">
-              <p className="section-label">ABOUT US</p>
+              <p className="section-label">
+                ABOUT US
+              </p>
 
               <h2>
                 Creating interiors
@@ -84,12 +101,14 @@ const About = () => {
                 interior solutions.
               </p>
 
-              <a href="/contact" className="about-text-link">
+              <a
+                href="/contact"
+                className="about-text-link"
+              >
                 DISCOVER OUR APPROACH
-                <span>→</span>
+                <span aria-hidden="true">→</span>
               </a>
             </div>
-
           </div>
         </div>
       </section>
@@ -97,10 +116,11 @@ const About = () => {
       {/* ================= IMAGE STORY ================= */}
       <section className="about-story">
         <div className="container">
-
           <div className="story-header">
             <div>
-              <p className="section-label">OUR PHILOSOPHY</p>
+              <p className="section-label">
+                OUR PHILOSOPHY
+              </p>
 
               <h2>
                 Where style meets
@@ -117,15 +137,20 @@ const About = () => {
           </div>
 
           <div className="story-images">
-
             <div className="story-image story-image-large">
               <img
                 src={elegantInterior}
                 alt="Elegant luxury interior designed by Sensational Interiors"
                 loading="lazy"
+                decoding="async"
               />
 
-              <span className="image-number">01</span>
+              <span
+                className="image-number"
+                aria-hidden="true"
+              >
+                01
+              </span>
             </div>
 
             <div className="story-image story-image-small">
@@ -133,22 +158,27 @@ const About = () => {
                 src={luxuryInterior}
                 alt="Luxury interior details by Sensational Interiors"
                 loading="lazy"
+                decoding="async"
               />
 
-              <span className="image-number">02</span>
+              <span
+                className="image-number"
+                aria-hidden="true"
+              >
+                02
+              </span>
             </div>
-
           </div>
-
         </div>
       </section>
 
       {/* ================= VALUES ================= */}
       <section className="about-values">
         <div className="container">
-
           <div className="values-heading">
-            <p className="section-label">WHAT WE BELIEVE</p>
+            <p className="section-label">
+              WHAT WE BELIEVE
+            </p>
 
             <h2>
               Designed with
@@ -163,11 +193,12 @@ const About = () => {
           </div>
 
           <div className="values-grid">
-
             <article className="value-card">
-              <span>01</span>
+              <span aria-hidden="true">01</span>
 
-              <h3>Timeless Design</h3>
+              <h3>
+                Timeless Design
+              </h3>
 
               <p>
                 We create interiors that remain beautiful
@@ -177,9 +208,11 @@ const About = () => {
             </article>
 
             <article className="value-card">
-              <span>02</span>
+              <span aria-hidden="true">02</span>
 
-              <h3>Personal Expression</h3>
+              <h3>
+                Personal Expression
+              </h3>
 
               <p>
                 Your home should tell your story. We design
@@ -189,9 +222,11 @@ const About = () => {
             </article>
 
             <article className="value-card">
-              <span>03</span>
+              <span aria-hidden="true">03</span>
 
-              <h3>Attention to Detail</h3>
+              <h3>
+                Attention to Detail
+              </h3>
 
               <p>
                 From furniture selection to finishing touches,
@@ -201,9 +236,11 @@ const About = () => {
             </article>
 
             <article className="value-card">
-              <span>04</span>
+              <span aria-hidden="true">04</span>
 
-              <h3>Comfort & Function</h3>
+              <h3>
+                Comfort &amp; Function
+              </h3>
 
               <p>
                 Beautiful spaces should also work beautifully.
@@ -211,7 +248,6 @@ const About = () => {
                 practicality.
               </p>
             </article>
-
           </div>
         </div>
       </section>
@@ -219,11 +255,11 @@ const About = () => {
       {/* ================= SERVICES ================= */}
       <section className="about-services">
         <div className="container">
-
           <div className="services-top">
-
             <div>
-              <p className="section-label">WHAT WE DO</p>
+              <p className="section-label">
+                WHAT WE DO
+              </p>
 
               <h2>
                 Everything you need
@@ -238,63 +274,97 @@ const About = () => {
               designed to help you create a space that feels
               uniquely yours.
             </p>
-
           </div>
 
           <div className="services-list">
-
             <div className="service-row">
-              <span className="service-number">01</span>
+              <span className="service-number">
+                01
+              </span>
 
-              <h3>Interior Design</h3>
+              <h3>
+                Interior Design
+              </h3>
 
               <p>
                 Thoughtful concepts and interior solutions
                 created around your space and lifestyle.
               </p>
 
-              <span className="service-arrow">↗</span>
+              <span
+                className="service-arrow"
+                aria-hidden="true"
+              >
+                ↗
+              </span>
             </div>
 
             <div className="service-row">
-              <span className="service-number">02</span>
+              <span className="service-number">
+                02
+              </span>
 
-              <h3>Furniture</h3>
+              <h3>
+                Furniture
+              </h3>
 
               <p>
                 Carefully selected pieces that bring comfort,
                 character and sophistication to your space.
               </p>
 
-              <span className="service-arrow">↗</span>
+              <span
+                className="service-arrow"
+                aria-hidden="true"
+              >
+                ↗
+              </span>
             </div>
 
             <div className="service-row">
-              <span className="service-number">03</span>
+              <span className="service-number">
+                03
+              </span>
 
-              <h3>Space Styling</h3>
+              <h3>
+                Space Styling
+              </h3>
 
               <p>
                 Décor, accessories and finishing details that
                 bring your interior together.
               </p>
 
-              <span className="service-arrow">↗</span>
+              <span
+                className="service-arrow"
+                aria-hidden="true"
+              >
+                ↗
+              </span>
             </div>
 
             <div className="service-row">
-              <span className="service-number">04</span>
+              <span className="service-number">
+                04
+              </span>
 
-              <h3>Custom Interiors</h3>
+              <h3>
+                Custom Interiors
+              </h3>
 
               <p>
                 Bespoke solutions created specifically for
-                your requirements and the character of your space.
+                your requirements and the character of your
+                space.
               </p>
 
-              <span className="service-arrow">↗</span>
+              <span
+                className="service-arrow"
+                aria-hidden="true"
+              >
+                ↗
+              </span>
             </div>
-
           </div>
         </div>
       </section>
@@ -302,9 +372,10 @@ const About = () => {
       {/* ================= PROCESS ================= */}
       <section className="about-process">
         <div className="container">
-
           <div className="process-heading">
-            <p className="section-label">OUR PROCESS</p>
+            <p className="section-label">
+              OUR PROCESS
+            </p>
 
             <h2>
               From your vision
@@ -314,11 +385,17 @@ const About = () => {
           </div>
 
           <div className="process-grid">
-
             <div className="process-item">
-              <div className="process-circle">01</div>
+              <div
+                className="process-circle"
+                aria-hidden="true"
+              >
+                01
+              </div>
 
-              <h3>Consultation</h3>
+              <h3>
+                Consultation
+              </h3>
 
               <p>
                 We begin by understanding your needs,
@@ -327,9 +404,16 @@ const About = () => {
             </div>
 
             <div className="process-item">
-              <div className="process-circle">02</div>
+              <div
+                className="process-circle"
+                aria-hidden="true"
+              >
+                02
+              </div>
 
-              <h3>Concept</h3>
+              <h3>
+                Concept
+              </h3>
 
               <p>
                 We develop a design direction that brings
@@ -338,9 +422,16 @@ const About = () => {
             </div>
 
             <div className="process-item">
-              <div className="process-circle">03</div>
+              <div
+                className="process-circle"
+                aria-hidden="true"
+              >
+                03
+              </div>
 
-              <h3>Selection</h3>
+              <h3>
+                Selection
+              </h3>
 
               <p>
                 Furniture, materials, textures and details
@@ -349,16 +440,22 @@ const About = () => {
             </div>
 
             <div className="process-item">
-              <div className="process-circle">04</div>
+              <div
+                className="process-circle"
+                aria-hidden="true"
+              >
+                04
+              </div>
 
-              <h3>Transformation</h3>
+              <h3>
+                Transformation
+              </h3>
 
               <p>
                 We bring the concept together and transform
                 your space into something truly special.
               </p>
             </div>
-
           </div>
         </div>
       </section>
@@ -366,17 +463,19 @@ const About = () => {
       {/* ================= FEATURED IMAGE ================= */}
       <section className="about-feature">
         <div className="feature-image">
-
           <img
             src={interiorFeature}
             alt="Sensational Interiors project"
             loading="lazy"
+            decoding="async"
           />
 
-          <div className="feature-overlay"></div>
+          <div
+            className="feature-overlay"
+            aria-hidden="true"
+          />
 
           <div className="feature-content">
-
             <p className="about-eyebrow">
               THE SENSATIONAL EXPERIENCE
             </p>
@@ -389,21 +488,20 @@ const About = () => {
               Beautifully told.
             </h2>
 
-            <a href="/projects" className="about-btn about-btn-light">
+            <a
+              href="/projects"
+              className="about-btn about-btn-light"
+            >
               View Our Work
             </a>
-
           </div>
-
         </div>
       </section>
 
       {/* ================= CTA ================= */}
       <section className="about-cta">
         <div className="container">
-
           <div className="cta-inner">
-
             <p className="section-label">
               LET'S CREATE SOMETHING BEAUTIFUL
             </p>
@@ -419,15 +517,15 @@ const About = () => {
               an interior that feels unmistakably yours.
             </p>
 
-            <a href="/contact" className="about-btn about-btn-dark">
+            <a
+              href="/contact"
+              className="about-btn about-btn-dark"
+            >
               Book a Consultation
             </a>
-
           </div>
-
         </div>
       </section>
-
     </main>
   );
 };
