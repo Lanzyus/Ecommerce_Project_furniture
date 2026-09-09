@@ -10,6 +10,8 @@ import {
 import { CartContext } from "../../Context/CartContext";
 import AuthContext from "../../Context/AuthContext";
 
+import logo from "../../assets/image/Sensation.PNG";
+
 import NavBarLink from "./NavBarLink";
 import styles from "./NavBar.module.css";
 
