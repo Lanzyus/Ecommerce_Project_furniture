@@ -150,13 +150,7 @@ const About = () => {
                 decoding="async"
               />
                             
-              {/* <img
-                src="/assets/image/elegant-interior.png"
-                alt="Elegant luxury interior designed by Sensational Interiors"
-                loading="lazy"
-                decoding="async"
-              /> */}
-
+             
               <span
                 className="image-number"
                 aria-hidden="true"
@@ -173,12 +167,6 @@ const About = () => {
                 decoding="async"
               />
               
-              {/* <img
-                src="/assets/image/luxury-interior.png"
-                alt="Luxury interior details by Sensational Interiors"
-                loading="lazy"
-                decoding="async"
-              /> */}
 
               <span
                 className="image-number"
@@ -496,12 +484,13 @@ const About = () => {
         <div className="feature-image">
 
           <img
-            src="/assets/image/interior-feature.jpg"
+            src={interiorFeature}
             alt="Sensational Interiors project"
             loading="lazy"
             decoding="async"
           />
 
+  
           <div
             className="feature-overlay"
             aria-hidden="true"
