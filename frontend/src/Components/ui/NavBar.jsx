@@ -10,25 +10,19 @@ import {
 import { CartContext } from "../../Context/CartContext";
 import AuthContext from "../../Context/AuthContext";
 
-
 import NavBarLink from "./NavBarLink";
 import styles from "./NavBar.module.css";
 
 import logo from "../../assets/image/Sensation.png";
-
-function Header() {
-  return (
-    <img src={logo} alt="Sensation Interiors" />
-  );
-}
-
 
 export default function NavBar() {
   const cart = useContext(CartContext) || {};
   const auth = useContext(AuthContext) || {};
 
   const { numCartItems = 0 } = cart;
-  const { isAuthenticated = false } = auth;
+  const {
+    isAuthenticated = false,
+  } = auth;
 
   const [open, setOpen] = useState(false);
 
@@ -54,6 +48,7 @@ export default function NavBar() {
       ========================================== */}
       <header className={styles.header}>
         <div className={styles.inner}>
+
           {/* =====================================
               MOBILE MENU BUTTON
           ===================================== */}
@@ -105,45 +100,78 @@ export default function NavBar() {
             }`}
             aria-label="Main navigation"
           >
-            {/* ===================================
-                MAIN NAVIGATION
-            =================================== */}
-            <Link to="/" onClick={close}>
-              Home
-            </Link>
+            {!isAuthenticated ? (
+              <>
+                {/* =============================
+                    GUEST NAVIGATION
+                ============================== */}
 
-            <Link to="/about" onClick={close}>
-              About
-            </Link>
+                <Link
+                  to="/"
+                  onClick={close}
+                >
+                  Home
+                </Link>
 
-            <a href="/#services" onClick={close}>
-              Services
-            </a>
+                <Link
+                  to="/about"
+                  onClick={close}
+                >
+                  About
+                </Link>
 
-            <a href="/#projects" onClick={close}>
-              Projects
-            </a>
+                <a
+                  href="/#services"
+                  onClick={close}
+                >
+                  Services
+                </a>
 
-            <a href="/#journal" onClick={close}>
-              Blog
-            </a>
+                <a
+                  href="/#projects"
+                  onClick={close}
+                >
+                  Projects
+                </a>
 
-            <Link to="/contact" onClick={close}>
-              Contact
-            </Link>
+                <a
+                  href="/#journal"
+                  onClick={close}
+                >
+                  Blog
+                </a>
 
-            {/* ===================================
-                ACCOUNT NAVIGATION
-            ==================================== */}
-            <div className={styles.accountNavigation}>
-              <NavBarLink close={close} />
-            </div>
+                <Link
+                  to="/contact"
+                  onClick={close}
+                >
+                  Contact
+                </Link>
+
+                {/* LOGIN */}
+                <div className={styles.accountNavigation}>
+                  <NavBarLink close={close} />
+                </div>
+              </>
+            ) : (
+              <>
+                {/* =============================
+                    AUTHENTICATED NAVIGATION
+
+                    NOTHING BEFORE "HI"
+                ============================== */}
+                <div className={styles.accountNavigation}>
+                  <NavBarLink close={close} />
+                </div>
+              </>
+            )}
           </nav>
 
           {/* =====================================
               RIGHT SIDE ACTIONS
           ===================================== */}
           <div className={styles.actions}>
+
             {/* INSTAGRAM */}
             <a
               href="https://www.instagram.com/sensational_interiors07/"
@@ -179,10 +207,10 @@ export default function NavBar() {
                 {Number(numCartItems) || 0}
               </span>
             </Link>
+
           </div>
         </div>
       </header>
     </>
   );
 }
-
