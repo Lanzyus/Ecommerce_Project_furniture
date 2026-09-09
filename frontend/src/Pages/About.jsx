@@ -1,6 +1,10 @@
 import React from "react";
 import "./AboutPage.css";
 
+import elegantInterior from "../../assets/image/Elegant interior.PNG";
+import luxuryInterior from "../../assets/image/Luxury Interior.png";
+
+
 const About = () => {
   return (
     <main className="sensational-about">
@@ -94,53 +98,56 @@ const About = () => {
       </section>
 
 
-      {/* ================= IMAGE STORY ================= */}
-      <section className="about-story">
-        <div className="container">
+{/* ================= IMAGE STORY ================= */}
+<section className="about-story">
+  <div className="container">
 
-          <div className="story-header">
-            <div>
-              <p className="section-label">OUR PHILOSOPHY</p>
+    <div className="story-header">
+      <div>
+        <p className="section-label">OUR PHILOSOPHY</p>
 
-              <h2>
-                Where style meets
-                <br />
-                functionality.
-              </h2>
-            </div>
+        <h2>
+          Where style meets
+          <br />
+          functionality.
+        </h2>
+      </div>
 
-            <p>
-              We don't believe luxury is simply about how a
-              space looks. True luxury is about how effortlessly
-              a space works for you.
-            </p>
-          </div>
+      <p>
+        We don't believe luxury is simply about how a
+        space looks. True luxury is about how effortlessly
+        a space works for you.
+      </p>
+    </div>
+
+    <div className="story-images">
+
+      <div className="story-image story-image-large">
+        <img
+          src={elegantInterior}
+          alt="Elegant luxury interior designed by Sensational Interiors"
+          loading="lazy"
+        />
+
+        <span className="image-number">01</span>
+      </div>
+
+      <div className="story-image story-image-small">
+        <img
+          src={luxuryInterior}
+          alt="Luxury interior details by Sensational Interiors"
+          loading="lazy"
+        />
+
+        <span className="image-number">02</span>
+      </div>
+
+    </div>
+
+  </div>
+</section>
 
 
-          <div className="story-images">
-
-            <div className="story-image story-image-large">
-              <img
-                src="../../assets/image/Elegant interior.png"
-                alt="Elegant interior designed by Sensational Interiors"
-              />
-
-              <span className="image-number">01</span>
-            </div>
-
-            <div className="story-image story-image-small">
-              <img
-                src="../../assets/image/Luxury Interior.png"
-                alt="Luxury interior details"
-              />
-
-              <span className="image-number">02</span>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
 
 
       {/* ================= VALUES ================= */}
