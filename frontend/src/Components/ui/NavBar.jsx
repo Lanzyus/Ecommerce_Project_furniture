@@ -13,7 +13,7 @@ import AuthContext from "../../Context/AuthContext";
 import NavBarLink from "./NavBarLink";
 import styles from "./NavBar.module.css";
 
-import logo from "../../assets/image/Sensation.PNG";
+import logo from "../../assets/image/Sensation.png";
 
 export default function NavBar() {
   const cart = useContext(CartContext) || {};
