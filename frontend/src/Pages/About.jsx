@@ -1,6 +1,10 @@
 import React from "react";
 import "./AboutPage.css";
 
+import elegantInterior from "../assets/image/Elegant interior.PNG";
+import luxuryInterior from "../assets/image/Luxury Interior.PNG";
+import interiorFeature from "../assets/image/Product.jpg";
+
 const About = () => {
   return (
     <main className="sensational-about">
@@ -140,11 +144,18 @@ const About = () => {
 
             <div className="story-image story-image-large">
               <img
-                src="/assets/image/elegant-interior.png"
+                src={elegantInterior}
                 alt="Elegant luxury interior designed by Sensational Interiors"
                 loading="lazy"
                 decoding="async"
               />
+                            
+              {/* <img
+                src="/assets/image/elegant-interior.png"
+                alt="Elegant luxury interior designed by Sensational Interiors"
+                loading="lazy"
+                decoding="async"
+              /> */}
 
               <span
                 className="image-number"
