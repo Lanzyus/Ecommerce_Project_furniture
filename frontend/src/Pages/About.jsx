@@ -167,11 +167,18 @@ const About = () => {
 
             <div className="story-image story-image-small">
               <img
-                src="/assets/image/luxury-interior.png"
+                src={luxuryInterior}
                 alt="Luxury interior details by Sensational Interiors"
                 loading="lazy"
                 decoding="async"
               />
+              
+              {/* <img
+                src="/assets/image/luxury-interior.png"
+                alt="Luxury interior details by Sensational Interiors"
+                loading="lazy"
+                decoding="async"
+              /> */}
 
               <span
                 className="image-number"
