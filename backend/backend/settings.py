@@ -8,6 +8,10 @@ import os
 from pathlib import Path
 from datetime import timedelta
 
+import cloudinary
+import cloudinary.api
+import cloudinary.uploader
+
 from dotenv import load_dotenv
 from decouple import config
 
