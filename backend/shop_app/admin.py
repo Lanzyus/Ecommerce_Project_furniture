@@ -1,33 +1,73 @@
 from django.contrib import admin
-from .models import Product, Cart, CartItem
-from .models import ProductMedia
-from .models import *
+
 from .models import (
+    Product,
+    ProductMedia,
+    ProductVariant,
+    ProductReview,
+    Wishlist,
+    RecentlyViewed,
+    Coupon,
+    Cart,
+    CartItem,
+    Transaction,
+    Order,
+    OrderItem,
+    Shipment,
     Category,
-    SubCategory
+    SubCategory,
+    ContactMessage,
+    Banner,
 )
-from .models import Banner
+
 
 @admin.register(Banner)
 class BannerAdmin(admin.ModelAdmin):
+
     list_display = (
         "title",
         "is_active",
         "created_at",
     )
 
-    list_filter = ("is_active",)
+    list_filter = (
+        "is_active",
+    )
 
-    search_fields = ("title",)
+    search_fields = (
+        "title",
+    )
 
 
+@admin.register(ProductMedia)
+class ProductMediaAdmin(admin.ModelAdmin):
 
+    list_display = (
+        "product",
+        "media_type",
+        "is_primary",
+        "created_at",
+    )
 
+    list_filter = (
+        "media_type",
+        "is_primary",
+    )
 
-# Register your models here.
+    search_fields = (
+        "product__name",
+    )
+
+    autocomplete_fields = (
+        "product",
+    )
+
+    filter_horizontal = (
+        "related_products",
+    )
+
 
 admin.site.register(Product)
-admin.site.register(ProductMedia)
 admin.site.register(ProductVariant)
 admin.site.register(ProductReview)
 admin.site.register(Wishlist)
