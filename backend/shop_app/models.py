@@ -1,23 +1,20 @@
 # shop_app/models.py
 
 import os
+import uuid
+
+from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.core.validators import (
+    MinValueValidator,
+    MaxValueValidator,
+)
+from django.db import models
+from django.db.models import Avg
+from django.utils import timezone
+from django.utils.text import slugify
 
 from .storage import ProductMediaCloudinaryStorage
-
-import cloudinary
-import cloudinary.uploader
-
-from django.db import models
-from django.core.exceptions import ValidationError
-
-
-from django.db import models
-from django.conf import settings
-from django.utils.text import slugify
-from django.utils import timezone
-from django.db.models import Avg
-from django.core.validators import MinValueValidator, MaxValueValidator
-from django.core.exceptions import ValidationError
 
 
 
@@ -530,6 +527,10 @@ class Product(models.Model):
 # PRODUCT MEDIA
 # ==================================================
 
+# ============================================================
+# PRODUCT MEDIA
+# ============================================================
+
 class ProductMedia(models.Model):
 
     IMAGE = "image"
@@ -549,6 +550,7 @@ class ProductMedia(models.Model):
     media_type = models.CharField(
         max_length=10,
         choices=MEDIA_CHOICES,
+        default=IMAGE,
     )
 
     file = models.FileField(
@@ -571,18 +573,22 @@ class ProductMedia(models.Model):
         auto_now_add=True,
     )
 
-    def clean(self):
-        """
-        Validate the uploaded file according to media_type.
-        """
+    # =========================================================
+    # VALIDATION
+    # =========================================================
 
+    def clean(self):
         super().clean()
 
         if not self.file:
             return
 
-        ext = os.path.splitext(
-            self.file.name
+        filename = os.path.basename(
+            str(self.file.name)
+        )
+
+        extension = os.path.splitext(
+            filename
         )[1].lower()
 
         image_extensions = {
@@ -591,46 +597,42 @@ class ProductMedia(models.Model):
             ".png",
             ".webp",
             ".avif",
+            ".gif",
         }
 
         video_extensions = {
             ".mp4",
             ".webm",
             ".mov",
+            ".avi",
+            ".mkv",
+            ".m4v",
         }
 
-        # -----------------------------
-        # IMAGE VALIDATION
-        # -----------------------------
         if self.media_type == self.IMAGE:
 
-            if ext not in image_extensions:
+            if extension not in image_extensions:
 
                 raise ValidationError({
                     "file": (
                         "Invalid image format. "
                         "Allowed formats: JPG, JPEG, PNG, "
-                        "WEBP and AVIF."
+                        "WEBP, AVIF and GIF."
                     )
                 })
 
-        # -----------------------------
-        # VIDEO VALIDATION
-        # -----------------------------
         elif self.media_type == self.VIDEO:
 
-            if ext not in video_extensions:
+            if extension not in video_extensions:
 
                 raise ValidationError({
                     "file": (
                         "Invalid video format. "
-                        "Allowed formats: MP4, WEBM and MOV."
+                        "Allowed formats: MP4, WEBM, "
+                        "MOV, AVI, MKV and M4V."
                     )
                 })
 
-        # -----------------------------
-        # MEDIA TYPE VALIDATION
-        # -----------------------------
         else:
 
             raise ValidationError({
@@ -640,57 +642,62 @@ class ProductMedia(models.Model):
                 )
             })
 
-    @property
-    def file_url(self):
-        """
-        Return the complete URL of the uploaded media.
-        """
-
-        if not self.file:
-            return None
-
-        try:
-            url = self.file.url
-        except Exception:
-            return str(self.file)
-
-        if not url:
-            return None
-
-        return url
+    # =========================================================
+    # CLOUDINARY RESOURCE TYPE
+    # =========================================================
 
     @property
     def cloudinary_resource_type(self):
-        """
-        Return the Cloudinary resource type used
-        for this media.
-        """
 
         if self.media_type == self.VIDEO:
             return "video"
 
         return "image"
 
+    # =========================================================
+    # MEDIA TYPE HELPERS
+    # =========================================================
+
     @property
     def is_video(self):
-        """
-        Convenient boolean for serializers/frontend.
-        """
 
         return self.media_type == self.VIDEO
 
     @property
     def is_image(self):
-        """
-        Convenient boolean for serializers/frontend.
-        """
 
         return self.media_type == self.IMAGE
 
+    # =========================================================
+    # FILE URL
+    # =========================================================
+
+    @property
+    def file_url(self):
+
+        if not self.file:
+            return None
+
+        try:
+            return self.file.url
+
+        except Exception:
+            return str(self.file)
+
+    # =========================================================
+    # STRING
+    # =========================================================
+
     def __str__(self):
 
+        product_name = (
+            self.product.name
+            if self.product
+            else "Product"
+        )
+
         return (
-            f"{self.product.name} - "
+            f"{product_name} - "
             f"{self.media_type}"
         )
 
