@@ -550,7 +550,9 @@ class ProductMedia(models.Model):
     )
 
     file = models.FileField(
-        upload_to="product_media/"
+        upload_to="product_media/",
+        blank=True,
+        null=True
     )
 
     related_products = models.ManyToManyField(
@@ -558,7 +560,9 @@ class ProductMedia(models.Model):
         blank=True
     )
 
-    is_primary = models.BooleanField(default=False)
+    is_primary = models.BooleanField(
+        default=False
+    )
 
     created_at = models.DateTimeField(
         auto_now_add=True
@@ -566,43 +570,145 @@ class ProductMedia(models.Model):
 
     def clean(self):
 
-        if self.file:
+        if not self.file:
+            return
 
-            ext = self.file.name.split(".")[-1].lower()
+        ext = os.path.splitext(
+            self.file.name
+        )[1].lower()
 
-            image_ext = [
-                "jpg",
-                "jpeg",
-                "png",
-                "webp",
-                "avif"
-            ]
+        image_ext = {
+            ".jpg",
+            ".jpeg",
+            ".png",
+            ".webp",
+            ".avif",
+        }
 
-            video_ext = [
-                "mp4",
-                "webm",
-                "mov"
-            ]
+        video_ext = {
+            ".mp4",
+            ".webm",
+            ".mov",
+        }
 
-            if (
-                self.media_type == "image"
-                and ext not in image_ext
-            ):
-                raise ValidationError(
-                    "Invalid image format."
-                )
+        if self.media_type == self.IMAGE:
 
-            if (
-                self.media_type == "video"
-                and ext not in video_ext
-            ):
-                raise ValidationError(
-                    "Invalid video format."
-                )
+            if ext not in image_ext:
+                raise ValidationError({
+                    "file": (
+                        "Invalid image format. "
+                        "Allowed formats: JPG, JPEG, PNG, "
+                        "WEBP and AVIF."
+                    )
+                })
+
+        elif self.media_type == self.VIDEO:
+
+            if ext not in video_ext:
+                raise ValidationError({
+                    "file": (
+                        "Invalid video format. "
+                        "Allowed formats: MP4, WEBM and MOV."
+                    )
+                })
+
+        else:
+
+            raise ValidationError({
+                "media_type": "Invalid media type."
+            })
+
+    def save(self, *args, **kwargs):
+
+        self.full_clean()
+
+        # Only upload a new file.
+        if self.file and hasattr(self.file, "file"):
+
+            uploaded_file = self.file
+
+            # Check whether this is a new Django upload.
+            is_new_upload = (
+                not self.pk
+                or not self.__class__.objects.filter(
+                    pk=self.pk
+                ).exists()
+            )
+
+            if is_new_upload:
+
+                uploaded_file.file.seek(0)
+
+                if self.media_type == self.VIDEO:
+
+                    result = cloudinary.uploader.upload(
+                        uploaded_file.file,
+                        resource_type="video",
+                        folder="product_media",
+                        use_filename=True,
+                        unique_filename=True,
+                        overwrite=False,
+                    )
+
+                else:
+
+                    result = cloudinary.uploader.upload(
+                        uploaded_file.file,
+                        resource_type="image",
+                        folder="product_media",
+                        use_filename=True,
+                        unique_filename=True,
+                        overwrite=False,
+                    )
+
+                # Cloudinary URL
+                secure_url = result.get("secure_url")
+
+                if not secure_url:
+                    raise ValidationError(
+                        "Cloudinary did not return a secure URL."
+                    )
+
+                # Store Cloudinary URL in the FileField.
+                self.file.name = secure_url
+
+        super().save(*args, **kwargs)
+
+    @property
+    def file_url(self):
+        """
+        Returns the complete Cloudinary URL.
+        """
+
+        if not self.file:
+            return None
+
+        value = str(self.file)
+
+        if value.startswith("http://") or value.startswith(
+            "https://"
+        ):
+            return value
+
+        return value
+
+    @property
+    def cloudinary_resource_type(self):
+        """
+        Returns the Cloudinary resource type.
+        """
+
+        if self.media_type == self.VIDEO:
+            return "video"
+
+        return "image"
 
     def __str__(self):
-        return f"{self.product.name} - {self.media_type}"
 
+        return (
+            f"{self.product.name} - "
+            f"{self.media_type}"
+        )
 
 
 # ==================================================
