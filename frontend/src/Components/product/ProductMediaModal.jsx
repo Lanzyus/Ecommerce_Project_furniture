@@ -97,35 +97,41 @@ const ProductMediaModal = ({
       <div
         className="d-flex justify-content-center align-items-center h-100"
       >
-        {currentMedia.media_type ===
-        "video" ? (
+        {currentMedia?.media_type === "video" ? (
           <video
             controls
             autoPlay
+            playsInline
+            preload="metadata"
             style={{
-              maxHeight: "90%",
-              maxWidth: "90%",
+              width: "100%",
+              height: "auto",
+              maxHeight: "80vh",
+              objectFit: "contain",
             }}
           >
             <source
-              src={getUrl(
-                currentMedia.file
-              )}
+              src={getUrl(currentMedia.file_url)}
+              type="video/mp4"
             />
+        
+            Your browser does not support video playback.
           </video>
         ) : (
           <img
-            src={getUrl(
-              currentMedia.file
-            )}
-            alt=""
+            src={getUrl(currentMedia.file_url)}
+            alt={
+              currentMedia?.product_name ||
+              "Product media"
+            }
             style={{
-              maxHeight: "90%",
-              maxWidth: "90%",
+              width: "100%",
+              height: "auto",
+              maxHeight: "80vh",
               objectFit: "contain",
             }}
           />
-        )}
+        )} 
       </div>
 
       {/* THUMBNAILS */}
