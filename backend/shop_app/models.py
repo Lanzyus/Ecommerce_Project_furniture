@@ -2,6 +2,8 @@
 
 import os
 
+from .storage import ProductMediaCloudinaryStorage
+
 import cloudinary
 import cloudinary.uploader
 
