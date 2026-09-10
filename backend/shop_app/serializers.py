@@ -418,7 +418,6 @@ class ContactMessageSerializer(serializers.ModelSerializer):
 # ==================================================
 
 class ProductMediaSerializer(serializers.ModelSerializer):
-
     file_url = serializers.SerializerMethodField()
 
     class Meta:
@@ -433,15 +432,39 @@ class ProductMediaSerializer(serializers.ModelSerializer):
         ]
 
     def get_file_url(self, obj):
-        request = self.context.get("request")
-
         if not obj.file:
             return None
 
-        if request:
-            return request.build_absolute_uri(obj.file.url)
+        try:
+            return obj.file.url
+        except Exception:
+            return None
 
-        return obj.file.url
+# class ProductMediaSerializer(serializers.ModelSerializer):
+
+#     file_url = serializers.SerializerMethodField()
+
+#     class Meta:
+#         model = ProductMedia
+#         fields = [
+#             "id",
+#             "media_type",
+#             "file",
+#             "file_url",
+#             "is_primary",
+#             "created_at",
+#         ]
+
+#     def get_file_url(self, obj):
+#         request = self.context.get("request")
+
+#         if not obj.file:
+#             return None
+
+#         if request:
+#             return request.build_absolute_uri(obj.file.url)
+
+#         return obj.file.url
 
 
 # ==================================================

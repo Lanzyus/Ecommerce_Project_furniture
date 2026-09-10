@@ -204,6 +204,17 @@ WSGI_APPLICATION = "backend.wsgi.application"
 # DATABASE
 # ============================================================
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": os.getenv("DB_NAME", "generictest"),
+#         "USER": os.getenv("DB_USER", "postgres"),
+#         "PASSWORD": os.getenv("DB_PASSWORD", ""),
+#         "HOST": os.getenv("DB_HOST", "localhost"),
+#         "PORT": os.getenv("DB_PORT", "5432"),
+#     }
+# }
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -212,6 +223,7 @@ DATABASES = {
         "PASSWORD": os.getenv("DB_PASSWORD", ""),
         "HOST": os.getenv("DB_HOST", "localhost"),
         "PORT": os.getenv("DB_PORT", "5432"),
+        "OPTIONS": {} if DEBUG else {"sslmode": "require"},
     }
 }
 
@@ -272,6 +284,7 @@ STATIC_URL = "static/"
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
@@ -297,9 +310,20 @@ STORAGES = {
 
 # MEDIA_ROOT = BASE_DIR / "media"
 
+
+# CLOUDINARY_STORAGE = {
+#     "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
+#     "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
+#     "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
+# }
+
+# DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+
 # ============================================================
 # MEDIA FILES (CLOUDINARY)
 # ============================================================
+
+
 
 CLOUDINARY_STORAGE = {
     "CLOUD_NAME": os.getenv("CLOUDINARY_CLOUD_NAME"),

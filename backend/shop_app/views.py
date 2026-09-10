@@ -2074,12 +2074,14 @@ def upload_product_media(
             status=400
         )
 
+    import os
+    VIDEO_EXTENSIONS = {".mp4", ".webm", ".mov"}
+    ext = os.path.splitext(file.name)[1].lower()
+    media_type = "video" if ext in VIDEO_EXTENSIONS else "image"
+
     media = ProductMedia.objects.create(
         product=product,
-        media_type=request.data.get(
-            "media_type",
-            "image"
-        ),
+        media_type=media_type,
         file=file,
         is_primary=request.data.get(
             "is_primary",
@@ -2095,6 +2097,48 @@ def upload_product_media(
         serializer.data,
         status=201
     )
+
+# @api_view(["POST"])
+# @permission_classes([IsAuthenticated])
+# def upload_product_media(
+#     request,
+#     product_id
+# ):
+
+#     product = get_object_or_404(
+#         Product,
+#         id=product_id
+#     )
+
+#     file = request.FILES.get("file")
+
+#     if not file:
+#         return Response(
+#             {"error": "file is required"},
+#             status=400
+#         )
+
+#     media = ProductMedia.objects.create(
+#         product=product,
+#         media_type=request.data.get(
+#             "media_type",
+#             "image"
+#         ),
+#         file=file,
+#         is_primary=request.data.get(
+#             "is_primary",
+#             False
+#         ),
+#     )
+
+#     serializer = ProductMediaSerializer(
+#         media
+#     )
+
+#     return Response(
+#         serializer.data,
+#         status=201
+#     )
 
 
 # ==================================================

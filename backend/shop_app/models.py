@@ -1,10 +1,16 @@
 # shop_app/models.py
+<<<<<<< Updated upstream
 
 import os
 import uuid
 
+=======
+import os
+from django.db import models
+>>>>>>> Stashed changes
 from django.conf import settings
 from django.core.exceptions import ValidationError
+<<<<<<< Updated upstream
 from django.core.validators import (
     MinValueValidator,
     MaxValueValidator,
@@ -15,6 +21,10 @@ from django.utils import timezone
 from django.utils.text import slugify
 
 from .storage import ProductMediaCloudinaryStorage
+=======
+from .storage import ProductMediaCloudinaryStorage
+
+>>>>>>> Stashed changes
 
 
 
@@ -526,11 +536,14 @@ class Product(models.Model):
 # ==================================================
 # PRODUCT MEDIA
 # ==================================================
+<<<<<<< Updated upstream
 
 # ============================================================
 # PRODUCT MEDIA
 # ============================================================
 
+=======
+>>>>>>> Stashed changes
 class ProductMedia(models.Model):
 
     IMAGE = "image"
@@ -550,7 +563,10 @@ class ProductMedia(models.Model):
     media_type = models.CharField(
         max_length=10,
         choices=MEDIA_CHOICES,
+<<<<<<< Updated upstream
         default=IMAGE,
+=======
+>>>>>>> Stashed changes
     )
 
     file = models.FileField(
@@ -578,6 +594,7 @@ class ProductMedia(models.Model):
     # =========================================================
 
     def clean(self):
+<<<<<<< Updated upstream
         super().clean()
 
         if not self.file:
@@ -589,6 +606,19 @@ class ProductMedia(models.Model):
 
         extension = os.path.splitext(
             filename
+=======
+        """
+        Validate the uploaded file according to media_type.
+        """
+
+        super().clean()
+
+        if not self.file:
+            return
+
+        ext = os.path.splitext(
+            self.file.name
+>>>>>>> Stashed changes
         )[1].lower()
 
         image_extensions = {
@@ -597,13 +627,17 @@ class ProductMedia(models.Model):
             ".png",
             ".webp",
             ".avif",
+<<<<<<< Updated upstream
             ".gif",
+=======
+>>>>>>> Stashed changes
         }
 
         video_extensions = {
             ".mp4",
             ".webm",
             ".mov",
+<<<<<<< Updated upstream
             ".avi",
             ".mkv",
             ".m4v",
@@ -612,11 +646,22 @@ class ProductMedia(models.Model):
         if self.media_type == self.IMAGE:
 
             if extension not in image_extensions:
+=======
+        }
+
+        # -----------------------------
+        # IMAGE VALIDATION
+        # -----------------------------
+        if self.media_type == self.IMAGE:
+
+            if ext not in image_extensions:
+>>>>>>> Stashed changes
 
                 raise ValidationError({
                     "file": (
                         "Invalid image format. "
                         "Allowed formats: JPG, JPEG, PNG, "
+<<<<<<< Updated upstream
                         "WEBP, AVIF and GIF."
                     )
                 })
@@ -624,15 +669,37 @@ class ProductMedia(models.Model):
         elif self.media_type == self.VIDEO:
 
             if extension not in video_extensions:
+=======
+                        "WEBP and AVIF."
+                    )
+                })
+
+        # -----------------------------
+        # VIDEO VALIDATION
+        # -----------------------------
+        elif self.media_type == self.VIDEO:
+
+            if ext not in video_extensions:
+>>>>>>> Stashed changes
 
                 raise ValidationError({
                     "file": (
                         "Invalid video format. "
+<<<<<<< Updated upstream
                         "Allowed formats: MP4, WEBM, "
                         "MOV, AVI, MKV and M4V."
                     )
                 })
 
+=======
+                        "Allowed formats: MP4, WEBM and MOV."
+                    )
+                })
+
+        # -----------------------------
+        # MEDIA TYPE VALIDATION
+        # -----------------------------
+>>>>>>> Stashed changes
         else:
 
             raise ValidationError({
@@ -642,29 +709,66 @@ class ProductMedia(models.Model):
                 )
             })
 
+<<<<<<< Updated upstream
     # =========================================================
     # CLOUDINARY RESOURCE TYPE
     # =========================================================
 
     @property
     def cloudinary_resource_type(self):
+=======
+    @property
+    def file_url(self):
+        """
+        Return the complete URL of the uploaded media.
+        """
+
+        if not self.file:
+            return None
+
+        try:
+            url = self.file.url
+        except Exception:
+            return str(self.file)
+
+        if not url:
+            return None
+
+        return url
+
+    @property
+    def cloudinary_resource_type(self):
+        """
+        Return the Cloudinary resource type used
+        for this media.
+        """
+>>>>>>> Stashed changes
 
         if self.media_type == self.VIDEO:
             return "video"
 
         return "image"
 
+<<<<<<< Updated upstream
     # =========================================================
     # MEDIA TYPE HELPERS
     # =========================================================
 
     @property
     def is_video(self):
+=======
+    @property
+    def is_video(self):
+        """
+        Convenient boolean for serializers/frontend.
+        """
+>>>>>>> Stashed changes
 
         return self.media_type == self.VIDEO
 
     @property
     def is_image(self):
+<<<<<<< Updated upstream
 
         return self.media_type == self.IMAGE
 
@@ -700,7 +804,20 @@ class ProductMedia(models.Model):
             f"{product_name} - "
             f"{self.media_type}"
         )
+=======
+        """
+        Convenient boolean for serializers/frontend.
+        """
 
+        return self.media_type == self.IMAGE
+
+    def __str__(self):
+>>>>>>> Stashed changes
+
+        return (
+            f"{self.product.name} - "
+            f"{self.media_type}"
+        )
 
 # ==================================================
 # PRODUCT BUNDLE
