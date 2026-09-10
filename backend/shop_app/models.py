@@ -1,16 +1,10 @@
 # shop_app/models.py
-<<<<<<< Updated upstream
 
 import os
 import uuid
 
-=======
-import os
-from django.db import models
->>>>>>> Stashed changes
 from django.conf import settings
 from django.core.exceptions import ValidationError
-<<<<<<< Updated upstream
 from django.core.validators import (
     MinValueValidator,
     MaxValueValidator,
@@ -21,12 +15,6 @@ from django.utils import timezone
 from django.utils.text import slugify
 
 from .storage import ProductMediaCloudinaryStorage
-=======
-from .storage import ProductMediaCloudinaryStorage
-
->>>>>>> Stashed changes
-
-
 
 
 # ==================================================
@@ -114,11 +102,11 @@ class OrderTracking(models.Model):
 
     def __str__(self):
         return f"{self.order.order_number} - {self.status}"
+
+
 # ==================================================
 # BANNER
 # ==================================================
-
-
 
 class CarouselImage(models.Model):
     title = models.CharField(max_length=200, blank=True)
@@ -131,6 +119,7 @@ class CarouselImage(models.Model):
 
     def __str__(self):
         return self.title or f"Carousel {self.id}"
+
 
 class Banner(models.Model):
     SEASON_CHOICES = [
@@ -160,8 +149,7 @@ class Banner(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
 
     class Meta:
-        ordering = ["-created_at"]  
-
+        ordering = ["-created_at"]
 
     def __str__(self):
         return self.title
@@ -532,18 +520,10 @@ class Product(models.Model):
         return self.name
 
 
-
 # ==================================================
 # PRODUCT MEDIA
 # ==================================================
-<<<<<<< Updated upstream
 
-# ============================================================
-# PRODUCT MEDIA
-# ============================================================
-
-=======
->>>>>>> Stashed changes
 class ProductMedia(models.Model):
 
     IMAGE = "image"
@@ -563,10 +543,7 @@ class ProductMedia(models.Model):
     media_type = models.CharField(
         max_length=10,
         choices=MEDIA_CHOICES,
-<<<<<<< Updated upstream
         default=IMAGE,
-=======
->>>>>>> Stashed changes
     )
 
     file = models.FileField(
@@ -594,7 +571,10 @@ class ProductMedia(models.Model):
     # =========================================================
 
     def clean(self):
-<<<<<<< Updated upstream
+        """
+        Validate the uploaded file according to media_type.
+        """
+
         super().clean()
 
         if not self.file:
@@ -606,19 +586,6 @@ class ProductMedia(models.Model):
 
         extension = os.path.splitext(
             filename
-=======
-        """
-        Validate the uploaded file according to media_type.
-        """
-
-        super().clean()
-
-        if not self.file:
-            return
-
-        ext = os.path.splitext(
-            self.file.name
->>>>>>> Stashed changes
         )[1].lower()
 
         image_extensions = {
@@ -627,26 +594,16 @@ class ProductMedia(models.Model):
             ".png",
             ".webp",
             ".avif",
-<<<<<<< Updated upstream
             ".gif",
-=======
->>>>>>> Stashed changes
         }
 
         video_extensions = {
             ".mp4",
             ".webm",
             ".mov",
-<<<<<<< Updated upstream
             ".avi",
             ".mkv",
             ".m4v",
-        }
-
-        if self.media_type == self.IMAGE:
-
-            if extension not in image_extensions:
-=======
         }
 
         # -----------------------------
@@ -654,23 +611,13 @@ class ProductMedia(models.Model):
         # -----------------------------
         if self.media_type == self.IMAGE:
 
-            if ext not in image_extensions:
->>>>>>> Stashed changes
+            if extension not in image_extensions:
 
                 raise ValidationError({
                     "file": (
                         "Invalid image format. "
                         "Allowed formats: JPG, JPEG, PNG, "
-<<<<<<< Updated upstream
                         "WEBP, AVIF and GIF."
-                    )
-                })
-
-        elif self.media_type == self.VIDEO:
-
-            if extension not in video_extensions:
-=======
-                        "WEBP and AVIF."
                     )
                 })
 
@@ -679,27 +626,19 @@ class ProductMedia(models.Model):
         # -----------------------------
         elif self.media_type == self.VIDEO:
 
-            if ext not in video_extensions:
->>>>>>> Stashed changes
+            if extension not in video_extensions:
 
                 raise ValidationError({
                     "file": (
                         "Invalid video format. "
-<<<<<<< Updated upstream
                         "Allowed formats: MP4, WEBM, "
                         "MOV, AVI, MKV and M4V."
-                    )
-                })
-
-=======
-                        "Allowed formats: MP4, WEBM and MOV."
                     )
                 })
 
         # -----------------------------
         # MEDIA TYPE VALIDATION
         # -----------------------------
->>>>>>> Stashed changes
         else:
 
             raise ValidationError({
@@ -709,14 +648,46 @@ class ProductMedia(models.Model):
                 )
             })
 
-<<<<<<< Updated upstream
     # =========================================================
     # CLOUDINARY RESOURCE TYPE
     # =========================================================
 
     @property
     def cloudinary_resource_type(self):
-=======
+        """
+        Return the Cloudinary resource type used
+        for this media.
+        """
+
+        if self.media_type == self.VIDEO:
+            return "video"
+
+        return "image"
+
+    # =========================================================
+    # MEDIA TYPE HELPERS
+    # =========================================================
+
+    @property
+    def is_video(self):
+        """
+        Convenient boolean for serializers/frontend.
+        """
+
+        return self.media_type == self.VIDEO
+
+    @property
+    def is_image(self):
+        """
+        Convenient boolean for serializers/frontend.
+        """
+
+        return self.media_type == self.IMAGE
+
+    # =========================================================
+    # FILE URL
+    # =========================================================
+
     @property
     def file_url(self):
         """
@@ -736,58 +707,6 @@ class ProductMedia(models.Model):
 
         return url
 
-    @property
-    def cloudinary_resource_type(self):
-        """
-        Return the Cloudinary resource type used
-        for this media.
-        """
->>>>>>> Stashed changes
-
-        if self.media_type == self.VIDEO:
-            return "video"
-
-        return "image"
-
-<<<<<<< Updated upstream
-    # =========================================================
-    # MEDIA TYPE HELPERS
-    # =========================================================
-
-    @property
-    def is_video(self):
-=======
-    @property
-    def is_video(self):
-        """
-        Convenient boolean for serializers/frontend.
-        """
->>>>>>> Stashed changes
-
-        return self.media_type == self.VIDEO
-
-    @property
-    def is_image(self):
-<<<<<<< Updated upstream
-
-        return self.media_type == self.IMAGE
-
-    # =========================================================
-    # FILE URL
-    # =========================================================
-
-    @property
-    def file_url(self):
-
-        if not self.file:
-            return None
-
-        try:
-            return self.file.url
-
-        except Exception:
-            return str(self.file)
-
     # =========================================================
     # STRING
     # =========================================================
@@ -804,20 +723,7 @@ class ProductMedia(models.Model):
             f"{product_name} - "
             f"{self.media_type}"
         )
-=======
-        """
-        Convenient boolean for serializers/frontend.
-        """
 
-        return self.media_type == self.IMAGE
-
-    def __str__(self):
->>>>>>> Stashed changes
-
-        return (
-            f"{self.product.name} - "
-            f"{self.media_type}"
-        )
 
 # ==================================================
 # PRODUCT BUNDLE
@@ -837,7 +743,7 @@ class ProductBundle(models.Model):
 
 
 # ==================================================
-# PRODUCT QUEStION
+# PRODUCT QUESTION
 # ==================================================
 
 class ProductQuestion(models.Model):
@@ -870,6 +776,7 @@ class ProductQuestion(models.Model):
 
     def __str__(self):
         return f"{self.product.name} - {self.question[:50]}"
+
 
 # ==================================================
 # PRODUCT VARIANT
@@ -906,9 +813,9 @@ class ProductVariant(models.Model):
     )
 
     storage = models.CharField(
-    max_length=50,
-    blank=True,
-    null=True
+        max_length=50,
+        blank=True,
+        null=True
     )
 
     material = models.CharField(
@@ -931,8 +838,6 @@ class ProductVariant(models.Model):
         )
 
 
-
-
 # ==================================================
 # ProductTag
 # ==================================================
@@ -942,6 +847,7 @@ class ProductTag(models.Model):
         max_length=100,
         unique=True
     )
+
 
 class ProductTagMapping(models.Model):
     product = models.ForeignKey(
@@ -961,6 +867,7 @@ class ProductTagMapping(models.Model):
 
     def __str__(self):
         return f"{self.product.name} - {self.tag.name}"
+
 
 # ==================================================
 # REVIEW
@@ -1098,12 +1005,6 @@ class Order(models.Model):
         ("failed", "Failed"),
     )
 
-    status = models.CharField(
-        max_length=20,
-        choices=STATUS_CHOICES,
-        default="pending"
-    )
-
     PAYMENT_TYPE_CHOICES = (
         ("online", "Online Payment"),
         ("cod", "Cash On Delivery"),
@@ -1147,12 +1048,12 @@ class Order(models.Model):
         decimal_places=2,
         default=0
     )
-    
+
     delivery_fee = models.DecimalField(
-    max_digits=10,
-    decimal_places=2,
-    default=0
-)
+        max_digits=10,
+        decimal_places=2,
+        default=0
+    )
 
     total_amount = models.DecimalField(
         max_digits=12,
@@ -1171,7 +1072,7 @@ class Order(models.Model):
         choices=PAYMENT_METHOD_CHOICES,
         default="paystack"
     )
-    shipping_address = models.TextField()
+
     payment_status = models.CharField(
         max_length=20,
         choices=PAYMENT_STATUS_CHOICES,
@@ -1189,6 +1090,7 @@ class Order(models.Model):
         decimal_places=2,
         default=0.00
     )
+
     created_at = models.DateTimeField(
         auto_now_add=True
     )
@@ -1223,9 +1125,6 @@ class Order(models.Model):
 # ==================================================
 # Shipment
 # ==================================================
-
-import uuid
-
 
 class Shipment(models.Model):
 
@@ -1267,11 +1166,6 @@ class Shipment(models.Model):
         unique=True
     )
 
-    # courier = models.CharField(
-    #     max_length=100,
-    #     blank=True
-    # )
-
     courier = models.CharField(
         max_length=100,
         choices=COURIER_CHOICES,
@@ -1296,12 +1190,8 @@ class Shipment(models.Model):
     )
 
     created_at = models.DateTimeField(
-            default=timezone.now
-        )
-
-    # created_at = models.DateTimeField(
-    #     auto_now_add=True
-    # )
+        default=timezone.now
+    )
 
     def save(self, *args, **kwargs):
 
@@ -1315,6 +1205,7 @@ class Shipment(models.Model):
     def __str__(self):
         return self.tracking_number
 
+
 # ==================================================
 # ShipmentTracking
 # ==================================================
@@ -1327,7 +1218,6 @@ class ShipmentTracking(models.Model):
         on_delete=models.CASCADE
     )
 
-   
     status = models.CharField(
         max_length=50
     )
@@ -1344,9 +1234,6 @@ class ShipmentTracking(models.Model):
     created_at = models.DateTimeField(
         default=timezone.now
     )
-    # created_at = models.DateTimeField(
-    #     auto_now_add=True
-    # )
 
     def __str__(self):
         return (
@@ -1354,47 +1241,10 @@ class ShipmentTracking(models.Model):
             f"- {self.status}"
         )
 
-# ==================================================
-# PRODUCT REVIEW
-# ==================================================
-
-# class ProductReview(models.Model):
-
-#     product = models.ForeignKey(
-#         Product,
-#         related_name="reviews",
-#         on_delete=models.CASCADE
-#     )
-
-#     user = models.ForeignKey(
-#         settings.AUTH_USER_MODEL,
-#         on_delete=models.CASCADE
-#     )
-
-#     rating = models.PositiveSmallIntegerField(
-#         validators=[
-#             MinValueValidator(1),
-#             MaxValueValidator(5)
-#         ]
-#     )
-
-#     comment = models.TextField(blank=True)
-
-#     created_at = models.DateTimeField(
-#         auto_now_add=True
-#     )
-
-#     class Meta:
-#         unique_together = ("product", "user")
-
-#     def __str__(self):
-#         return f"{self.user} - {self.product}"
-
 
 # ==================================================
 # WISHLIST
 # ==================================================
-
 
 class Wishlist(models.Model):
     user = models.ForeignKey(
@@ -1418,30 +1268,6 @@ class Wishlist(models.Model):
         return f"{self.user.username} - {self.product.name}"
 
 
-
-# class Wishlist(models.Model):
-
-#     user = models.ForeignKey(
-#         settings.AUTH_USER_MODEL,
-#         on_delete=models.CASCADE
-#     )
-
-#     product = models.ForeignKey(
-#         Product,
-#         on_delete=models.CASCADE
-#     )
-
-#     created_at = models.DateTimeField(
-#         auto_now_add=True
-#     )
-
-#     class Meta:
-#         unique_together = ("user", "product")
-
-#     def __str__(self):
-#         return f"{self.user} - {self.product}"
-
-
 # ==================================================
 # RECENTLY VIEWED
 # ==================================================
@@ -1462,52 +1288,10 @@ class RecentlyViewed(models.Model):
         auto_now=True
     )
 
+
 # ==================================================
 # TRANSACTION
 # ==================================================
-
-# class Transaction(models.Model):
-
-#     STATUS_CHOICES = [
-#         ("pending", "Pending"),
-#         ("completed", "Completed"),
-#         ("failed", "Failed"),
-#     ]
-
-#     ref = models.CharField(
-#         max_length=100,
-#         unique=True
-#     )
-
-#     user = models.ForeignKey(
-#         settings.AUTH_USER_MODEL,
-#         on_delete=models.CASCADE
-#     )
-
-#     cart = models.ForeignKey(
-#         Cart,
-#         on_delete=models.CASCADE
-#     )
-
-#     amount = models.DecimalField(
-#         max_digits=12,
-#         decimal_places=2
-#     )
-
-#     currency = models.CharField(
-#         max_length=10,
-#         default="NGN"
-#     )
-
-#     status = models.CharField(
-#         max_length=20,
-#         choices=STATUS_CHOICES,
-#         default="pending"
-#     )
-
-#     created_at = models.DateTimeField(
-#         auto_now_add=True
-#     )
 
 class Transaction(models.Model):
 
@@ -1615,269 +1399,12 @@ class Transaction(models.Model):
             f"{self.ref} | "
             f"{self.payment_method} | "
             f"{self.status}"
-        ) 
+        )
 
-# class Transaction(models.Model):
-
-#     STATUS_CHOICES = [
-#         ("pending", "Pending"),
-#         ("completed", "Completed"),
-#         ("failed", "Failed"),
-#     ]
-
-#     PAYMENT_METHOD_CHOICES = [
-#         ("paystack", "Paystack"),
-#         ("flutterwave", "Flutterwave"),
-#         ("paypal", "PayPal"),
-#     ]
-
-#     ref = models.CharField(
-#         max_length=255,
-#         unique=True,
-#         db_index=True
-#     )
-
-#     user = models.ForeignKey(
-#         settings.AUTH_USER_MODEL,
-#         on_delete=models.CASCADE,
-#         related_name="transactions"
-#     )
-
-#     cart = models.ForeignKey(
-#         Cart,
-#         on_delete=models.CASCADE,
-#         related_name="transactions"
-#     )
-
-#     amount = models.DecimalField(
-#         max_digits=12,
-#         decimal_places=2
-#     )
-
-#     currency = models.CharField(
-#         max_length=10,
-#         default="NGN"
-#     )
-
-#     payment_method = models.CharField(
-#         max_length=20,
-#         choices=PAYMENT_METHOD_CHOICES,
-#         default="paystack"
-#     )
-
-#     # Customer Information
-#     full_name = models.CharField(
-#         max_length=255,
-#         blank=True,
-#         null=True
-#     )
-
-#     email = models.EmailField(
-#         blank=True,
-#         null=True
-#     )
-
-#     phone = models.CharField(
-#         max_length=30,
-#         blank=True,
-#         null=True
-#     )
-
-#     # Shipping Information
-#     shipping_address = models.TextField(
-#         blank=True,
-#         null=True
-#     )
-
-#     city = models.CharField(
-#         max_length=100,
-#         blank=True,
-#         null=True
-#     )
-
-#     state = models.CharField(
-#         max_length=100,
-#         blank=True,
-#         null=True
-#     )
-
-#     country = models.CharField(
-#         max_length=100,
-#         blank=True,
-#         null=True
-#     )
-
-#     status = models.CharField(
-#         max_length=20,
-#         choices=STATUS_CHOICES,
-#         default="pending"
-#     )
-
-#     created_at = models.DateTimeField(
-#         auto_now_add=True
-#     )
-
-#     class Meta:
-#         ordering = ["-created_at"]
-
-#     def __str__(self):
-#         return (
-#             f"{self.ref} | "
-#             f"{self.payment_method} | "
-#             f"{self.status}"
-#         )
-
-
-# class Transaction(models.Model):
-
-#     STATUS_CHOICES = [
-#         ("pending", "Pending"),
-#         ("completed", "Completed"),
-#         ("failed", "Failed"),
-#     ]
-
-#     PAYMENT_METHOD_CHOICES = [
-#         ("paystack", "Paystack"),
-#         ("flutterwave", "Flutterwave"),
-#         ("paypal", "PayPal"),
-#     ]
-
-#     ref = models.CharField(
-#         max_length=255,
-#         unique=True,
-#         db_index=True
-#     )
-
-#     user = models.ForeignKey(
-#         settings.AUTH_USER_MODEL,
-#         on_delete=models.CASCADE,
-#         related_name="transactions"
-#     )
-
-#     cart = models.ForeignKey(
-#         Cart,
-#         on_delete=models.CASCADE,
-#         related_name="transactions"
-#     )
-
-#     amount = models.DecimalField(
-#         max_digits=12,
-#         decimal_places=2
-#     )
-
-#     currency = models.CharField(
-#         max_length=10,
-#         default="NGN"
-#     )
-
-#     payment_method = models.CharField(
-#         max_length=20,
-#         choices=PAYMENT_METHOD_CHOICES,
-#         default="paystack"
-#     )
-
-
-#     shipping_address = models.TextField(
-#         blank=True,
-#         null=True
-#     )
-
-
-#     status = models.CharField(
-#         max_length=20,
-#         choices=STATUS_CHOICES,
-#         default="pending"
-#     )
-
-#     created_at = models.DateTimeField(
-#         auto_now_add=True
-#     )
-
-#     class Meta:
-#         ordering = ["-created_at"]
-
-#     def __str__(self):
-#         return (
-#             f"{self.ref} | "
-#             f"{self.payment_method} | "
-#             f"{self.status}"
-#         )
 
 # ==================================================
-# CONTACT
+# ORDER ITEM
 # ==================================================
-
-# class ContactMessage(models.Model):
-#     name = models.CharField(max_length=200)
-#     email = models.EmailField()
-#     subject = models.CharField(max_length=255)
-#     message = models.TextField()
-
-#     created_at = models.DateTimeField(auto_now_add=True)
-
-#     def __str__(self):
-#         return self.subject
-# ==================================================
-# ORDER
-# ==================================================
-
-# class Order(models.Model):
-
-#     ORDER_STATUS = [
-#         ("pending", "Pending"),
-#         ("processing", "Processing"),
-#         ("shipped", "Shipped"),
-#         ("delivered", "Delivered"),
-#         ("cancelled", "Cancelled"),
-#     ]
-
-#     user = models.ForeignKey(
-#         settings.AUTH_USER_MODEL,
-#         on_delete=models.CASCADE
-#     )
-
-#     shipping_address = models.TextField()
-
-#     city = models.CharField(
-#         max_length=100
-#     )
-
-#     subtotal = models.DecimalField(
-#         max_digits=12,
-#         decimal_places=2,
-#         default=0
-#     )
-
-#     total_amount = models.DecimalField(
-#         max_digits=12,
-#         decimal_places=2,
-#         default=0
-#     )
-
-#     status = models.CharField(
-#         max_length=20,
-#         choices=ORDER_STATUS,
-#         default="pending"
-#     )
-
-#     created_at = models.DateTimeField(
-#         auto_now_add=True
-#     )
-
-#     updated_at = models.DateTimeField(
-#         auto_now=True
-#     )
-#     transaction = models.OneToOneField(
-#     "Transaction",
-#         on_delete=models.SET_NULL,
-#         null=True,
-#         blank=True,
-#         related_name="order"
-#     )
-
-#     def __str__(self):
-#         return f"Order #{self.id}"
-
 
 class OrderItem(models.Model):
 
@@ -1903,80 +1430,6 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return self.product.name
-
-
-# ==================================================
-# SHIPMENT
-# ==================================================
-
-# class Shipment(models.Model):
-#     STATUS_CHOICES = (
-#         ("processing", "Processing"),
-#         ("shipped", "Shipped"),
-#         ("transit", "In Transit"),
-#         ("delivered", "Delivered"),
-#         ("cancelled", "Cancelled"),
-#     )
-
-#     order = models.OneToOneField(
-#         Order,
-#         on_delete=models.CASCADE,
-#         related_name="shipment"
-#     )
-
-#     tracking_number = models.CharField(
-#         max_length=100,
-#         unique=True
-#     )
-
-#     courier = models.CharField(
-#         max_length=100
-#     )
-
-#     status = models.CharField(
-#         max_length=20,
-#         choices=STATUS_CHOICES,
-#         default="processing"
-#     )
-
-#     shipped_at = models.DateTimeField(
-#         null=True,
-#         blank=True
-#     )
-
-#     delivered_at = models.DateTimeField(
-#         null=True,
-#         blank=True
-#     )
-
-# class Shipment(models.Model):
-
-#     order = models.OneToOneField(
-#         Order,
-#         related_name="shipment",
-#         on_delete=models.CASCADE
-#     )
-
-#     courier_name = models.CharField(
-#         max_length=100
-#     )
-
-#     tracking_number = models.CharField(
-#         max_length=255,
-#         unique=True
-#     )
-
-#     status = models.CharField(
-#         max_length=100,
-#         default="Pending"
-#     )
-
-#     updated_at = models.DateTimeField(
-#         auto_now=True
-#     )
-
-#     def __str__(self):
-#         return self.tracking_number
 
 
 # ==================================================
@@ -2006,37 +1459,6 @@ class StockMovement(models.Model):
         auto_now_add=True
     )
 
-# class StockMovement(models.Model):
-
-#     MOVEMENT_CHOICES = [
-#         ("in", "Stock In"),
-#         ("out", "Stock Out"),
-#     ]
-
-
-#     product = models.ForeignKey(
-#         "Product",
-#         on_delete=models.CASCADE,
-#         related_name="stock_movements"
-#     )
-
-#     movement_type = models.CharField(
-#         max_length=10,
-#         choices=MOVEMENT_CHOICES
-#     )
-
-#     quantity = models.PositiveIntegerField()
-
-#     created_at = models.DateTimeField(
-#         auto_now_add=True
-#     )
-
-#     def __str__(self):
-#         return (
-#             f"{self.product.name} - "
-#             f"{self.movement_type} "
-#             f"({self.quantity})"
-#         )
 
 # ==================================================
 # COUPON
@@ -2061,10 +1483,6 @@ class Coupon(models.Model):
 
     def __str__(self):
         return self.code
-
-
-
-
 
 
 
@@ -2676,15 +2094,6 @@ class Coupon(models.Model):
 
 #     def __str__(self):
 #         return self.code
-
-
-
-
-
-
-
-
-
 
 
 
