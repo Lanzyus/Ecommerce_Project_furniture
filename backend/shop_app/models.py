@@ -1,5 +1,14 @@
 # shop_app/models.py
 
+import os
+
+import cloudinary
+import cloudinary.uploader
+
+from django.db import models
+from django.core.exceptions import ValidationError
+
+
 from django.db import models
 from django.conf import settings
 from django.utils.text import slugify
