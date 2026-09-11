@@ -1,9 +1,8 @@
-# backend/shop_app/storage.py
-
 import os
 
 import cloudinary
 import cloudinary.uploader
+import cloudinary.utils
 
 from django.core.files.storage import Storage
 from django.utils.deconstruct import deconstructible
@@ -15,8 +14,10 @@ class ProductMediaCloudinaryStorage(Storage):
     Cloudinary storage specifically for ProductMedia.
 
     Images are uploaded as Cloudinary image resources.
-
     Videos are uploaded as Cloudinary video resources.
+
+    The saved Django filename keeps the resource type so that
+    Django can generate the correct Cloudinary URL later.
     """
 
     IMAGE_EXTENSIONS = {
@@ -42,9 +43,7 @@ class ProductMediaCloudinaryStorage(Storage):
     # =========================================================
 
     def _get_resource_type(self, filename):
-        extension = os.path.splitext(
-            str(filename)
-        )[1].lower()
+        extension = os.path.splitext(str(filename))[1].lower()
 
         if extension in self.VIDEO_EXTENSIONS:
             return "video"
@@ -59,20 +58,16 @@ class ProductMediaCloudinaryStorage(Storage):
     # =========================================================
 
     def _clean_name(self, name):
-        name = str(name).replace("\\", "/")
-        return name.lstrip("/")
+        return str(name).replace("\\", "/").lstrip("/")
 
     # =========================================================
     # SAVE
     # =========================================================
 
     def _save(self, name, content):
-
         name = self._clean_name(name)
 
-        resource_type = self._get_resource_type(
-            name
-        )
+        resource_type = self._get_resource_type(name)
 
         try:
             content.seek(0)
@@ -81,16 +76,12 @@ class ProductMediaCloudinaryStorage(Storage):
 
         filename = os.path.basename(name)
 
-        filename_without_extension = os.path.splitext(
-            filename
-        )[0]
+        extension = os.path.splitext(filename)[1].lower()
+
+        filename_without_extension = os.path.splitext(filename)[0]
 
         public_id = filename_without_extension.strip()
-
-        public_id = public_id.replace(
-            " ",
-            "_"
-        )
+        public_id = public_id.replace(" ", "_")
 
         if not public_id:
             public_id = "product_media"
@@ -105,9 +96,7 @@ class ProductMediaCloudinaryStorage(Storage):
             overwrite=False,
         )
 
-        returned_public_id = result.get(
-            "public_id"
-        )
+        returned_public_id = result.get("public_id")
 
         if not returned_public_id:
             raise RuntimeError(
@@ -115,18 +104,26 @@ class ProductMediaCloudinaryStorage(Storage):
                 "no public_id returned."
             )
 
-        return returned_public_id
+        # Keep the resource type and extension in the value
+        # stored by Django.
+        #
+        # Example:
+        # image:product_media/Double_Beds6_cxchw5.jpg
+        # video:product_media/sofa_def_jszjvr.mp4
+        #
+        # The actual Cloudinary public_id remains unchanged.
+
+        return (
+            f"{resource_type}:"
+            f"{returned_public_id}"
+            f"{extension}"
+        )
 
     # =========================================================
     # EXISTS
     # =========================================================
 
     def exists(self, name):
-        """
-        Cloudinary generates unique filenames,
-        so Django does not need to check first.
-        """
-
         return False
 
     # =========================================================
@@ -134,26 +131,26 @@ class ProductMediaCloudinaryStorage(Storage):
     # =========================================================
 
     def url(self, name):
-
         if not name:
             return ""
 
         name = self._clean_name(name)
 
-        resource_type = self._get_resource_type(
-            name
-        )
+        # New format:
+        #
+        # image:product_media/example.jpg
+        # video:product_media/example.mp4
 
-        # Every asset is uploaded as a flat public_id directly
-        # inside the "product_media" Cloudinary folder (see
-        # _save above) — there are never nested subfolders.
-        # Taking just the basename (instead of trying to strip
-        # a specific "product_media/" prefix) means this also
-        # self-heals any legacy/corrupted `name` values that
-        # contain duplicated or stray path segments.
-        public_id = os.path.basename(name)
+        if ":" in name:
+            resource_type, stored_name = name.split(":", 1)
+        else:
+            # Backward compatibility for old database records.
+            resource_type = self._get_resource_type(name)
+            stored_name = name
 
-        public_id = os.path.splitext(public_id)[0]
+        stored_name = self._clean_name(stored_name)
+
+        public_id = os.path.splitext(stored_name)[0]
 
         cloud_name = cloudinary.config().cloud_name
 
@@ -163,72 +160,57 @@ class ProductMediaCloudinaryStorage(Storage):
             )
 
         if resource_type == "video":
+            delivery_type = "video"
+        else:
+            delivery_type = "image"
 
-            return (
-                f"https://res.cloudinary.com/"
-                f"{cloud_name}/"
-                f"video/upload/"
-                f"product_media/{public_id}"
-            )
-
-        return (
-            f"https://res.cloudinary.com/"
-            f"{cloud_name}/"
-            f"image/upload/"
-            f"product_media/{public_id}"
+        # Generate the Cloudinary delivery URL.
+        url, _ = cloudinary.utils.cloudinary_url(
+            public_id,
+            resource_type=delivery_type,
+            type="upload",
+            secure=True,
         )
+
+        return url
 
     # =========================================================
     # DELETE
     # =========================================================
 
     def delete(self, name):
-
         if not name:
             return
 
         name = self._clean_name(name)
 
-        resource_type = self._get_resource_type(
-            name
-        )
+        if ":" in name:
+            resource_type, stored_name = name.split(":", 1)
+        else:
+            resource_type = self._get_resource_type(name)
+            stored_name = name
 
-        # See url() above: always derive the identifier from
-        # the basename, since assets are flat inside the
-        # "product_media" folder. This is also robust against
-        # legacy/corrupted `name` values.
-        public_id = os.path.basename(name)
+        stored_name = self._clean_name(stored_name)
 
-        public_id = os.path.splitext(public_id)[0]
+        public_id = os.path.splitext(stored_name)[0]
 
-        full_public_id = (
-            f"product_media/{public_id}"
-        )
+        if resource_type not in {"image", "video"}:
+            resource_type = "image"
 
         try:
-
             cloudinary.uploader.destroy(
-                full_public_id,
+                public_id,
                 resource_type=resource_type,
                 type="upload",
             )
-
         except Exception:
-
-            # Do not prevent Django from deleting
-            # the database record if the Cloudinary
-            # resource no longer exists.
             pass
 
     # =========================================================
     # AVAILABLE NAME
     # =========================================================
 
-    def get_available_name(
-        self,
-        name,
-        max_length=None,
-    ):
+    def get_available_name(self, name, max_length=None):
         return name
 
     # =========================================================
