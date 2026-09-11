@@ -400,8 +400,8 @@ SIMPLE_JWT = {
 
 FRONTEND_URL = config(
     "FRONTEND_URL",
-    default="http://localhost:5173"
-    # default="https://sensational-interior-07.onrender.com"
+    # default="http://localhost:5173"
+    default="https://sensational-interior-07.onrender.com"
 )
 
 
