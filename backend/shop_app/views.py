@@ -896,7 +896,8 @@ def initialize_paystack_payment(request):
             "email": request.user.email,
             "amount": int(amount * 100),
             "reference": reference,
-            "callback_url": "http://localhost:5173/payment-status"
+            # "callback_url": "http://localhost:5173/payment-status"
+         "callback_url": f"{settings.FRONTEND_URL}/payment-status"
         }
 
         print("PAYLOAD:", payload)
