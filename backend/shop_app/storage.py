@@ -144,19 +144,16 @@ class ProductMediaCloudinaryStorage(Storage):
             name
         )
 
-        public_id = os.path.splitext(name)[0]
+        # Every asset is uploaded as a flat public_id directly
+        # inside the "product_media" Cloudinary folder (see
+        # _save above) — there are never nested subfolders.
+        # Taking just the basename (instead of trying to strip
+        # a specific "product_media/" prefix) means this also
+        # self-heals any legacy/corrupted `name` values that
+        # contain duplicated or stray path segments.
+        public_id = os.path.basename(name)
 
-        public_id = public_id.replace(
-            "\\",
-            "/"
-        )
-
-        if public_id.startswith(
-            "product_media/"
-        ):
-            public_id = public_id[
-                len("product_media/"):
-            ]
+        public_id = os.path.splitext(public_id)[0]
 
         cloud_name = cloudinary.config().cloud_name
 
@@ -196,19 +193,13 @@ class ProductMediaCloudinaryStorage(Storage):
             name
         )
 
-        public_id = os.path.splitext(name)[0]
+        # See url() above: always derive the identifier from
+        # the basename, since assets are flat inside the
+        # "product_media" folder. This is also robust against
+        # legacy/corrupted `name` values.
+        public_id = os.path.basename(name)
 
-        public_id = public_id.replace(
-            "\\",
-            "/"
-        )
-
-        if public_id.startswith(
-            "product_media/"
-        ):
-            public_id = public_id[
-                len("product_media/"):
-            ]
+        public_id = os.path.splitext(public_id)[0]
 
         full_public_id = (
             f"product_media/{public_id}"
