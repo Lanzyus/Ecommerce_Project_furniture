@@ -996,8 +996,6 @@ const ProductMediaModal = ({
 };
 
 export default ProductMediaModal;
-<<<<<<< Updated upstream
-=======
 
 
 
