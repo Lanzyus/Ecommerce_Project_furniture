@@ -924,14 +924,16 @@ class ProductSerializer(
     # AVERAGE RATING
     # --------------------------------------------------------
 
-    def get_average_rating(
-        self,
-        obj,
-    ):
+    # def get_average_rating(
+    #     self,
+    #     obj,
+    # ):
 
-        reviews = obj.reviews.filter(
-            is_approved=True
-        )
+    #     reviews = obj.reviews.filter(
+    #         is_approved=True
+    #     )
+    def get_average_rating(self, obj):
+        reviews = obj.reviews.all()
 
         if not reviews.exists():
             return (
