@@ -263,6 +263,7 @@ class UserSerializer(serializers.ModelSerializer):
             "country",
             "address",
             "orders",
+            "profile_picture",
         ]
 
     def get_orders(self, obj):
