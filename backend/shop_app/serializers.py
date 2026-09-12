@@ -436,9 +436,29 @@ class ProductMediaSerializer(serializers.ModelSerializer):
             return None
 
         try:
-            return obj.file.url
+            file_name = obj.file.name
+
+            # Cloudinary cloud name
+            cloud_name = "tkmeq34s"
+
+            # Decide Cloudinary resource type from media_type
+            if obj.media_type == "video":
+                resource_type = "video"
+            else:
+                resource_type = "image"
+
+            return (
+                f"https://res.cloudinary.com/"
+                f"{cloud_name}/"
+                f"{resource_type}/upload/v1/"
+                f"{file_name}"
+            )
+
         except Exception:
             return None
+       
+
+
 
 # class ProductMediaSerializer(serializers.ModelSerializer):
 
