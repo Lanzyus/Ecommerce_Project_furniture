@@ -2284,7 +2284,7 @@ class OrderItemSerializer(
 #     similar_products = serializers.SerializerMethodField()
 
 #     class Meta:
-#         model = Product
+#
 
 #         fields = [
 #             "id",
@@ -3140,6 +3140,42 @@ class OrderItemSerializer(
 # # ============================================================
 # # ORDER SERIALIZER
 # # ============================================================
+
+# ============================================================
+# ORDER SERIALIZER
+# ============================================================
+
+class OrderSerializer(serializers.ModelSerializer):
+
+    orderitems = OrderItemSerializer(
+        source="items",
+        many=True,
+        read_only=True,
+    )
+
+    shipment = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Order
+        fields = [
+            "id",
+            "order_number",
+            "status",
+            "payment_method",
+            "payment_type",
+            "subtotal",
+            "total_amount",
+            "created_at",
+            "orderitems",
+            "shipment",
+        ]
+        read_only_fields = fields
+
+    def get_shipment(self, obj):
+        shipment = getattr(obj, "shipment", None)
+        if not shipment:
+            return None
+        return ShipmentSerializer(shipment, context=self.context).data
 
 # class OrderSerializer(
 #     serializers.ModelSerializer
