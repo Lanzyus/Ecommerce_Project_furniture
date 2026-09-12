@@ -546,12 +546,20 @@ class ProductMedia(models.Model):
         default=IMAGE,
     )
 
+    # file = models.FileField(
+    #     upload_to="product_media/",
+    #     storage=ProductMediaCloudinaryStorage(),
+    #     blank=True,
+    #     null=True,
+    # )
+
     file = models.FileField(
-        upload_to="product_media/",
-        storage=ProductMediaCloudinaryStorage(),
-        blank=True,
-        null=True,
-    )
+    upload_to="product_media/",
+    storage=ProductMediaCloudinaryStorage(),
+    max_length=500,
+    blank=True,
+    null=True,
+)
 
     related_products = models.ManyToManyField(
         "self",
@@ -893,6 +901,8 @@ class ProductReview(models.Model):
         ]
     )
 
+    is_approved = models.BooleanField(default=True)
+    
     comment = models.TextField(blank=True)
 
     created_at = models.DateTimeField(
