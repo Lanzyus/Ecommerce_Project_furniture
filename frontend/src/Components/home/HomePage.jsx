@@ -130,40 +130,141 @@ export default function HomePage() {
   const [activeCategory, setActiveCategory] = useState(null);
 
   useEffect(() => {
-    let mounted = true;
+  let mounted = true;
 
-    Promise.allSettled([
+  const loadHomeData = async () => {
+    const results = await Promise.allSettled([
       api.get("/products/"),
       api.get("/categories/"),
       api.get("/banners/"),
-    ]).then(
-      ([productResult, categoryResult, bannerResult]) => {
-        if (!mounted) return;
+    ]);
 
-        if (productResult.status === "fulfilled") {
-          setProducts(
-            productResult.value.data || []
-          );
-        }
+    if (!mounted) return;
 
-        if (categoryResult.status === "fulfilled") {
-          setCategories(
-            categoryResult.value.data || []
-          );
-        }
+    const [
+      productResult,
+      categoryResult,
+      bannerResult,
+    ] = results;
 
-        if (bannerResult.status === "fulfilled") {
-          setBanners(
-            bannerResult.value.data || []
-          );
-        }
-      }
-    );
+    // ==============================
+    // PRODUCTS
+    // ==============================
+    if (productResult.status === "fulfilled") {
+      console.log(
+        "PRODUCT API RESPONSE:",
+        productResult.value.data
+      );
 
-    return () => {
-      mounted = false;
-    };
-  }, []);
+      const data = productResult.value.data;
+
+      const productList = Array.isArray(data)
+        ? data
+        : Array.isArray(data?.results)
+          ? data.results
+          : [];
+
+      console.log(
+        "PRODUCT LIST:",
+        productList
+      );
+
+      setProducts(productList);
+    } else {
+      console.error(
+        "PRODUCT API FAILED:",
+        productResult.reason
+      );
+
+      setProducts([]);
+    }
+
+    // ==============================
+    // CATEGORIES
+    // ==============================
+    if (categoryResult.status === "fulfilled") {
+      const data = categoryResult.value.data;
+
+      const categoryList = Array.isArray(data)
+        ? data
+        : Array.isArray(data?.results)
+          ? data.results
+          : [];
+
+      setCategories(categoryList);
+    } else {
+      console.error(
+        "CATEGORY API FAILED:",
+        categoryResult.reason
+      );
+
+      setCategories([]);
+    }
+
+    // ==============================
+    // BANNERS
+    // ==============================
+    if (bannerResult.status === "fulfilled") {
+      const data = bannerResult.value.data;
+
+      const bannerList = Array.isArray(data)
+        ? data
+        : Array.isArray(data?.results)
+          ? data.results
+          : [];
+
+      setBanners(bannerList);
+    } else {
+      console.error(
+        "BANNER API FAILED:",
+        bannerResult.reason
+      );
+
+      setBanners([]);
+    }
+  };
+
+  loadHomeData();
+
+  return () => {
+    mounted = false;
+  };
+}, []);
+  // useEffect(() => {
+  //   let mounted = true;
+
+  //   Promise.allSettled([
+  //     api.get("/products/"),
+  //     api.get("/categories/"),
+  //     api.get("/banners/"),
+  //   ]).then(
+  //     ([productResult, categoryResult, bannerResult]) => {
+  //       if (!mounted) return;
+
+  //       if (productResult.status === "fulfilled") {
+  //         setProducts(
+  //           productResult.value.data || []
+  //         );
+  //       }
+
+  //       if (categoryResult.status === "fulfilled") {
+  //         setCategories(
+  //           categoryResult.value.data || []
+  //         );
+  //       }
+
+  //       if (bannerResult.status === "fulfilled") {
+  //         setBanners(
+  //           bannerResult.value.data || []
+  //         );
+  //       }
+  //     }
+  //   );
+
+  //   return () => {
+  //     mounted = false;
+  //   };
+  // }, []);
 
 
   const featuredProducts = useMemo(
