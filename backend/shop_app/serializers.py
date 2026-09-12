@@ -3185,67 +3185,67 @@ class OrderItemSerializer(
 # # ORDER DETAIL SERIALIZER
 # # ============================================================
 
-# class OrderDetailSerializer(
-#     serializers.ModelSerializer
-# ):
+class OrderDetailSerializer(
+    serializers.ModelSerializer
+):
 
-#     # IMPORTANT:
-#     # The frontend can consistently use "orderitems".
+    # IMPORTANT:
+    # The frontend can consistently use "orderitems".
 
-#     orderitems = OrderItemSerializer(
-#         source="items",
-#         many=True,
-#         read_only=True,
-#     )
+    orderitems = OrderItemSerializer(
+        source="items",
+        many=True,
+        read_only=True,
+    )
 
-#     shipment = serializers.SerializerMethodField()
+    shipment = serializers.SerializerMethodField()
 
-#     class Meta:
+    class Meta:
 
-#         model = Order
+        model = Order
 
-#         fields = [
-#             "id",
-#             "order_number",
+        fields = [
+            "id",
+            "order_number",
 
-#             "status",
+            "status",
 
-#             "payment_method",
-#             "payment_type",
-#             "payment_status",
+            "payment_method",
+            "payment_type",
+            "payment_status",
 
-#             "shipping_address",
-#             "city",
+            "shipping_address",
+            "city",
 
-#             "subtotal",
-#             "vat",
-#             "delivery_fee",
-#             "total_amount",
+            "subtotal",
+            "vat",
+            "delivery_fee",
+            "total_amount",
 
-#             "created_at",
+            "created_at",
 
-#             "orderitems",
+            "orderitems",
 
-#             "shipment",
-#         ]
+            "shipment",
+        ]
 
-#         read_only_fields = fields
+        read_only_fields = fields
 
-#     def get_shipment(self, obj):
+    def get_shipment(self, obj):
 
-#         shipment = getattr(
-#             obj,
-#             "shipment",
-#             None,
-#         )
+        shipment = getattr(
+            obj,
+            "shipment",
+            None,
+        )
 
-#         if not shipment:
-#             return None
+        if not shipment:
+            return None
 
-#         return ShipmentSerializer(
-#             shipment,
-#             context=self.context,
-#         ).data
+        return ShipmentSerializer(
+            shipment,
+            context=self.context,
+        ).data
 
 
 # # class OrderItemSerializer(serializers.ModelSerializer):
