@@ -95,15 +95,15 @@ const SearchResultsPage = () => {
                     alt={product.name}
                     className="card-img-top product-image"
                   /> */}
-                  <img
-                    src={
-                      product?.media?.[0]?.file
-                        ? `http://127.0.0.1:8001${product.media[0].file}`
-                        : "/placeholder.jpg"
-                    }
-                    alt={product.name}
-                    className="card-img-top product-image"
-                  />
+               <img
+                  src={
+                    product?.media?.[0]?.file_url ||
+                    product?.primary_image ||
+                    "/placeholder.jpg"
+                  }
+                  alt={product.name}
+                  className="card-img-top product-image"
+                />
                 </Link>
 
                 <div className="card-body">
