@@ -368,17 +368,12 @@ CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "http://localhost:3000",
+
     "https://sensational-interior-07.onrender.com",
 ]
 
-# CORS_ALLOWED_ORIGINS = [
-#     origin.strip()
-#     for origin in os.getenv(
-#     "http://localhost:5173",
-#     "https://sensational-interior-07.onrender.com",
-#     ).split(",")
-#     if origin.strip()
-# ]
+
 
 
 # CORS_ALLOWED_ORIGINS = [
