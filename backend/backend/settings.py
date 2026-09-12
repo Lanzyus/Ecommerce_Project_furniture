@@ -66,12 +66,7 @@ DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 # ALLOWED HOSTS
 # ============================================================
 
-ALLOWED_HOSTS = [
-    "sensational-interior-07.onrender.com",
-    "ecommerce-project-furniture.onrender.com",
-    "localhost",
-    "127.0.0.1",
-]
+
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
@@ -380,14 +375,45 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # CORS
 # ============================================================
 
-CORS_ALLOW_CREDENTIALS = True
+# ============================================================
+# ALLOWED HOSTS
+# ============================================================
+
+ALLOWED_HOSTS = [
+    "sensational-interior-07.onrender.com",
+    "ecommerce-project-furniture.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
+
+
+# ============================================================
+# CORS
+# ============================================================
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
     "http://localhost:3000",
-
-    "https://sensational-interior-07.onrender.com",
 ]
+
+
+# ============================================================
+# CSRF TRUSTED ORIGINS
+# ============================================================
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://sensational-interior-07.onrender.com",
+    "https://ecommerce-project-furniture.onrender.com",
+]
+
+
+CORS_ALLOW_CREDENTIALS = True
+
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:5173",
+#     "http://localhost:3000",
+
+#     "https://sensational-interior-07.onrender.com",
+# ]
 
 
 
