@@ -240,6 +240,39 @@ def build_product_media_url(media):
         return None
 
 
+
+
+# ============================================================
+# USER SERIALIZER
+# ============================================================
+
+class UserSerializer(serializers.ModelSerializer):
+
+    orders = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "username",
+            "email",
+            "first_name",
+            "last_name",
+            "phone",
+            "city",
+            "country",
+            "address",
+            "orders",
+        ]
+
+    def get_orders(self, obj):
+        return OrderSerializer(
+            obj.orders.all(),
+            many=True,
+            context=self.context,
+        ).data
+
+
 # ============================================================
 # SHIPMENT TRACKING
 # ============================================================
