@@ -9,8 +9,6 @@ from pathlib import Path
 from datetime import timedelta
 
 import cloudinary
-import cloudinary.api
-import cloudinary.uploader
 
 from dotenv import load_dotenv
 from decouple import config
@@ -37,32 +35,42 @@ load_dotenv(BASE_DIR / ".env")
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 if not SECRET_KEY:
-    raise RuntimeError("SECRET_KEY is not set in the .env file")
+    raise RuntimeError(
+        "SECRET_KEY is not set. "
+        "Set SECRET_KEY in your .env file or Render environment variables."
+    )
 
 
 DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
 
-# ALLOWED_HOSTS = [
-#     host.strip()
-#     for host in os.getenv(
-#         "ALLOWED_HOSTS",
-#         "localhost,127.0.0.1"
-#     ).split(",")
-#     if host.strip()
-# ]
+# ============================================================
+# ALLOWED HOSTS
+# ============================================================
 
 ALLOWED_HOSTS = [
-    "ecommerce-project-furniture.onrender.com",
-    "localhost",
-    "127.0.0.1",
+    host.strip()
+    for host in os.getenv(
+        "ALLOWED_HOSTS",
+        "ecommerce-project-furniture.onrender.com,"
+        "localhost,"
+        "127.0.0.1",
+    ).split(",")
+    if host.strip()
 ]
+
+
+# ============================================================
+# CSRF TRUSTED ORIGINS
+# ============================================================
 
 CSRF_TRUSTED_ORIGINS = [
     origin.strip()
     for origin in os.getenv(
         "CSRF_TRUSTED_ORIGINS",
-        ""
+        "https://ecommerce-project-furniture.onrender.com,"
+        "https://sensational-interior-07.onrender.com,"
+        "http://localhost:5173",
     ).split(",")
     if origin.strip()
 ]
@@ -72,20 +80,18 @@ CSRF_TRUSTED_ORIGINS = [
 # HTTPS / SECURITY SETTINGS
 # ============================================================
 
-# SECURE_SSL_REDIRECT = not DEBUG
+# Render terminates HTTPS at the proxy.
+SECURE_PROXY_SSL_HEADER = (
+    "HTTP_X_FORWARDED_PROTO",
+    "https",
+)
 
-# SESSION_COOKIE_SECURE = not DEBUG
-
-# CSRF_COOKIE_SECURE = not DEBUG
-
-
+# Keep these False unless you intentionally want Django itself
+# to force HTTPS locally/through the application server.
 SECURE_SSL_REDIRECT = False
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SECURE = False
 
-SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-
-SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
 
 if not DEBUG:
     SECURE_HSTS_SECONDS = 31536000
@@ -100,28 +106,10 @@ if not DEBUG:
 # APPLICATIONS
 # ============================================================
 
-# INSTALLED_APPS = [
-#     # Django
-#     "django.contrib.admin",
-#     "django.contrib.auth",
-#     "django.contrib.contenttypes",
-#     "django.contrib.sessions",
-#     "django.contrib.messages",
-#     "django.contrib.staticfiles",
-
-#     # Third-party
-#     "rest_framework",
-#     "corsheaders",
-#     "rest_framework_simplejwt",
-
-#     # Local apps
-#     "accounts",
-#     "core",
-#     "shop_app",
-# ]
-
 INSTALLED_APPS = [
+    # --------------------------------------------------------
     # Django
+    # --------------------------------------------------------
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -129,18 +117,23 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
+    # --------------------------------------------------------
     # Third-party
+    # --------------------------------------------------------
     "cloudinary_storage",
     "cloudinary",
     "rest_framework",
     "corsheaders",
     "rest_framework_simplejwt",
 
+    # --------------------------------------------------------
     # Local apps
+    # --------------------------------------------------------
     "accounts",
     "core",
     "shop_app",
 ]
+
 
 # ============================================================
 # MIDDLEWARE
@@ -148,8 +141,11 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+
+    # WhiteNoise must be after SecurityMiddleware
     "whitenoise.middleware.WhiteNoiseMiddleware",
 
+    # CORS middleware should be high in the middleware stack
     "corsheaders.middleware.CorsMiddleware",
 
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -204,26 +200,35 @@ WSGI_APPLICATION = "backend.wsgi.application"
 # DATABASE
 # ============================================================
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": os.getenv("DB_NAME", "generictest"),
-#         "USER": os.getenv("DB_USER", "postgres"),
-#         "PASSWORD": os.getenv("DB_PASSWORD", ""),
-#         "HOST": os.getenv("DB_HOST", "localhost"),
-#         "PORT": os.getenv("DB_PORT", "5432"),
-#     }
-# }
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DB_NAME", "generictest"),
-        "USER": os.getenv("DB_USER", "postgres"),
-        "PASSWORD": os.getenv("DB_PASSWORD", ""),
-        "HOST": os.getenv("DB_HOST", "localhost"),
-        "PORT": os.getenv("DB_PORT", "5432"),
-        "OPTIONS": {} if DEBUG else {"sslmode": "require"},
+        "NAME": os.getenv(
+            "DB_NAME",
+            "generictest",
+        ),
+        "USER": os.getenv(
+            "DB_USER",
+            "postgres",
+        ),
+        "PASSWORD": os.getenv(
+            "DB_PASSWORD",
+            "",
+        ),
+        "HOST": os.getenv(
+            "DB_HOST",
+            "localhost",
+        ),
+        "PORT": os.getenv(
+            "DB_PORT",
+            "5432",
+        ),
+
+        "OPTIONS": (
+            {"sslmode": "require"}
+            if not DEBUG
+            else {}
+        ),
     }
 }
 
@@ -285,79 +290,148 @@ STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 
-STORAGES = {
-    "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
-
-# STORAGES = {
-#     "staticfiles": {
-#         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-#     },
-# }
-
-
-
 # ============================================================
-# MEDIA FILES
+# CLOUDINARY CONFIGURATION
 # ============================================================
 
-# MEDIA_URL = "/media/"
+# Read Cloudinary credentials from environment variables.
+#
+# LOCAL .env example:
+#
+# CLOUDINARY_CLOUD_NAME=tkmeq34s
+# CLOUDINARY_API_KEY=xxxxxxxxxxxxxxxx
+# CLOUDINARY_API_SECRET=xxxxxxxxxxxxxxxx
+#
+# RENDER:
+# Add the same variables under Environment Variables.
 
-# MEDIA_ROOT = BASE_DIR / "media"
+CLOUDINARY_CLOUD_NAME = os.getenv(
+    "CLOUDINARY_CLOUD_NAME",
+    "",
+).strip()
+
+CLOUDINARY_API_KEY = os.getenv(
+    "CLOUDINARY_API_KEY",
+    "",
+).strip()
+
+CLOUDINARY_API_SECRET = os.getenv(
+    "CLOUDINARY_API_SECRET",
+    "",
+).strip()
 
 
-# CLOUDINARY_STORAGE = {
-#     "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
-#     "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
-#     "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
-# }
-
-# DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-
-# ============================================================
-# MEDIA FILES (CLOUDINARY)
-# ============================================================
-
-
-
+# Django Cloudinary storage configuration.
 CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": os.getenv("CLOUDINARY_CLOUD_NAME"),
-    "API_KEY": os.getenv("CLOUDINARY_API_KEY"),
-    "API_SECRET": os.getenv("CLOUDINARY_API_SECRET"),
+    "CLOUD_NAME": CLOUDINARY_CLOUD_NAME,
+    "API_KEY": CLOUDINARY_API_KEY,
+    "API_SECRET": CLOUDINARY_API_SECRET,
 }
 
-# Explicitly configure the cloudinary SDK here. Do not rely on
-# importing cloudinary_storage.storage (or any other module) as
-# a side effect to do this — that only happens when Django's
-# *default* file storage backend is actually touched (e.g. by a
-# Banner/Category ImageField), which is not guaranteed to occur
-# before a custom storage class (like ProductMediaCloudinaryStorage)
-# calls cloudinary.config() to read these values. Without this,
-# cloudinary.config().cloud_name can be empty on a fresh worker,
-# causing ProductMediaCloudinaryStorage.url() to raise and the
-# /products/ endpoint to 500.
+
+# ------------------------------------------------------------
+# IMPORTANT:
+#
+# Explicitly configure the Cloudinary Python SDK.
+#
+# Do NOT depend on cloudinary_storage importing/configuring
+# the SDK as a side effect.
+#
+# This is particularly important for:
+#
+# ProductMediaCloudinaryStorage
+#
+# because ProductMedia.file uses a custom storage backend.
+# ------------------------------------------------------------
+
 cloudinary.config(
-    cloud_name=CLOUDINARY_STORAGE["CLOUD_NAME"],
-    api_key=CLOUDINARY_STORAGE["API_KEY"],
-    api_secret=CLOUDINARY_STORAGE["API_SECRET"],
+    cloud_name=CLOUDINARY_CLOUD_NAME,
+    api_key=CLOUDINARY_API_KEY,
+    api_secret=CLOUDINARY_API_SECRET,
     secure=True,
 )
 
-MEDIA_URL = "/media/"
 
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+# ------------------------------------------------------------
+# Optional production validation.
+#
+# We don't raise an error during local development if the
+# credentials are missing, but production should have them.
+# ------------------------------------------------------------
+
+if not DEBUG:
+    missing_cloudinary_settings = []
+
+    if not CLOUDINARY_CLOUD_NAME:
+        missing_cloudinary_settings.append(
+            "CLOUDINARY_CLOUD_NAME"
+        )
+
+    if not CLOUDINARY_API_KEY:
+        missing_cloudinary_settings.append(
+            "CLOUDINARY_API_KEY"
+        )
+
+    if not CLOUDINARY_API_SECRET:
+        missing_cloudinary_settings.append(
+            "CLOUDINARY_API_SECRET"
+        )
+
+    if missing_cloudinary_settings:
+        raise RuntimeError(
+            "Missing required Cloudinary environment variables: "
+            + ", ".join(missing_cloudinary_settings)
+        )
+
+
+# ============================================================
+# FILE STORAGE
+# ============================================================
+
+STORAGES = {
+    "default": {
+        "BACKEND": (
+            "cloudinary_storage.storage."
+            "MediaCloudinaryStorage"
+        ),
+    },
+
+    "staticfiles": {
+        "BACKEND": (
+            "whitenoise.storage."
+            "CompressedManifestStaticFilesStorage"
+        ),
+    },
+}
+
+
+# Keep this for compatibility with code/packages that still
+# reference DEFAULT_FILE_STORAGE.
+DEFAULT_FILE_STORAGE = (
+    "cloudinary_storage.storage.MediaCloudinaryStorage"
+)
+
+
+# ============================================================
+# MEDIA
+# ============================================================
+
+# Do not use MEDIA_ROOT for Cloudinary files.
+#
+# Product images/videos are stored in Cloudinary.
+#
+# MEDIA_URL is retained for compatibility with existing code.
+
+MEDIA_URL = "/media/"
 
 
 # ============================================================
 # DEFAULT PRIMARY KEY
 # ============================================================
 
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+DEFAULT_AUTO_FIELD = (
+    "django.db.models.BigAutoField"
+)
 
 
 # ============================================================
@@ -366,29 +440,18 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_ALLOW_CREDENTIALS = True
 
+
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "https://sensational-interior-07.onrender.com",
+    origin.strip()
+    for origin in os.getenv(
+        "CORS_ALLOWED_ORIGINS",
+        (
+            "http://localhost:5173,"
+            "https://sensational-interior-07.onrender.com"
+        ),
+    ).split(",")
+    if origin.strip()
 ]
-
-# CORS_ALLOWED_ORIGINS = [
-#     origin.strip()
-#     for origin in os.getenv(
-#     "http://localhost:5173",
-#     "https://sensational-interior-07.onrender.com",
-#     ).split(",")
-#     if origin.strip()
-# ]
-
-
-# CORS_ALLOWED_ORIGINS = [
-#     origin.strip()
-#     for origin in os.getenv(
-#         "CORS_ALLOWED_ORIGINS",
-#         "http://localhost:5173"
-#     ).split(",")
-#     if origin.strip()
-# ]
 
 
 # ============================================================
@@ -397,7 +460,8 @@ CORS_ALLOWED_ORIGINS = [
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "rest_framework_simplejwt.authentication."
+        "JWTAuthentication",
     ),
 }
 
@@ -407,7 +471,9 @@ REST_FRAMEWORK = {
 # ============================================================
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "ACCESS_TOKEN_LIFETIME": timedelta(
+        minutes=60
+    ),
 }
 
 
@@ -417,8 +483,9 @@ SIMPLE_JWT = {
 
 FRONTEND_URL = config(
     "FRONTEND_URL",
-    # default="http://localhost:5173"
-    default="https://sensational-interior-07.onrender.com"
+    default=(
+        "https://sensational-interior-07.onrender.com"
+    ),
 )
 
 
@@ -426,34 +493,36 @@ FRONTEND_URL = config(
 # EMAIL
 # ============================================================
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_BACKEND = (
+    "django.core.mail.backends.smtp.EmailBackend"
+)
 
 EMAIL_HOST = config(
     "EMAIL_HOST",
-    default="smtp.gmail.com"
+    default="smtp.gmail.com",
 )
 
 EMAIL_PORT = config(
     "EMAIL_PORT",
     default=587,
-    cast=int
+    cast=int,
 )
 
 EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = config(
     "EMAIL_HOST_USER",
-    default=""
+    default="",
 )
 
 EMAIL_HOST_PASSWORD = config(
     "EMAIL_HOST_PASSWORD",
-    default=""
+    default="",
 )
 
 DEFAULT_FROM_EMAIL = config(
     "DEFAULT_FROM_EMAIL",
-    default=EMAIL_HOST_USER
+    default=EMAIL_HOST_USER,
 )
 
 
@@ -467,7 +536,9 @@ COMPANY_EMAIL = "support@naijaopenmarket.com"
 
 COMPANY_PHONE = "+2348012345678"
 
-COMPANY_ADDRESS = "Ibadan, Oyo State, Nigeria"
+COMPANY_ADDRESS = (
+    "Ibadan, Oyo State, Nigeria"
+)
 
 
 # ============================================================
@@ -476,12 +547,12 @@ COMPANY_ADDRESS = "Ibadan, Oyo State, Nigeria"
 
 PAYSTACK_PUBLIC_KEY = config(
     "PAYSTACK_PUBLIC_KEY",
-    default=""
+    default="",
 )
 
 PAYSTACK_SECRET_KEY = config(
     "PAYSTACK_SECRET_KEY",
-    default=""
+    default="",
 )
 
 
@@ -491,23 +562,18 @@ PAYSTACK_SECRET_KEY = config(
 
 FLUTTERWAVE_PUBLIC_KEY = config(
     "FLUTTERWAVE_PUBLIC_KEY",
-    default=""
+    default="",
 )
 
 FLUTTERWAVE_SECRET_KEY = config(
     "FLUTTERWAVE_SECRET_KEY",
-    default=""
+    default="",
 )
 
 FLUTTERWAVE_ENCRYPTION_KEY = config(
     "FLUTTERWAVE_ENCRYPTION_KEY",
-    default=""
+    default="",
 )
-
-
-
-
-
 
 
 
