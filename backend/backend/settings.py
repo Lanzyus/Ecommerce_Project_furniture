@@ -62,18 +62,24 @@ DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 # ALLOWED HOSTS
 # ============================================================
 
-ALLOWED_HOSTS = [
-    host.strip()
-    for host in os.getenv(
-        "ALLOWED_HOSTS",
-        "sensational-interior-07.onrender.com,"
-        "ecommerce-project-furniture.onrender.com,"
-        "localhost,"
-        "127.0.0.1",
-    ).split(",")
-    if host.strip()
-]
+# ALLOWED_HOSTS = [
+#     host.strip()
+#     for host in os.getenv(
+#         "ALLOWED_HOSTS",
+#         "sensational-interior-07.onrender.com,"
+#         "ecommerce-project-furniture.onrender.com,"
+#         "localhost,"
+#         "127.0.0.1",
+#     ).split(",")
+#     if host.strip()
+# ]
 
+ALLOWED_HOSTS = [
+    "sensational-interior-07.onrender.com",
+    "ecommerce-project-furniture.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
 
 CSRF_TRUSTED_ORIGINS = [
     origin.strip()
