@@ -67,15 +67,21 @@ DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 # ============================================================
 
 ALLOWED_HOSTS = [
-    host.strip()
-    for host in os.getenv(
-        "ALLOWED_HOSTS",
-        "sensational-interior-07.onrender.com,"
-        "ecommerce-project-furniture.onrender.com,"
-        "localhost,"
-        "127.0.0.1",
-    ).split(",")
-    if host.strip()
+    "sensational-interior-07.onrender.com",
+    "ecommerce-project-furniture.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    # "https://YOUR-FRONTEND-DOMAIN.com",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://sensational-interior-07.onrender.com",
+    "https://ecommerce-project-furniture.onrender.com",
+    # "https://YOUR-FRONTEND-DOMAIN.com",
 ]
 
 # ALLOWED_HOSTS = [
@@ -85,14 +91,14 @@ ALLOWED_HOSTS = [
 #     "127.0.0.1",
 # ]
 
-CSRF_TRUSTED_ORIGINS = [
-    origin.strip()
-    for origin in os.getenv(
-        "CSRF_TRUSTED_ORIGINS",
-        ""
-    ).split(",")
-    if origin.strip()
-]
+# CSRF_TRUSTED_ORIGINS = [
+#     origin.strip()
+#     for origin in os.getenv(
+#         "CSRF_TRUSTED_ORIGINS",
+#         ""
+#     ).split(",")
+#     if origin.strip()
+# ]
 
 
 # ============================================================
