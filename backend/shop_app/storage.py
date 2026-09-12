@@ -1,28 +1,4 @@
-# ============================================================
-# PRODUCT MEDIA CLOUDINARY STORAGE
-# ============================================================
-#
-# This storage backend handles ProductMedia files using
-# Cloudinary.
-#
-# It supports:
-#
-#   - Images
-#   - Videos
-#
-# The most important goals are:
-#
-#   1. Every upload gets a UNIQUE Cloudinary public_id.
-#   2. Images are delivered through /image/upload/
-#   3. Videos are delivered through /video/upload/
-#   4. Cloudinary's version is preserved.
-#   5. Browser/CDN caching does not cause an old asset to
-#      appear after a new upload.
-#   6. Existing Django code can continue using:
-#
-#          obj.file.url
-#
-# ============================================================
+# backend/shop_app/storage.py
 
 import os
 import re
@@ -40,55 +16,26 @@ from django.utils.deconstruct import deconstructible
 @deconstructible
 class ProductMediaCloudinaryStorage(Storage):
     """
-    Cloudinary storage specifically for ProductMedia.
+    Cloudinary storage dedicated to ProductMedia.
 
-    Every uploaded file receives a unique Cloudinary public_id.
+    Images are uploaded using Cloudinary resource_type="image".
 
-    Example image:
+    Videos are uploaded using Cloudinary resource_type="video".
 
-        Original:
-            sofa_def.jpg
-
-        Cloudinary:
-            product_media/sofa_def_a82f91c72d10
-
-        Django stored value:
-
-            image:product_media/sofa_def_a82f91c72d10.jpg|v1768254000
-
-
-    Example video:
-
-        Original:
-            sofa_video.mp4
-
-        Cloudinary:
-            product_media/sofa_video_91bc72d8e301
-
-        Django stored value:
-
-            video:product_media/sofa_video_91bc72d8e301.mp4|v1768254050
-
-
-    The stored value allows the URL method to know:
-
+    The Django database value keeps:
         - resource type
         - public ID
         - original extension
         - Cloudinary version
 
-    without having to guess later.
+    Example image:
+        image:product_media/modern_sofa_a82f91c72d10.jpg|v1768254000
+
+    Example video:
+        video:product_media/modern_sofa_91bc72d8e301.mp4|v1768254050
     """
 
-    # ========================================================
-    # CLOUDINARY FOLDER
-    # ========================================================
-
     CLOUDINARY_FOLDER = "product_media"
-
-    # ========================================================
-    # ALLOWED IMAGE EXTENSIONS
-    # ========================================================
 
     IMAGE_EXTENSIONS = {
         ".jpg",
@@ -99,10 +46,6 @@ class ProductMediaCloudinaryStorage(Storage):
         ".gif",
     }
 
-    # ========================================================
-    # ALLOWED VIDEO EXTENSIONS
-    # ========================================================
-
     VIDEO_EXTENSIONS = {
         ".mp4",
         ".webm",
@@ -112,656 +55,297 @@ class ProductMediaCloudinaryStorage(Storage):
         ".mkv",
     }
 
-    # ========================================================
+    # =========================================================
     # RESOURCE TYPE
-    # ========================================================
+    # =========================================================
 
     def _get_resource_type(self, filename):
         """
-        Determine whether a file is an image or video.
-
-        We use the ORIGINAL filename/extension during upload.
-
-        After the file is uploaded, we do not try to determine
-        the resource type from the Cloudinary public_id.
-
-        That is important because Cloudinary public_ids normally
-        do not contain the original file extension.
+        Determine whether the file is an image or video
+        from its extension.
         """
 
-        extension = os.path.splitext(
-            str(filename)
-        )[1].lower()
-
-        # ----------------------------------------------------
-        # Video
-        # ----------------------------------------------------
+        extension = os.path.splitext(str(filename))[1].lower()
 
         if extension in self.VIDEO_EXTENSIONS:
             return "video"
 
-        # ----------------------------------------------------
-        # Image
-        # ----------------------------------------------------
-
         if extension in self.IMAGE_EXTENSIONS:
             return "image"
 
-        # ----------------------------------------------------
-        # Unsupported file
-        # ----------------------------------------------------
-
         return None
 
-    # ========================================================
+    # =========================================================
     # CLEAN NAME
-    # ========================================================
+    # =========================================================
 
     def _clean_name(self, name):
         """
-        Normalize a Django storage filename.
-
-        This converts Windows backslashes to forward slashes
-        and removes leading slashes.
+        Normalize Windows/Linux path separators.
         """
 
-        return (
-            str(name)
-            .replace("\\", "/")
-            .lstrip("/")
-        )
+        return str(name).replace("\\", "/").lstrip("/")
 
-    # ========================================================
+    # =========================================================
     # SAFE PUBLIC ID
-    # ========================================================
+    # =========================================================
 
     def _make_safe_public_id(self, filename):
         """
         Convert the original filename into a safe Cloudinary
-        public ID component.
-
-        Example:
-
-            "My Sofa Photo (Final).jpg"
-
-        becomes:
-
-            "My_Sofa_Photo_Final"
+        public ID and append a UUID so two files with the same
+        filename never collide.
         """
 
-        # ----------------------------------------------------
-        # Remove extension.
-        # ----------------------------------------------------
-
-        filename_without_extension = os.path.splitext(
-            filename
+        base_name = os.path.splitext(
+            os.path.basename(filename)
         )[0]
 
-        # ----------------------------------------------------
-        # Replace whitespace with underscores.
-        # ----------------------------------------------------
-
-        filename_without_extension = re.sub(
-            r"\s+",
-            "_",
-            filename_without_extension,
-        )
-
-        # ----------------------------------------------------
-        # Keep only safe characters.
-        #
-        # We keep:
-        #
-        # letters
-        # numbers
-        # underscores
-        # hyphens
-        # ----------------------------------------------------
-
+        # Replace spaces and unsafe characters.
         safe_name = re.sub(
-            r"[^A-Za-z0-9_-]",
+            r"[^a-zA-Z0-9_-]+",
             "_",
-            filename_without_extension,
+            base_name,
         )
-
-        # ----------------------------------------------------
-        # Remove repeated underscores.
-        # ----------------------------------------------------
-
-        safe_name = re.sub(
-            r"_+",
-            "_",
-            safe_name,
-        )
-
-        # ----------------------------------------------------
-        # Remove underscores from beginning/end.
-        # ----------------------------------------------------
 
         safe_name = safe_name.strip("_")
-
-        # ----------------------------------------------------
-        # Fallback if filename is empty or contains only
-        # unsupported characters.
-        # ----------------------------------------------------
 
         if not safe_name:
             safe_name = "product_media"
 
-        return safe_name
+        # Guaranteed uniqueness.
+        unique_suffix = uuid.uuid4().hex[:12]
 
-    # ========================================================
+        return f"{safe_name}_{unique_suffix}"
+
+    # =========================================================
     # SAVE
-    # ========================================================
+    # =========================================================
 
     def _save(self, name, content):
         """
-        Upload a ProductMedia file to Cloudinary.
-
-        IMPORTANT:
-
-        The public_id is intentionally UNIQUE.
-
-        We do NOT use:
-
-            public_id = filename
-
-        because filenames are not unique.
-
-        Instead:
-
-            filename + UUID
-
-        is used.
-
-        Example:
-
-            sofa_def_a82f91c72d10
+        Upload the file to Cloudinary and return the value
+        that Django will store in ProductMedia.file.
         """
-
-        # ----------------------------------------------------
-        # Normalize filename.
-        # ----------------------------------------------------
 
         name = self._clean_name(name)
 
-        # ----------------------------------------------------
-        # Get original filename.
-        # ----------------------------------------------------
-
-        filename = os.path.basename(name)
-
-        # ----------------------------------------------------
-        # Get extension.
-        # ----------------------------------------------------
-
-        extension = os.path.splitext(
-            filename
-        )[1].lower()
-
-        # ----------------------------------------------------
-        # Determine resource type.
-        # ----------------------------------------------------
-
-        resource_type = self._get_resource_type(
-            filename
-        )
-
-        # ----------------------------------------------------
-        # IMPORTANT:
-        #
-        # Do not allow "auto" here.
-        #
-        # ProductMedia only supports image/video.
-        #
-        # If we allow "auto", a bad/unsupported file could
-        # become a Cloudinary "raw" resource and then our URL
-        # generation would be incorrect.
-        # ----------------------------------------------------
+        resource_type = self._get_resource_type(name)
 
         if resource_type is None:
-
             raise SuspiciousOperation(
-                "Unsupported product media format. "
-                "Allowed image formats: JPG, JPEG, PNG, "
-                "WEBP, AVIF, GIF. "
-                "Allowed video formats: MP4, WEBM, MOV, "
-                "M4V, AVI, MKV."
+                f"Unsupported ProductMedia file type: {name}"
             )
 
-        # ----------------------------------------------------
-        # Reset file pointer.
-        #
-        # This is important when Django has already read part
-        # of the uploaded file.
-        # ----------------------------------------------------
-
+        # Reset file pointer before uploading.
         try:
             content.seek(0)
         except Exception:
             pass
 
-        # ----------------------------------------------------
-        # Create a safe version of the original filename.
-        # ----------------------------------------------------
+        filename = os.path.basename(name)
 
-        safe_filename = self._make_safe_public_id(
-            filename
-        )
+        extension = os.path.splitext(filename)[1].lower()
 
-        # ----------------------------------------------------
-        # Generate a truly unique identifier.
-        #
-        # Example:
-        #
-        # a82f91c72d10
-        # ----------------------------------------------------
+        public_id = self._make_safe_public_id(filename)
 
-        unique_id = uuid.uuid4().hex[:12]
-
-        # ----------------------------------------------------
-        # FINAL CLOUDINARY PUBLIC ID
-        #
-        # Example:
-        #
-        # sofa_def_a82f91c72d10
-        #
-        # Another upload with the exact same filename:
-        #
-        # sofa_def_91bc72d8e301
-        #
-        # Therefore there is NO collision.
-        # ----------------------------------------------------
-
-        public_id = (
-            f"{safe_filename}_{unique_id}"
-        )
-
-        # ----------------------------------------------------
-        # Upload to Cloudinary.
-        #
-        # We explicitly specify the resource type because we
-        # already determined it from the original file.
-        #
-        # This guarantees:
-        #
-        # image -> Cloudinary image
-        # video -> Cloudinary video
-        # ----------------------------------------------------
+        # -----------------------------------------------------
+        # CLOUDINARY UPLOAD
+        # -----------------------------------------------------
 
         result = cloudinary.uploader.upload(
             content,
             folder=self.CLOUDINARY_FOLDER,
             public_id=public_id,
-
-            # ------------------------------------------------
-            # IMPORTANT:
-            #
-            # We already know the resource type, so don't use
-            # "auto" here.
-            # ------------------------------------------------
-
             resource_type=resource_type,
 
-            # ------------------------------------------------
-            # Never overwrite another upload.
-            #
-            # Because our public_id contains a UUID, this is
-            # safe.
-            # ------------------------------------------------
-
-            overwrite=False,
-
-            # ------------------------------------------------
-            # We are providing our own public_id.
-            #
-            # Therefore unique_filename is unnecessary.
-            # ------------------------------------------------
-
+            # We already generate our own unique public ID.
+            use_filename=False,
             unique_filename=False,
 
-            # ------------------------------------------------
-            # Don't let Cloudinary derive another filename
-            # from the original upload.
-            # ------------------------------------------------
+            # Never overwrite another product media file.
+            overwrite=False,
 
-            use_filename=False,
-
-            # ------------------------------------------------
-            # Secure HTTPS delivery.
-            # ------------------------------------------------
-
+            # Generate secure HTTPS URLs.
             secure=True,
         )
 
-        # ====================================================
+        # -----------------------------------------------------
         # VALIDATE CLOUDINARY RESPONSE
-        # ====================================================
+        # -----------------------------------------------------
 
-        returned_public_id = result.get(
-            "public_id"
-        )
+        returned_public_id = result.get("public_id")
 
         returned_resource_type = result.get(
             "resource_type"
         )
 
-        returned_version = result.get(
-            "version"
-        )
-
-        # ----------------------------------------------------
-        # public_id is mandatory.
-        # ----------------------------------------------------
+        version = result.get("version")
 
         if not returned_public_id:
-
-            raise SuspiciousOperation(
-                "Cloudinary upload failed: "
-                "no public_id was returned."
+            raise RuntimeError(
+                "Cloudinary upload failed: public_id missing."
             )
 
-        # ----------------------------------------------------
-        # resource_type is mandatory.
-        # ----------------------------------------------------
-
-        if returned_resource_type not in {
-            "image",
-            "video",
-        }:
-
-            raise SuspiciousOperation(
-                "Cloudinary returned an unsupported "
-                f"resource type: {returned_resource_type}"
+        if returned_resource_type != resource_type:
+            raise RuntimeError(
+                "Cloudinary resource type mismatch. "
+                f"Expected {resource_type}, "
+                f"received {returned_resource_type}."
             )
 
-        # ----------------------------------------------------
-        # version is important for cache busting.
-        # ----------------------------------------------------
-
-        if returned_version is None:
-
-            raise SuspiciousOperation(
-                "Cloudinary upload failed: "
-                "no version was returned."
+        if not version:
+            raise RuntimeError(
+                "Cloudinary upload failed: version missing."
             )
 
-        # ====================================================
-        # STORE METADATA IN DJANGO'S FILE NAME
-        # ====================================================
+        # -----------------------------------------------------
+        # VALUE STORED IN DATABASE
+        # -----------------------------------------------------
+
+        # Example:
+        #
+        # video:product_media/sofa_91bc72d8e301.mp4|v1768254050
         #
         # Example:
         #
-        # image:product_media/sofa_def_a82f91c72d10.jpg|v1768254000
-        #
-        # or:
-        #
-        # video:product_media/sofa_video_91bc72d8e301.mp4|v1768254050
-        #
-        # ====================================================
+        # image:product_media/sofa_a82f91c72d10.jpg|v1768254000
 
         stored_name = (
-            f"{returned_resource_type}:"
+            f"{resource_type}:"
             f"{returned_public_id}"
             f"{extension}"
-            f"|v{returned_version}"
+            f"|v{version}"
         )
 
         return stored_name
 
-    # ========================================================
+    # =========================================================
     # EXISTS
-    # ========================================================
+    # =========================================================
 
     def exists(self, name):
         """
-        Always return False.
+        We deliberately return False.
 
-        Cloudinary assets are remote and every upload receives
-        a unique public_id.
-
-        Returning False allows Django to proceed with the
-        upload rather than trying to treat Cloudinary like a
-        local filesystem.
+        Cloudinary manages the actual remote resource.
         """
 
         return False
 
-    # ========================================================
+    # =========================================================
     # PARSE STORED NAME
-    # ========================================================
+    # =========================================================
 
     def _parse_stored_name(self, name):
         """
-        Parse the custom filename stored in Django.
+        Convert the database value back into its components.
 
-        New format:
+        Supports the new format:
 
-            image:product_media/sofa_abc123.jpg|v1768254000
+            video:product_media/example.mp4|v123456
 
-        Returns:
-
-            resource_type
-            stored_name
-            version
-            public_id
-
+        Also provides basic compatibility with older records.
         """
 
         name = self._clean_name(name)
 
-        # ----------------------------------------------------
-        # Default values.
-        # ----------------------------------------------------
-
         resource_type = None
         version = None
-        stored_name = name
 
-        # ====================================================
+        # -----------------------------------------------------
         # RESOURCE TYPE
-        # ====================================================
+        # -----------------------------------------------------
 
-        if ":" in stored_name:
+        if ":" in name:
+            prefix, remainder = name.split(":", 1)
 
-            possible_resource_type, remainder = (
-                stored_name.split(":", 1)
-            )
+            if prefix in {"image", "video"}:
+                resource_type = prefix
+                name = remainder
 
-            if possible_resource_type in {
-                "image",
-                "video",
-            }:
-
-                resource_type = (
-                    possible_resource_type
-                )
-
-                stored_name = remainder
-
-        # ====================================================
+        # -----------------------------------------------------
         # VERSION
-        # ====================================================
+        # -----------------------------------------------------
 
-        # ----------------------------------------------------
-        # New format ends with:
-        #
-        # |v1768254000
-        # ----------------------------------------------------
-
-        version_match = re.search(
-            r"\|v(\d+)$",
-            stored_name,
-        )
-
-        if version_match:
-
-            version = int(
-                version_match.group(1)
+        if "|v" in name:
+            name, version_string = name.rsplit(
+                "|v",
+                1,
             )
 
-            stored_name = stored_name[
-                :version_match.start()
-            ]
+            try:
+                version = int(version_string)
+            except (TypeError, ValueError):
+                version = None
 
-        # ====================================================
-        # PUBLIC ID
-        # ====================================================
+        name = self._clean_name(name)
 
-        # ----------------------------------------------------
-        # The extension was intentionally stored after the
-        # public_id so that Django can retain information about
-        # the original file.
-        #
-        # We remove it before generating the Cloudinary URL.
-        # ----------------------------------------------------
-
-        public_id = os.path.splitext(
-            stored_name
-        )[0]
-
-        # ----------------------------------------------------
+        # -----------------------------------------------------
         # BACKWARD COMPATIBILITY
-        # ----------------------------------------------------
-        #
-        # Old records may not contain:
-        #
-        # resource_type
-        #
-        # or:
-        #
-        # version
-        #
-        # In that case, try the old extension-based method.
-        #
-        # IMPORTANT:
-        #
-        # An old video whose database value has NO extension
-        # cannot be automatically identified as a video.
-        # Such old records need to be re-uploaded.
-        # ----------------------------------------------------
+        # -----------------------------------------------------
 
         if resource_type is None:
+            resource_type = self._get_resource_type(name)
 
-            resource_type = (
-                self._get_resource_type(
-                    stored_name
-                )
-            )
+        # -----------------------------------------------------
+        # PUBLIC ID
+        # -----------------------------------------------------
+
+        public_id = os.path.splitext(name)[0]
+
+        if public_id.startswith(
+            f"{self.CLOUDINARY_FOLDER}/"
+        ):
+            public_id = public_id[
+                len(self.CLOUDINARY_FOLDER) + 1:
+            ]
+
+        public_id = (
+            f"{self.CLOUDINARY_FOLDER}/{public_id}"
+        )
 
         return {
             "resource_type": resource_type,
-            "stored_name": stored_name,
             "version": version,
+            "stored_name": name,
             "public_id": public_id,
         }
 
-    # ========================================================
+    # =========================================================
     # URL
-    # ========================================================
+    # =========================================================
 
     def url(self, name):
         """
         Generate the correct Cloudinary delivery URL.
-
-        IMAGE:
-
-            /image/upload/vVERSION/PUBLIC_ID
-
-        VIDEO:
-
-            /video/upload/vVERSION/PUBLIC_ID
-
-        Example image:
-
-            https://res.cloudinary.com/tkmeq34s/
-            image/upload/v1768254000/
-            product_media/sofa_def_a82f91c72d10
-
-        Example video:
-
-            https://res.cloudinary.com/tkmeq34s/
-            video/upload/v1768254050/
-            product_media/sofa_video_91bc72d8e301
         """
-
-        # ----------------------------------------------------
-        # Empty value.
-        # ----------------------------------------------------
 
         if not name:
             return ""
 
-        # ----------------------------------------------------
-        # Parse stored value.
-        # ----------------------------------------------------
+        parsed = self._parse_stored_name(name)
 
-        parsed = self._parse_stored_name(
-            name
-        )
-
-        resource_type = parsed[
-            "resource_type"
-        ]
-
-        public_id = parsed[
-            "public_id"
-        ]
-
-        version = parsed[
-            "version"
-        ]
-
-        # ----------------------------------------------------
-        # If resource type is still unknown, fail loudly.
-        #
-        # This is much safer than accidentally serving a video
-        # through /image/upload/.
-        # ----------------------------------------------------
-
-        if resource_type not in {
-            "image",
-            "video",
-        }:
-
-            raise SuspiciousOperation(
-                "Unable to determine Cloudinary resource "
-                f"type for media: {name}"
-            )
-
-        # ----------------------------------------------------
-        # Get Cloudinary cloud name.
-        # ----------------------------------------------------
+        resource_type = parsed["resource_type"]
+        version = parsed["version"]
+        public_id = parsed["public_id"]
 
         cloud_name = cloudinary.config().cloud_name
 
-        # ----------------------------------------------------
-        # Make sure Cloudinary is configured.
-        # ----------------------------------------------------
-
         if not cloud_name:
-
             raise RuntimeError(
                 "Cloudinary cloud_name is not configured."
             )
 
-        # ====================================================
-        # GENERATE URL
-        # ====================================================
+        if resource_type not in {"image", "video"}:
+            raise SuspiciousOperation(
+                f"Unable to determine Cloudinary resource type "
+                f"for stored media: {name}"
+            )
 
-        # ----------------------------------------------------
-        # Use Cloudinary's URL helper.
-        #
-        # We explicitly pass:
-        #
-        # resource_type
-        # version
-        # type=upload
-        # secure=True
-        #
-        # This prevents videos from accidentally becoming
-        # image URLs.
-        # ----------------------------------------------------
+        # -----------------------------------------------------
+        # CLOUDINARY URL
+        # -----------------------------------------------------
 
         url, _ = cloudinary.utils.cloudinary_url(
             public_id,
@@ -773,83 +357,42 @@ class ProductMediaCloudinaryStorage(Storage):
 
         return url
 
-    # ========================================================
+    # =========================================================
     # DELETE
-    # ========================================================
+    # =========================================================
 
     def delete(self, name):
         """
-        Delete a Cloudinary asset.
-
-        The resource type is taken from the stored metadata,
-        rather than guessed from the current filename.
+        Delete the corresponding Cloudinary asset.
         """
-
-        # ----------------------------------------------------
-        # Nothing to delete.
-        # ----------------------------------------------------
 
         if not name:
             return
 
-        # ----------------------------------------------------
-        # Parse stored filename.
-        # ----------------------------------------------------
+        parsed = self._parse_stored_name(name)
 
-        parsed = self._parse_stored_name(
-            name
-        )
+        resource_type = parsed["resource_type"]
+        public_id = parsed["public_id"]
 
-        resource_type = parsed[
-            "resource_type"
-        ]
-
-        public_id = parsed[
-            "public_id"
-        ]
-
-        # ----------------------------------------------------
-        # Only image/video resources are supported.
-        # ----------------------------------------------------
-
-        if resource_type not in {
-            "image",
-            "video",
-        }:
-
+        if resource_type not in {"image", "video"}:
             return
 
-        # ----------------------------------------------------
-        # Delete from Cloudinary.
-        # ----------------------------------------------------
-
         try:
-
             cloudinary.uploader.destroy(
                 public_id,
                 resource_type=resource_type,
                 type="upload",
-
-                # --------------------------------------------
-                # Invalidate cached CDN copies.
-                # --------------------------------------------
-
                 invalidate=True,
             )
-
         except Exception:
-            # ------------------------------------------------
-            # Do not allow Cloudinary cleanup failure to crash
-            # Django's delete operation.
-            #
-            # The database record can still be deleted.
-            # ------------------------------------------------
-
+            # Do not prevent the database record from
+            # being deleted if Cloudinary no longer has
+            # the remote file.
             pass
 
-    # ========================================================
+    # =========================================================
     # AVAILABLE NAME
-    # ========================================================
+    # =========================================================
 
     def get_available_name(
         self,
@@ -857,42 +400,40 @@ class ProductMediaCloudinaryStorage(Storage):
         max_length=None,
     ):
         """
-        Return the name unchanged.
+        Return the requested name.
 
-        We generate a UUID during _save(), so there is no need
-        for Django to generate a second filename.
+        Our _save() method generates the actual unique
+        Cloudinary public ID.
         """
 
         return name
 
-    # ========================================================
+    # =========================================================
     # SIZE
-    # ========================================================
+    # =========================================================
 
     def size(self, name):
         """
-        Product media lives remotely on Cloudinary.
+        Size is stored remotely in Cloudinary.
 
-        Django's local filesystem size isn't available here.
-
-        Return 0 as a safe fallback.
+        We don't use Django's local filesystem size.
         """
 
         return 0
 
-    # ========================================================
+    # =========================================================
     # OPEN
-    # ========================================================
+    # =========================================================
 
     def _open(self, name, mode="rb"):
         """
-        Product media is remotely hosted on Cloudinary.
+        Product media is remote in Cloudinary.
 
-        The application should use file.url instead of trying
-        to open the remote asset as a local Django file.
+        The application should use file.url rather than
+        trying to open the file locally.
         """
 
         raise NotImplementedError(
             "Product media is stored remotely on Cloudinary. "
-            "Use file.url to access the media."
+            "Use file.url instead."
         )
