@@ -417,10 +417,6 @@ class ContactMessageSerializer(serializers.ModelSerializer):
 # PRODUCT MEDIA
 # ==================================================
 
-# ==================================================
-# PRODUCT MEDIA
-# ==================================================
-
 class ProductMediaSerializer(serializers.ModelSerializer):
     """
     Serializer for product images and videos.
