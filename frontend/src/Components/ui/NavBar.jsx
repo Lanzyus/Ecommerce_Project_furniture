@@ -131,7 +131,7 @@ export default function NavBar() {
                   href="/#projects"
                   onClick={close}
                 >
-                  Projects
+                  Buy Products
                 </a>
 
                 <a
