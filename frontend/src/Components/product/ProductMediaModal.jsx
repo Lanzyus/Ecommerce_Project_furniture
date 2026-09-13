@@ -934,7 +934,25 @@ const ProductMediaModal = ({
       {/* =====================================================
           MAIN CONTENT
           ===================================================== */}      
+     
       <div
+        ref={contentRef}
+        className="d-flex justify-content-center align-items-center w-100 h-100"
+        style={{
+          padding: isMobile
+            ? "50px 12px 120px"
+            : normalizedMedia.length > 1
+              ? "70px 70px 140px"
+              : "70px 60px",
+          boxSizing: "border-box",
+          overflow: "hidden",
+        }}
+        onClick={(event) =>
+          event.stopPropagation()
+        }
+      >
+      
+      {/* <div
         ref={contentRef}
         className="d-flex justify-content-center align-items-center w-100 h-100"
         style={{
@@ -948,7 +966,7 @@ const ProductMediaModal = ({
         onClick={(event) =>
           event.stopPropagation()
         }
-      >
+      > */}
         {/* ===================================================
             VIDEO
             =================================================== */}
