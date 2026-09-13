@@ -20,8 +20,8 @@ const ProductMediaModal = ({
   const [thumbnailErrors, setThumbnailErrors] = useState({});
   const [touchStartX, setTouchStartX] = useState(null);
 
-  const videoRef = useRef(null);
-  const contentRef = useRef(null);
+  const video = use(null);
+  const content = use(null);
 
   /*
    * ---------------------------------------------------------
@@ -53,6 +53,18 @@ const ProductMediaModal = ({
    * thumbnail
    * ---------------------------------------------------------
    */
+   const [isMobile, setIsMobile] = useState(
+          typeof window !== "undefined" && window.innerWidth <= 768
+        );
+        
+        useEffect(() => {
+          const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+          };
+          window.addEventListener("resize", handleResize);
+          return () => window.removeEventListener("resize", handleResize);
+        }, []);
+  
   const getMediaFile = useCallback((item) => {
     if (!item) {
       return "";
@@ -546,10 +558,10 @@ const ProductMediaModal = ({
    * ---------------------------------------------------------
    */
   useEffect(() => {
-    if (videoRef.current) {
+    if (video.current) {
       try {
-        videoRef.current.pause();
-        videoRef.current.currentTime = 0;
+        video.current.pause();
+        video.current.currentTime = 0;
       } catch (error) {
         console.warn(
           "Unable to reset video:",
@@ -921,19 +933,7 @@ const ProductMediaModal = ({
 
       {/* =====================================================
           MAIN CONTENT
-          ===================================================== */}
-      const [isMobile, setIsMobile] = useState(
-        typeof window !== "undefined" && window.innerWidth <= 768
-      );
-      
-      useEffect(() => {
-        const handleResize = () => {
-          setIsMobile(window.innerWidth <= 768);
-        };
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-      }, []);
-      
+          ===================================================== */}      
       <div
         ref={contentRef}
         className="d-flex justify-content-center align-items-center w-100 h-100"
