@@ -253,10 +253,21 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            "id", "username", "email", "first_name", "last_name",
-            "phone", "city", "state", "country", "address",
-            "profile_picture", "profile_picture_url", "orders",
+            "id",
+            "username",
+            "email",
+            "first_name",
+            "last_name",
+            "phone",
+            "city",
+            "state",
+            "country",
+            "address",
+            "profile_picture",
+            "profile_picture_url",
+            "orders",
         ]
+
 
     def get_orders(self, obj):
         return OrderSerializer(

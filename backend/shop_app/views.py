@@ -1522,12 +1522,28 @@ def user_info(request):
     )
 
 
-@api_view(["GET"])
+from rest_framework.parsers import MultiPartParser, FormParser
+
+@api_view(["GET", "PATCH"])
 @permission_classes([IsAuthenticated])
+@parser_classes([MultiPartParser, FormParser])
 def user_profile(request):
-    return Response(
-        UserSerializer(request.user).data
+    if request.method == "GET":
+        return Response(UserSerializer(request.user).data)
+
+    serializer = UserSerializer(
+        request.user, data=request.data, partial=True
     )
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    return Response(serializer.data)
+
+# @api_view(["GET"])
+# @permission_classes([IsAuthenticated])
+# def user_profile(request):
+#     return Response(
+#         UserSerializer(request.user).data
+#     )
 
 
 # ==================================================
