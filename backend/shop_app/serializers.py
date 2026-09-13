@@ -247,22 +247,15 @@ def build_product_media_url(media):
 # ============================================================
 
 class UserSerializer(serializers.ModelSerializer):
-
     orders = serializers.SerializerMethodField()
+    profile_picture_url = serializers.SerializerMethodField()
 
     class Meta:
         model = User
         fields = [
-            "id",
-            "username",
-            "email",
-            "first_name",
-            "last_name",
-            "phone",
-            "city",
-            "country",
-            "address",
-            "orders",
+            "id", "username", "email", "first_name", "last_name",
+            "phone", "city", "state", "country", "address",
+            "profile_picture", "profile_picture_url", "orders",
         ]
 
     def get_orders(self, obj):
@@ -271,6 +264,47 @@ class UserSerializer(serializers.ModelSerializer):
             many=True,
             context=self.context,
         ).data
+
+    def get_profile_picture_url(self, obj):
+        if not obj.profile_picture:
+            return None
+
+        try:
+            url = obj.profile_picture.url
+        except (ValueError, AttributeError):
+            return None
+
+        request = self.context.get("request")
+        if request:
+            return request.build_absolute_uri(url)
+        return url
+
+
+# class UserSerializer(serializers.ModelSerializer):
+
+#     orders = serializers.SerializerMethodField()
+
+#     class Meta:
+#         model = User
+#         fields = [
+#             "id",
+#             "username",
+#             "email",
+#             "first_name",
+#             "last_name",
+#             "phone",
+#             "city",
+#             "country",
+#             "address",
+#             "orders",
+#         ]
+
+#     def get_orders(self, obj):
+#         return OrderSerializer(
+#             obj.orders.all(),
+#             many=True,
+#             context=self.context,
+#         ).data
 
 
 # ============================================================
