@@ -904,7 +904,20 @@ const ProductMediaModal = ({
       {/* =====================================================
           NEXT BUTTON
           ===================================================== */}
-      {normalizedMedia.length > 1 && (
+
+      {normalizedMedia.length > 1 && !isMobile && (
+        <button /* ...previous button... */ >
+          ❮
+        </button>
+      )}
+      
+      {normalizedMedia.length > 1 && !isMobile && (
+        <button /* ...next button... */ >
+          ❯
+        </button>
+      )}
+      
+      /* {normalizedMedia.length > 1 && (
         <button
           type="button"
           className="btn btn-light position-absolute shadow"
@@ -929,7 +942,7 @@ const ProductMediaModal = ({
         >
           ❯
         </button>
-      )}
+      )} */
 
       {/* =====================================================
           MAIN CONTENT
@@ -1015,7 +1028,7 @@ const ProductMediaModal = ({
                 </a>
               )}
             </div>
-          ) : (
+          // ) : (
             <video
               ref={videoRef}
               key={currentUrl}
@@ -1023,20 +1036,13 @@ const ProductMediaModal = ({
               autoPlay
               playsInline
               preload="metadata"
-              poster={
-                currentVideoThumbnail ||
-                undefined
-              }
-              onError={(event) =>
-                handleVideoError(
-                  currentIndex,
-                  event
-                )
-              }
+              poster={currentVideoThumbnail || undefined}
+              onError={(event) => handleVideoError(currentIndex, event)}
               style={{
-                maxHeight:
-                  "calc(100vh - 190px)",
-                maxWidth: "90vw",
+                maxHeight: isMobile
+                  ? "calc(100vh - 160px)"
+                  : "calc(100vh - 190px)",
+                maxWidth: isMobile ? "96vw" : "90vw",
                 width: "auto",
                 height: "auto",
                 objectFit: "contain",
@@ -1045,6 +1051,35 @@ const ProductMediaModal = ({
                 display: "block",
               }}
             >
+          //   <video
+          //     ref={videoRef}
+          //     key={currentUrl}
+          //     controls
+          //     autoPlay
+          //     playsInline
+          //     preload="metadata"
+          //     poster={
+          //       currentVideoThumbnail ||
+          //       undefined
+          //     }
+          //     onError={(event) =>
+          //       handleVideoError(
+          //         currentIndex,
+          //         event
+          //       )
+          //     }
+          //     style={{
+          //       maxHeight:
+          //         "calc(100vh - 190px)",
+          //       maxWidth: "90vw",
+          //       width: "auto",
+          //       height: "auto",
+          //       objectFit: "contain",
+          //       borderRadius: "8px",
+          //       background: "#000",
+          //       display: "block",
+          //     }}
+          //   >
               <source
                 src={currentUrl}
                 type={currentMimeType}
@@ -1100,7 +1135,24 @@ const ProductMediaModal = ({
           /* =================================================
              IMAGE
              ================================================= */
-          <img
+         <img
+            key={currentUrl}
+            src={currentUrl}
+            alt={currentMedia.alt_text || currentMedia.altText || currentMedia.title || "Product media"}
+            onError={(event) => handleImageError(currentIndex, event)}
+            style={{
+              maxHeight: isMobile
+                ? "calc(100vh - 160px)"
+                : "calc(100vh - 190px)",
+              maxWidth: isMobile ? "96vw" : "90vw",
+              width: "auto",
+              height: "auto",
+              objectFit: "contain",
+              borderRadius: "8px",
+              display: "block",
+            }}
+          />
+      /* {/* <img
             key={currentUrl}
             src={currentUrl}
             alt={
@@ -1127,7 +1179,7 @@ const ProductMediaModal = ({
             }}
           />
         )}
-      </div>
+      </div> */} */
 
       {/* =====================================================
           THUMBNAILS
