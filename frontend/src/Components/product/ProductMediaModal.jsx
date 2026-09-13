@@ -11,7 +11,7 @@ import { BASE_URL } from "../../api";
 const ProductMediaModal = ({
   show,
   onClose,
-  media = [],
+  media = [],a
   initialIndex = 0,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -20,8 +20,25 @@ const ProductMediaModal = ({
   const [thumbnailErrors, setThumbnailErrors] = useState({});
   const [touchStartX, setTouchStartX] = useState(null);
 
-  const video = use(null);
-  const content = use(null);
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" &&
+      window.innerWidth <= 768
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const videoRef = useRef(null);
+  const contentRef = useRef(null);
 
   /*
    * ---------------------------------------------------------
@@ -53,18 +70,6 @@ const ProductMediaModal = ({
    * thumbnail
    * ---------------------------------------------------------
    */
-   const [isMobile, setIsMobile] = useState(
-          typeof window !== "undefined" && window.innerWidth <= 768
-        );
-        
-        useEffect(() => {
-          const handleResize = () => {
-            setIsMobile(window.innerWidth <= 768);
-          };
-          window.addEventListener("resize", handleResize);
-          return () => window.removeEventListener("resize", handleResize);
-        }, []);
-  
   const getMediaFile = useCallback((item) => {
     if (!item) {
       return "";
@@ -558,10 +563,10 @@ const ProductMediaModal = ({
    * ---------------------------------------------------------
    */
   useEffect(() => {
-    if (video.current) {
+    if (videoRef.current) {
       try {
-        video.current.pause();
-        video.current.currentTime = 0;
+        videoRef.current.pause();
+        videoRef.current.currentTime = 0;
       } catch (error) {
         console.warn(
           "Unable to reset video:",
@@ -874,7 +879,7 @@ const ProductMediaModal = ({
       {/* =====================================================
           PREVIOUS BUTTON
           ===================================================== */}
-      {normalizedMedia.length > 1 && (
+      {normalizedMedia.length > 1 && !isMobile && (
         <button
           type="button"
           className="btn btn-light position-absolute shadow"
@@ -904,20 +909,7 @@ const ProductMediaModal = ({
       {/* =====================================================
           NEXT BUTTON
           ===================================================== */}
-
       {normalizedMedia.length > 1 && !isMobile && (
-        <button /* ...previous button... */ >
-          ❮
-        </button>
-      )}
-      
-      {normalizedMedia.length > 1 && !isMobile && (
-        <button /* ...next button... */ >
-          ❯
-        </button>
-      )}
-      
-      /* {normalizedMedia.length > 1 && (
         <button
           type="button"
           className="btn btn-light position-absolute shadow"
@@ -942,12 +934,11 @@ const ProductMediaModal = ({
         >
           ❯
         </button>
-      )} */
+      )}
 
       {/* =====================================================
           MAIN CONTENT
-          ===================================================== */}      
-     
+          ===================================================== */}
       <div
         ref={contentRef}
         className="d-flex justify-content-center align-items-center w-100 h-100"
@@ -955,8 +946,8 @@ const ProductMediaModal = ({
           padding: isMobile
             ? "50px 12px 120px"
             : normalizedMedia.length > 1
-              ? "70px 70px 140px"
-              : "70px 60px",
+            ? "70px 70px 140px"
+            : "70px 60px",
           boxSizing: "border-box",
           overflow: "hidden",
         }}
@@ -964,22 +955,6 @@ const ProductMediaModal = ({
           event.stopPropagation()
         }
       >
-      
-      {/* <div
-        ref={contentRef}
-        className="d-flex justify-content-center align-items-center w-100 h-100"
-        style={{
-          padding:
-            normalizedMedia.length > 1
-              ? "70px 70px 140px"
-              : "70px 60px",
-          boxSizing: "border-box",
-          overflow: "hidden",
-        }}
-        onClick={(event) =>
-          event.stopPropagation()
-        }
-      > */}
         {/* ===================================================
             VIDEO
             =================================================== */}
@@ -1028,7 +1003,7 @@ const ProductMediaModal = ({
                 </a>
               )}
             </div>
-          // ) : (
+          ) : (
             <video
               ref={videoRef}
               key={currentUrl}
@@ -1036,13 +1011,23 @@ const ProductMediaModal = ({
               autoPlay
               playsInline
               preload="metadata"
-              poster={currentVideoThumbnail || undefined}
-              onError={(event) => handleVideoError(currentIndex, event)}
+              poster={
+                currentVideoThumbnail ||
+                undefined
+              }
+              onError={(event) =>
+                handleVideoError(
+                  currentIndex,
+                  event
+                )
+              }
               style={{
                 maxHeight: isMobile
                   ? "calc(100vh - 160px)"
                   : "calc(100vh - 190px)",
-                maxWidth: isMobile ? "96vw" : "90vw",
+                maxWidth: isMobile
+                  ? "96vw"
+                  : "90vw",
                 width: "auto",
                 height: "auto",
                 objectFit: "contain",
@@ -1051,35 +1036,6 @@ const ProductMediaModal = ({
                 display: "block",
               }}
             >
-          //   <video
-          //     ref={videoRef}
-          //     key={currentUrl}
-          //     controls
-          //     autoPlay
-          //     playsInline
-          //     preload="metadata"
-          //     poster={
-          //       currentVideoThumbnail ||
-          //       undefined
-          //     }
-          //     onError={(event) =>
-          //       handleVideoError(
-          //         currentIndex,
-          //         event
-          //       )
-          //     }
-          //     style={{
-          //       maxHeight:
-          //         "calc(100vh - 190px)",
-          //       maxWidth: "90vw",
-          //       width: "auto",
-          //       height: "auto",
-          //       objectFit: "contain",
-          //       borderRadius: "8px",
-          //       background: "#000",
-          //       display: "block",
-          //     }}
-          //   >
               <source
                 src={currentUrl}
                 type={currentMimeType}
@@ -1135,24 +1091,7 @@ const ProductMediaModal = ({
           /* =================================================
              IMAGE
              ================================================= */
-         <img
-            key={currentUrl}
-            src={currentUrl}
-            alt={currentMedia.alt_text || currentMedia.altText || currentMedia.title || "Product media"}
-            onError={(event) => handleImageError(currentIndex, event)}
-            style={{
-              maxHeight: isMobile
-                ? "calc(100vh - 160px)"
-                : "calc(100vh - 190px)",
-              maxWidth: isMobile ? "96vw" : "90vw",
-              width: "auto",
-              height: "auto",
-              objectFit: "contain",
-              borderRadius: "8px",
-              display: "block",
-            }}
-          />
-      /* {/* <img
+          <img
             key={currentUrl}
             src={currentUrl}
             alt={
@@ -1168,9 +1107,12 @@ const ProductMediaModal = ({
               )
             }
             style={{
-              maxHeight:
-                "calc(100vh - 190px)",
-              maxWidth: "90vw",
+              maxHeight: isMobile
+                ? "calc(100vh - 160px)"
+                : "calc(100vh - 190px)",
+              maxWidth: isMobile
+                ? "96vw"
+                : "90vw",
               width: "auto",
               height: "auto",
               objectFit: "contain",
@@ -1179,7 +1121,7 @@ const ProductMediaModal = ({
             }}
           />
         )}
-      </div> */} */
+      </div>
 
       {/* =====================================================
           THUMBNAILS
