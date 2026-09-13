@@ -11,7 +11,7 @@ import { BASE_URL } from "../../api";
 const ProductMediaModal = ({
   show,
   onClose,
-  media = [],a
+  media = [],
   initialIndex = 0,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
